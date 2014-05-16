@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	#header-2
+		a(href="/profile")
+			h1 Urbanopoly
+		#user
+			img(src= "../images/default_user.jpg")
+			p #{user_name}
+			a(href="/")
+				p Logout
+
+	#content
+		h1= title
+		p Credits page.
