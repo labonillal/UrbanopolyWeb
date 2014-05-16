@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	#header-2
+		a(href="/profile")
+			h1 Urbanopoly
+		#user
+			img(src= "../images/default_user.jpg")
+			p #{user_name}
+			a(href="/")
+				p Logout
+
+	#content
+		h1= title
+		p Map page.
+		script(src="https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js")
+		script(src='http://code.jquery.com/jquery-2.1.0.min.js')
+		script(src='./javascripts/mapView.js')
+		#map

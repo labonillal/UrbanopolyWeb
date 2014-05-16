@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	#header-2
+		a(href="/profile")
+			h1 Urbanopoly
+		#user
+			img(src= "../images/default_user.jpg")
+			p #{user_name}
+			a(href="/logout")
+				p Logout
+
+	#content
+		h1= title
+		p Welcome to #{title}
+	
+		ul
+			li
+				a(href="/venues") MyVenues
+			li 
+				a(href="/map") Map
+			li 
+				a(href="/leaderboard") Leaderboard
+			li 
+				a(href="/notifications") Notifications
+			li 
+				a(href="/tutorial") Tutorial
+			li 
+				a(href="/credits") Credits
