@@ -1,0 +1,38 @@
+extends layout
+
+block content
+	div.container
+		#header-2
+			a(href="/profile")
+				h1 Urbanopoly
+			#user
+				img(src= user_pic)
+				p #{user_name}
+				a(href="/")
+					p Logout
+
+		#content
+			div(class="panel panel-default")
+				div(class="panel-heading")
+					img(src='/images/title_notifications.png')
+				div(class="panel-body")
+					table(class="table")
+						each notification, i in notifications
+							tr
+								td
+									img(src='#{notification.icon}')
+								td
+									h5 #{notification.date}
+									h4 #{notification.text}
+								td
+									if notification.deltaCash != 0
+										h4(style="text-align: right") #{notification.deltaCash}&euro;
+
+	div.container
+		#footer-score
+			div(id="footer")
+				div.container
+					p #{user_numVenues}
+					img(src= "../images/venue_small.png")
+					p #{user_cash}
+					img(src= "../images/euro_symbol.png")

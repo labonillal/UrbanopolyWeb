@@ -1,0 +1,39 @@
+extends layout
+
+block content
+	div.container
+		#header-2
+			a(href="/profile")
+				h1 Urbanopoly
+			#user
+				img(src= user_pic)
+				p #{user_name}
+				a(href="/logout")
+					p Logout
+
+		#content
+			h1= title
+			p Welcome to #{title}
+		
+			ul
+				li
+					a(href="/venues") MyVenues
+				li 
+					a(href="/map") Map
+				li 
+					a(href="/leaderboard") Leaderboard
+				li 
+					a(href="/notifications") Notifications
+				li 
+					a(href="/tutorial") Tutorial
+				li 
+					a(href="/credits") Credits
+
+	div.container
+		#footer-score
+			div(id="footer")
+				div.container
+					p #{user_numVenues}
+					img(src= "../images/venue_small.png")
+					p #{user_cash}
+					img(src= "../images/euro_symbol.png")

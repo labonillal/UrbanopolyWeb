@@ -1,0 +1,367 @@
+extends layout
+
+block content
+	div.container
+		#header-2
+			a(href="/profile")
+				h1 Urbanopoly
+			#user
+				img(src= user_pic)
+				p #{user_name}
+				a(href="/")
+					p Logout
+
+		#content
+			div(class="panel panel-default")
+				div(class="panel-heading")
+					img(src='/images/title_map.png')
+				div(class="panel-body")
+					#map
+
+			// Default Location Modal
+			div(class="modal fade", id="defaultLocationModal", tabindex="-1", role="dialog", aria-labelledby="defaultLocationModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							h4(class="modal-title" style="text-align:center") Default Location
+						div(class="modal-body")
+							div(class="alert alert-info" style="text-align:center")
+								|	<strong>Location could not be found!.</strong> Please share your location or select one of our default locations.
+							<!-- Single button -->
+							div(class="btn-group")
+								button(type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown") Default Location 
+									span(class="caret")
+								ul(class="dropdown-menu" role="menu")
+									li
+										a(id="location1") Milano
+									li 
+										a(id="location2") Boston
+									li
+										a(id="location3") Amsterdam
+									li
+										a(id="location4") Como
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+
+			// Free Venue Modal
+			div(class="modal fade", id="freeModal", tabindex="-1", role="dialog", aria-labelledby="freeModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(id="freeModalHeader", src='/images/title_free_venue.png')
+						div(class="modal-body")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="freeVenueName") Venue Name
+									div(class="col-md-4")
+										img(id="freeVenueIcon")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-6")
+										h4(id="freeVenueCategory") Venue Category
+										h5 Category
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="freeVenueValue")
+										h5 Value
+									div(class="col-md-4")
+										h4(id="freeVenueRent") 
+										h5 Rent
+						div(class="btn-group-wrap" style="text-align: center")
+								div(class="btn-group")
+									button.btn.btn-primary(id="buyBtn" type="button") Buy
+									button.btn.btn-primary(id="mtgBtn" type="button") Mortgage
+									button.btn.btn-primary(id="rdmBtn" type="button") Redeem
+									button.btn.btn-primary(id="selBtn" type="button") Sell
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+			
+			// Occupied Venue Modal
+			div(class="modal fade", id="occupiedModal", tabindex="-1", role="dialog", aria-labelledby="occupiedModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_occupied_venue.png')
+						div(class="modal-body")
+							h4(style="text-align:center") UrbanopolyGameWheel
+							div(class="alert alert-info" style="text-align:center")
+								|	<strong>GameWheel Here!</strong> Available soon.
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="occupiedVenueName")
+									div(class="col-md-4")
+										img(id="occupiedVenueIcon")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="occupiedVenueCategory")
+										h5 Category
+									div(class="col-md-4")
+										h4(id="occupiedVenueValue") &euro; 
+										h5 Value
+							div(class="btn-group-wrap" style="text-align: center")
+								div(class="btn-group")
+									button.btn.btn-primary(id="takeBtn" type="button") Take
+									button.btn.btn-primary(id="payBtn" type="button") Pay
+									button.btn.btn-primary(id="advBtn" type="button") Advertise
+									button.btn.btn-primary(id="quzBtn" type="button") Quiz
+									button.btn.btn-primary(id="skpBtn" type="button") Skip
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+
+			// Free Buy Modal
+			div(class="modal fade", id="buyModal", tabindex="-1", role="dialog", aria-labelledby="buyModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header" style="text-align:center")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_buy.png')
+						div(class="modal-body")
+							div(class="panel panel-info")
+								div(class="panel-heading")
+									h4(class="panel-title") Confirm or Edit the Venue's name
+								div(class="panel-body")
+									div(class="input-group")
+										input(id="inputVenueName" type="text" class="form-control")
+										span(class="input-group-btn")
+											button(id="insertNameOk" class="btn btn-default" type="button") OK
+
+							div(id="parentPanel" class="panel panel-info")
+								div(class="panel-heading")
+									h4(class="panel-title") Select Venue's category
+								div(class="panel-body")
+									select(id="parentSelect")
+										option(selected value="base") Please Select
+										for category in categories
+											if (typeof(category.parent) == 'undefined' || category.parent == "")
+												option(value=category.id)=category.name
+							
+							div
+								div(id="childPanel" class="panel panel-info")
+									div(class="panel-heading")
+										h4(class="panel-title") Select Venue's Subcategory
+									div(class="panel-body")
+										select(id="childSelect")
+											option Please Select			
+							
+							div(style="text-align:center")
+								button(id="buyButton" type="button" class="btn btn-primary") BUY
+			
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+				
+			// Occupied Take Modal
+			div(class="modal fade", id="takeModal", tabindex="-1", role="dialog", aria-labelledby="takeModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_take.png')
+						div(class="modal-body")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="takeVenueName") Venue Name
+										h5(id="takeVenueCategory") Venue Category
+									div(class="col-md-4")
+										img(id="takeVenueIcon")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-4")
+										img(src='/images/image_take.png')
+									div(class="col-md-8")
+										h4 Take the venue
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h3(id="costTakeValue")
+										h5 Cost to take
+									div(class="col-md-4")
+										h3(id="yourMoneyValue") 
+										h5 Your money
+							div(style="text-align:center")
+								button(id="takeButton" type="button" class="btn btn-primary") TAKE
+								button(id="cancelButton" type="button" class="btn btn-primary" data-dismiss="modal") CANCEL
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+								
+			// Occupied Pay Modal
+			div(class="modal fade", id="payModal", tabindex="-1", role="dialog", aria-labelledby="payModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							h4(class="modal-title" style="text-align:center") Pay
+						div(class="modal-body")
+						
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+								
+			// Occupied Advertise Modal
+			div(class="modal fade", id="advertiseModal", tabindex="-1", role="dialog", aria-labelledby="advertiseModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_advertise.png')
+						div(class="modal-body")
+							<!-- Nav tabs -->
+							ul(class="nav nav-tabs")
+								li(class="active")
+									a(href="#advStep1" data-toggle="tab") Step 1
+								li
+									a(href="#advStep2" data-toggle="tab") Step 2
+								li
+									a(href="#advStep3" data-toggle="tab") Step 3
+								li
+									a(href="#advStep4" data-toggle="tab") Step 4
+								li
+									a(href="#advStep5" data-toggle="tab") Step 5
+
+							<!-- Tab panes -->
+							div(class="tab-content")
+								div(class="tab-pane active" id="advStep1")
+									div(class="alert alert-info alert-dismissable")
+										button(type="button" class="close" data-dismiss="alert" aria-hidden="true") &times;
+										|	<strong>Info.</strong> This is the first step of your advertisement.
+									div(style="text-align:center")
+										a(id="btnAdvStp1" href="#advStep2" class="btn btn-primary" data-toggle="tab") Next
+								div(class="tab-pane" id="advStep2")
+									div(class="alert alert-success alert-dismissable")
+										button(type="button" class="close" data-dismiss="alert" aria-hidden="true") &times;
+										|	<strong>Well done!</strong> This is the second step of your advertisement.
+									div(style="text-align:center")
+										a(id="btnAdvStp2" href="#advStep3" class="btn btn-primary" data-toggle="tab") Next
+								div(class="tab-pane" id="advStep3")
+									div(class="alert alert-success alert-dismissable")
+										button(type="button" class="close" data-dismiss="alert" aria-hidden="true") &times;
+										|	<strong>Well done!</strong> This is the third step of your advertisement.
+									div(style="text-align:center")
+										a(id="btnAdvStp3" href="#advStep4" class="btn btn-primary" data-toggle="tab") Next
+								div(class="tab-pane" id="advStep4")
+									div(class="alert alert-success alert-dismissable")
+										button(type="button" class="close" data-dismiss="alert" aria-hidden="true") &times;
+										|	<strong>Well done!</strong> This is the fourth step of your advertisement.
+									div(style="text-align:center")
+										a(id="btnAdvStp4" href="#advStep5" class="btn btn-primary" data-toggle="tab") Next
+								div(class="tab-pane" id="advStep5")
+									div(class="alert alert-success alert-dismissable")
+										button(type="button" class="close" data-dismiss="alert" aria-hidden="true") &times;
+										|	<strong>Congratulations!</strong> This is the last step of your advertisement.
+									div(style="text-align:center")
+										button(id="btnAdvStp5" type="button" class="btn btn-primary" data-dismiss="modal") Finish
+						
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+			
+			// Occupied Quiz Modal
+			div(class="modal fade", id="quizModal", tabindex="-1", role="dialog", aria-labelledby="quizModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_quiz.png')
+						div(class="modal-body")
+							<!-- Nav tabs -->
+							ul(class="nav nav-tabs")
+								li(class="active")
+									a(href="#qzStep1" data-toggle="tab") Question 1
+								li
+									a(href="#qzStep2" data-toggle="tab") Question 2
+
+							<!-- Tab panes -->
+							div(class="tab-content")
+								div(class="tab-pane active" id="qzStep1")
+									div(class="alert alert-info alert-dismissable")
+										button(type="button" class="close" data-dismiss="alert" aria-hidden="true") &times;
+										|	<strong>Info.</strong> This is the first question of the quiz.
+									div(style="text-align:left")
+										|	Question 1.
+									div(class="radio")
+										input(type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked)
+										|	First Option
+									div(class="radio")
+										input(type="radio" name="optionsRadios" id="optionsRadios2" value="option2")
+										|	Second Option
+									div(class="radio")
+										input(type="radio" name="optionsRadios" id="optionsRadios3" value="option3")
+										|	Third Option
+									div(style="text-align:center")
+										a(id="btnQzStp1" href="#qzStep2" class="btn btn-primary" data-toggle="tab") Next
+								div(class="tab-pane" id="qzStep2")
+									div(class="alert alert-success alert-dismissable")
+										button(type="button" class="close" data-dismiss="alert" aria-hidden="true") &times;
+										|	<strong>Well done!</strong> This is the last question of the quiz.
+									div(style="text-align:left")
+										|	Question 2.
+									div(style="text-align:center")
+										button(id="yesStp2" type="button" class="btn btn-primary" data-dismiss="modal") Yes
+										button(id="noStp2" type="button" class="btn btn-primary" data-dismiss="modal") No
+										button(id="idkStp2" type="button" class="btn btn-primary" data-dismiss="modal") I don't know
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+								
+			// Occupied Skip Modal
+			div(class="modal fade", id="skipModal", tabindex="-1", role="dialog", aria-labelledby="skipModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							h4(class="modal-title" style="text-align:center") Skip
+						div(class="modal-body")
+						
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='#') Urbanopoly
+								|  2014
+
+			// Message Modal
+			div(class="modal fade", id="messageModal")
+				div(class="modal-dialog modal-sm")
+					div(class="modal-content")
+						div(class="modal-body")
+							div(id="successMessage", class="alert alert-success")
+								h4(style="text-align:center") <strong>Well done!</strong>
+								p(id="scsMsgContent") You successfully read this important alert message.
+							div(id="errorMessage", class="alert alert-danger")
+								h4(style="text-align:center") <strong>Oh snap!</strong>
+								p(id="errMsgContent") Change a few things up and try submitting again.
+						div(class="modal-footer")
+							button(id="okMsgModal" type="button" class="btn btn-default" data-dismiss="modal") Ok
+							button(id="yesMsgModal" type="button" class="btn btn-default") Yes
+							button(id="noMsgModal" type="button" class="btn btn-default" data-dismiss="modal") No
+
+			script(src="https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js")
+			script(src='http://code.jquery.com/jquery-2.1.0.min.js')
+			script(src='./javascripts/mapView.js')
+
+	div.container
+		#footer-score
+			div(id="footer")
+				div.container
+					p(id="userNumVenues") #{user_numVenues}
+					img(src= "../images/venue_small.png")
+					p(id="userCash") #{user_cash}
+					img(src= "../images/euro_symbol.png")
