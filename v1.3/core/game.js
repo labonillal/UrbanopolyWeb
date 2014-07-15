@@ -1,7 +1,7 @@
 // config/game.js
 module.exports = {
 	// Servers
-	'localhostServerUrl' : 'http://192.168.1.6:8080/urbanopoly-server', // Local emulator
+	'localhostServerUrl' : 'http://192.168.1.10:8080/urbanopoly-server', // Local emulator
 	'cefrielServerUrl' : 'http://swa.cefriel.it/urbangames/urbanopoly-server',	// Cefriel server
 
 	// Game parameters

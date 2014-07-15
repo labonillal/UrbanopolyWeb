@@ -6,6 +6,7 @@ module.exports = {
 	'facebookAuth' : {
 		'clientID' 		: '270256063152691', // your App ID
 		'clientSecret' 	: 'ebfd00a8dd374eff46955a4012532c67', // your App Secret
+		'clientNamespace'	: 'Urbanopoly', // your App Namespace
 		'callbackURL' 	: 'http://localhost:3000/auth/facebook/callback'
 	},
 

@@ -62,9 +62,12 @@ block content
 										img(id="freeVenueIcon")
 							div(class="panel panel-default")
 								div(class="panel-body")
-									div(class="col-md-6")
+									div(class="col-md-8")
 										h4(id="freeVenueCategory") Venue Category
 										h5 Category
+									div(class="col-md-4")
+										h4(id="freeVenueMortgageDeadTime")
+										h5(id="freeVenueMortgageLabel")
 							div(class="panel panel-default")
 								div(class="panel-body")
 									div(class="col-md-8")
@@ -92,16 +95,22 @@ block content
 							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
 							img(src='/images/title_occupied_venue.png')
 						div(class="modal-body")
-							h4(style="text-align:center") UrbanopolyGameWheel
-							div(class="alert alert-info" style="text-align:center")
-								|	<strong>GameWheel Here!</strong> Available soon.
-							div(class="panel panel-default")
+							div(id="GameWheelPanel" class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-2")
+									div(class="col-md-8")
+										div(style="position: relative; left: 0; top: 0;")
+											img(id="wheelBorder" src="/images/wheel_border.png" alt="wheelBorder")
+											img(id="wheel" src="/images/wheel.png" alt="wheel" style="position: absolute; top: 0px; left: 0px;")
+											img(id="wheelPin" src="/images/wheel_pin.png" alt="wheelPin" style="position: absolute; top: 0px; left: 126px;")
+									div(class="col-md-2")
+							div(id="venueNamePanel" class="panel panel-default")
 								div(class="panel-body")
 									div(class="col-md-8")
 										h4(id="occupiedVenueName")
 									div(class="col-md-4")
 										img(id="occupiedVenueIcon")
-							div(class="panel panel-default")
+							div(id="venueCategoryPanel" class="panel panel-default")
 								div(class="panel-body")
 									div(class="col-md-8")
 										h4(id="occupiedVenueCategory")
@@ -109,13 +118,17 @@ block content
 									div(class="col-md-4")
 										h4(id="occupiedVenueValue") &euro; 
 										h5 Value
-							div(class="btn-group-wrap" style="text-align: center")
-								div(class="btn-group")
-									button.btn.btn-primary(id="takeBtn" type="button") Take
-									button.btn.btn-primary(id="payBtn" type="button") Pay
-									button.btn.btn-primary(id="advBtn" type="button") Advertise
-									button.btn.btn-primary(id="quzBtn" type="button") Quiz
-									button.btn.btn-primary(id="skpBtn" type="button") Skip
+							div(id="gameWheelResultPanel" class="panel panel-info")
+								div(class="panel-heading" style="text-align: center")
+									img(id="resultTitle" width="146" height="25" src='')
+								div(class="panel-body" style="text-align: center")
+									p(id="resultDescription")
+									div(class="btn-group-wrap" style="text-align: center")
+										button.btn.btn-primary(id="takeBtn" type="button") Go to Take
+										button.btn.btn-primary(id="payBtn" type="button") Go to Pay
+										button.btn.btn-primary(id="advBtn" type="button") Go to Advertise
+										button.btn.btn-primary(id="quzBtn" type="button") Go to Quiz
+										button.btn.btn-primary(id="skpBtn" type="button") Skip
 						div(class="modal-footer" style="text-align:left")
 							p &copy;&nbsp;
 								a(href='#') Urbanopoly
@@ -289,7 +302,7 @@ block content
 							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
 							img(src='/images/title_advertise.png')
 						div(class="modal-body")
-							p(id="advertiseContent") 
+							p(id="advertiseContent")
 							<!-- Nav tabs -->
 							ul(id="advertiseTabsNav" class="nav nav-tabs")
 								li(id= "adv1" class="active")
@@ -366,7 +379,7 @@ block content
 								p(id="errMsgContent") Change a few things up and try submitting again.
 						div(class="modal-footer")
 							button(id="okMsgModal" type="button" class="btn btn-default" data-dismiss="modal") Ok
-							button(id="yesMsgModal" type="button" class="btn btn-default") Yes
+							button(id="yesMsgModal" type="button" class="btn btn-default" data-dismiss="modal") Yes
 							button(id="noMsgModal" type="button" class="btn btn-default" data-dismiss="modal") No
 
 			script(src="https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js")

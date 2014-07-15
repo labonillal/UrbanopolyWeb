@@ -1,4 +1,5 @@
 // Loading module dependecies
+var FB = require('fb');
 var gameController = require('./GameController'); //GameController
 var gameConf = require("../core/game");
 var venueController = require('./VenueController');
@@ -120,60 +121,115 @@ exports.getBuyAction = function(req, res){
 	var player = req.user;
 	var venueCategory = req.body.venueCategory
 	var venueName = req.body.venueName;
-	var visit = gameController.buyFreeVenue(venue, player, venueCategory, venueName);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 0, venueName);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.buyFreeVenue(venue, player, venueCategory, venueName, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 0, venueName);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("error", err.code, venueName);
+			console.log('MESSAGE: ', message);
+			result = {"visit" : null, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
 };
 
 /* POST Sell Action */
 exports.getSellAction = function(req, res){
 	var venue = JSON.parse(req.body.venue);
 	var player = req.user;
-	var visit = gameController.sellVenue(venue, player);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 1, venue.name);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.sellVenue(venue, player, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 1, venue.name);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("error", err.code, venueName);
+			console.log('MESSAGE: ', message);
+			result = {"visit" : null, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
 };
 
 /* GET Mortgage Action */
 exports.getMortgageAction = function(req, res){
 	var venue = JSON.parse(req.body.venue);
 	var player = req.user;
-	var visit = gameController.mortgageVenue(venue, player);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 2, venue.name);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.mortgageVenue(venue, player, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 2, venue.name);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("error", err.code, venueName);
+			console.log('MESSAGE: ', message);
+			result = {"visit" : null, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
 };
 
 /* GET Redeem Action */
 exports.getRedeemAction = function(req, res){
 	var venue = JSON.parse(req.body.venue);
 	var player = req.user;
-	var visit = gameController.redeemMortgagedVenue(venue, player);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 3, venue.name);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.redeemMortgagedVenue(venue, player, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 3, venue.name);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("error", err.code, venueName);
+			console.log('MESSAGE: ', message);
+			result = {"visit" : null, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
 };
 
 /* GET Pay Action */
 exports.getPayAction = function(req, res){
 	var venue = JSON.parse(req.body.venue);
 	var player = req.user;
-	var visit = gameController.payFee(venue, player);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 4, venue.name);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.payFee(venue, player, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 4, venue.name);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("error", err.code, venueName);
+			console.log('MESSAGE: ', message);
+			result = {"visit" : null, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
 };
 
 /* GET Take Action */
@@ -182,12 +238,22 @@ exports.getTakeAction = function(req, res){
 	var player = req.user;
 	var venueCategory = req.body.venueCategory
 	var venueName = req.body.venueName;
-	var visit = gameController.takeVenue(venue, player, venueName, venueCategory);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 5, venueName);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.takeVenue(venue, player, venueName, venueCategory, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 5, venueName);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("success", 5, venueName);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
 };
 
 /* GET Quiz Action */
@@ -199,12 +265,23 @@ exports.getQuizAction = function(req, res){
 	console.log('selected', selected);
 	var skips = req.body.skips;
 	console.log('skips', skips);
-	var visit = gameController.quiz(venue, player, selected, skips);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 7, venue.name);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.quiz(venue, player, selected, skips, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 7, venue.name);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("success", 5, venueName);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
+
 };
 
 /* GET Advertise Action */
@@ -231,25 +308,60 @@ exports.getAdvertiseAction = function(req, res){
 			moneyForQuestions += parseInt(gameConf.moneyForAdvertiseClosed);
 		}
 	}
-	var visit = gameController.advertise(venue, player, venueCategory, venueName, features, skips, moneyForQuestions);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 6, moneyForQuestions);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.advertise(venue, player, venueCategory, venueName, features, skips, moneyForQuestions, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 6, moneyForQuestions);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("success", 5, venueName);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
 };
 
 /* GET Skip Action */
 exports.getSkipAction = function(req, res){
 	var venue = JSON.parse(req.body.venue);
 	var player = req.user;
-	var visit = gameController.skip(venue, player);
-	console.log('VISIT: ', visit);
-	var message = Utility.getMessageBuilder("success", 8, gameConf.moneyForSkip);
-	var result = {"visit" : visit, "message" : message, "player": player };
-	console.log('RESULT: ', result);
-	res.send(result);
+	gameController.skip(venue, player, function(err, visit){
+		console.log('VISIT: ', visit);
+		var message;
+		var result;
+		if(visit){
+			message = Utility.getMessageBuilder("success", 8, gameConf.moneyForSkip);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}else{
+			message = Utility.getMessageBuilder("success", 5, venueName);
+			result = {"visit" : visit, "message" : message, "player": player };
+			console.log('RESULT: ', result);
+			res.send(result);
+		}
+	});
 };
+
+/* Share on facebook Action*/
+exports.getShare = function(req, res){
+	FB.setAccessToken(req.user.token);
+
+	var FbMessage = 'I just have a great time playing Urbanopoly!. Try it yourself on http://swa.cefriel.it/urbangames/urbanopoly/index.html';
+	FB.api('me/feed', 'post', { message: FbMessage}, function (res) {
+	  if(!res || res.error) {
+	    console.log(!res ? 'error occurred' : res.error);
+	    return;
+	  }
+	  console.log('Facebook Post Id: ' + res.id);
+	});
+
+}
 
 exports.getChildCategories = function(req, res){
 	var result = gameController.getChildCategoryOf(req.query.category);

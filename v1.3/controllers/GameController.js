@@ -118,8 +118,7 @@ exports.downloadArea = function(req, res, lat, lon){
 };
 
 // Method to perform the buy action
-exports.buyFreeVenue = function(venue, player, venueCategory, venueName){
-  //1) Comprobar si tiene suficiente dinero
+exports.buyFreeVenue = function(venue, player, venueCategory, venueName, callback){
   console.log('PLAYER: %j', player);
   console.log('VENUE: %j', venue);
   console.log('NEW CATEGORY: %j', venueCategory);
@@ -128,12 +127,14 @@ exports.buyFreeVenue = function(venue, player, venueCategory, venueName){
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
-    return null;
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Enough money validation
   if(player.cash < venue.value){
     console.log('ERROR: Player dont have enough cash to buy the venue');
-    return null;
+    var error = {"code": 3 };
+    return callback(error);
   }
   // Player cash new value
   player.cash -= parseInt(venue.value);
@@ -167,32 +168,32 @@ exports.buyFreeVenue = function(venue, player, venueCategory, venueName){
     if(result){
       venueController.addVisitedVenue(venue);
       console.log('ADDED VISIT: %j', visit);
-      return visit;
+      callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
       console.log('DELETED VISIT: %j', visit);
-      return null;
+      callback(err);
     }
     //5) Share on facebook    
   });
 };
 
 // Method to sell a venue
-exports.sellVenue = function(venue, player){
-  //1) Verificar si ya ha sido visitada VenuesManager.venueHasBeenVisited(venue)
-  //2) Vender mediante VenuesManager.sellVenue(
+exports.sellVenue = function(venue, player, callback){
   console.log('PLAYER: %j', player);
   console.log('VENUE: %j', venue);
 
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
-    return null;
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Owner have been changed validation
   if(venue.state == 'FREE' || venue.state == 'OCCUPIED'){
     console.log('ERROR: Venue owner have been changed');
-    return null;
+    var error = {"code": 4 };
+    return callback(error);
   }
   
   var mortgageValue = parseInt(venue.value * gameConf.mortgagePercentage/100);
@@ -246,36 +247,37 @@ exports.sellVenue = function(venue, player){
     if(result){
       venueController.addVisitedVenue(venue);
       console.log('ADDED VISIT: %j', visit);
-      return visit;
+      callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
       console.log('DELETED VISIT: %j', visit);
-      return null;
+      callback(err);
     }
   });
 };
 
 // Method to mortgage venue
-exports.mortgageVenue = function(venue, player){
-  //1) Verificar si ya ha sido visitada VenuesManager.venueHasBeenVisited(venue)
-  //2) Crear hipoteca mediante VenuesManager.mortgageVenue(
+exports.mortgageVenue = function(venue, player, callback){
   console.log('PLAYER: %j', player);
   console.log('VENUE: %j', venue);
 
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
-    return null;
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Owner have been changed validation
   if(venue.state == 'FREE' || venue.state == 'OCCUPIED'){
     console.log('ERROR: Venue owner have been changed');
-    return null;
+    var error = {"code": 4 };
+    return callback(error);
   }
   // Already mortgage venue
   if(venue.state == 'MINE_MORTGAGED'){
     console.log('ERROR: Venue is already mortgage');
-    return null;
+    var error = {"code": 5 };
+    return callback(error);
   }
   
   var mortgageValue = parseInt(venue.value * gameConf.mortgagePercentage/100);
@@ -317,35 +319,37 @@ exports.mortgageVenue = function(venue, player){
     if(result){
       venueController.addVisitedVenue(venue);
       console.log('ADDED VISIT: %j', visit);
-      return visit;
+      callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
       console.log('DELETED VISIT: %j', visit);
-      return null;
+      callback(err);
     }
   });
 };
 
 // Method to redeem mortgaged venue
-exports.redeemMortgagedVenue = function(venue, player){
-  //1) VenuesManager.redeemMortgagedVenue(
+exports.redeemMortgagedVenue = function(venue, player, callback){
   console.log('PLAYER: %j', player);
   console.log('VENUE: %j', venue);
 
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
-    return null;
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Owner have been changed validation
   if(venue.state == 'FREE' || venue.state == 'OCCUPIED'){
     console.log('ERROR: Venue owner have been changed');
-    return null;
+    var error = {"code": 4 };
+    return callback(error);
   }
   // Already redeemed venue
   if(venue.state == 'MINE'){
     console.log('ERROR: Venue mortgage is already redeemed');
-    return null;
+    var error = {"code": 6 };
+    return callback(error);
   }
   
   var mortgageValue = parseInt(venue.value * gameConf.mortgagePercentage/100);
@@ -353,7 +357,8 @@ exports.redeemMortgagedVenue = function(venue, player){
   // Enough money validation
   if(player.cash < mortgageValue){
     console.log('ERROR: Player dont have enough cash to mortgage the venue');
-    return null;
+    var error = {"code": 3 };
+    return callback(error);
   }
   // Set the new cash value of the player
   player.cash -= mortgageValue;
@@ -382,38 +387,42 @@ exports.redeemMortgagedVenue = function(venue, player){
     if(result){
       venueController.addVisitedVenue(venue);
       console.log('ADDED VISIT: %j', visit);
-      return visit;
+      callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
       console.log('DELETED VISIT: %j', visit);
-      return null;
+      callback(err);
     }
   });
 };
 
 // Method to perform the PAY option on the GameWheel
-exports.payFee = function(venue, player){
+exports.payFee = function(venue, player, callback){
 	console.log('PLAYER: %j', player);
 	console.log('VENUE: %j', venue);
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
-    return null;
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Enough money validation
   if(player.cash < venue.value*gameConf.feePercentage/100){
     console.log('ERROR: Player dont have enough cash to buy the venue');
-    return null;
+    var error = {"code": 3 };
+    return callback(error);
   }
   // Venue is not free validation
   if(venue.state == 'FREE'){
     console.log('ERROR: Venue is free');
-    return null;
+    var error = {"code": 2 };
+    return callback(error);
   }
   // Owner have been changed validation
   if(venue.state == 'MINE' || venue.state == 'MINE_MORTGAGED'){
     console.log('ERROR: Venue owner have been changed');
-    return null;
+    var error = {"code": 4 };
+    return callback(error);
   }
   // Set the new cash value of the player
   player.cash -= parseInt(venue.value*gameConf.feePercentage/100);
@@ -441,44 +450,46 @@ exports.payFee = function(venue, player){
     if(result){
       venueController.addVisitedVenue(venue);
       console.log('ADDED VISIT: %j', visit);
-      return visit;
+      callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
       console.log('DELETED VISIT: %j', visit);
-      return null;
+      callback(err);
     }
   });
 };
 
 // Method to perform the TAKE option on the GameWheel
-exports.takeVenue = function(venue, player, venueName, venueCategory){
+exports.takeVenue = function(venue, player, venueName, venueCategory, callback){
   console.log('PLAYER: %j', player);
   console.log('VENUE: %j', venue);
   console.log('VENUE NAME: %j', venueName);
   console.log('VENUE CATEGORY: %j', venueCategory);
-  // Get the player
-  //var player = Player.parse(req.user);
   // Take cost
   var takeCost = venue.value * gameConf.takePercentage/100;
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
-    return null;
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Enough money validation
   if(player.cash < takeCost){
     console.log('ERROR: Player dont have enough cash to buy the venue');
-    return null;
+    var error = {"code": 3 };
+    return callback(error);
   }
   // Venue is not free validation
   if(venue.state == 'FREE'){
     console.log('ERROR: Venue is free');
-    return null;
+    var error = {"code": 2 };
+    return callback(error);
   }
   // Owner have been changed validation
   if(venue.state == 'MINE' || venue.state == 'MINE_MORTGAGED'){
     console.log('ERROR: Venue owner have been changed');
-    return null;
+    var error = {"code": 4 };
+    return callback(error);
   }
   //Player takes the venue
   player.cash -= takeCost;
@@ -509,17 +520,17 @@ exports.takeVenue = function(venue, player, venueName, venueCategory){
     if(result){
       venueController.addVisitedVenue(venue);
       console.log('ADDED VISIT: %j', visit);
-      return visit;
+      callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
       console.log('DELETED VISIT: %j', visit);
-      return null;
+      callback(err);
     }
   });
 };
 
 // Method to perform the QUIZ option on the GameWheel
-exports.quiz = function(venue, player, selected, skips){
+exports.quiz = function(venue, player, selected, skips, callback){
   console.log('PLAYER: %j', player);
   console.log('VENUE: %j', venue);
   console.log('SELECTED: %j', selected);
@@ -527,17 +538,20 @@ exports.quiz = function(venue, player, selected, skips){
   // Not undefined validation
   if(venue == undefined && player == undefined){
     console.log('ERROR: Undefined');
-    return null;
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Venue is not free validation
   if(venue.state == 'FREE'){
     console.log('ERROR: Venue is free');
-    return null;
+    var error = {"code": 2 };
+    return callback(error);
   }
   // Owner have been changed validation
   if(venue.state == 'MINE' || venue.state == 'MINE_MORTGAGED'){
     console.log('ERROR: Venue owner have been changed');
-    return null;
+    var error = {"code": 4 };
+    return callback(error);
   }
 
   // Calculate the money earned on the quiz
@@ -571,11 +585,11 @@ exports.quiz = function(venue, player, selected, skips){
       if(result){
         venueController.addVisitedVenue(venue);
         console.log('ADDED VISIT: %j', visit);
-        return visit;
+        callback(null, visit);
       }else{
         visitController.deleteVisit(visit);
         console.log('DELETED VISIT: %j', visit);
-        return null;
+        callback(err);
       }
     });
   }
@@ -583,7 +597,7 @@ exports.quiz = function(venue, player, selected, skips){
 };
 
 // Method to perform the ADVERTISE option on the GameWheel
-exports.advertise = function(venueAdvertise, player, category, venueName, featureValues, skips, deltaCash){
+exports.advertise = function(venueAdvertise, player, category, venueName, featureValues, skips, deltaCash, callback){
   var venue = Venue.parse(venueAdvertise);
   console.log('PLAYER: %j', player);
   console.log('VENUE: %j', venue);
@@ -595,17 +609,20 @@ exports.advertise = function(venueAdvertise, player, category, venueName, featur
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
-    return null;
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Venue is not free validation
   if(venue.state == 'FREE'){
     console.log('ERROR: Venue is free');
-    return null;
+    var error = {"code": 2 };
+    return callback(error);
   }
   // Owner have been changed validation
   if(venue.state == 'MINE' || venue.state == 'MINE_MORTGAGED'){
     console.log('ERROR: Venue owner have been changed');
-    return null;
+    var error = {"code": 4 };
+    return callback(error);
   }
   // Get visits of advertise type
   var visitAdvertise = visitController.getVisitAdvertise(venue);
@@ -635,11 +652,11 @@ exports.advertise = function(venueAdvertise, player, category, venueName, featur
       if(result){
         venueController.addVisitedVenue(venue);
         console.log('ADDED VISIT: %j', visit);
-        return visit;
+        callback(null, visit);
       }else{
         visitController.deleteVisit(visit);
         console.log('DELETED VISIT: %j', visit);
-        return null;
+        callback(err);
       }
     });
   }
@@ -647,25 +664,26 @@ exports.advertise = function(venueAdvertise, player, category, venueName, featur
 };
 
 // Method to perform the SKIP option on the GameWheel
-exports.skip = function(venue, player){
+exports.skip = function(venue, player, callback){
   console.log('PLAYER: %j', player);
   console.log('VENUE: %j', venue);
-  // Get the player
-  //var player = Player.parse(req.user);
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
-	console.log('ERROR: Undefined');
-    return null;
+    console.log('ERROR: Undefined');
+    var error = {"code": 0 };
+    return callback(error);
   }
   // Venue is not free validation
   if(venue.state == 'FREE'){
     console.log('ERROR: Venue is free');
-    return null;
+    var error = {"code": 2 };
+    return callback(error);
   }
   // Owner have been changed validation
   if(venue.state == 'MINE' || venue.state == 'MINE_MORTGAGED'){
     console.log('ERROR: Venue owner have been changed');
-    return null;
+    var error = {"code": 4 };
+    return callback(error);
   }
 
   // Set player cash
@@ -692,11 +710,11 @@ exports.skip = function(venue, player){
     if(result){
       venueController.addVisitedVenue(venue);
       console.log('ADDED VISIT: %j', visit);
-      return visit;
+      callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
       console.log('DELETED VISIT: %j', visit);
-      return null;
+      callback(err);
     }
   });
 };

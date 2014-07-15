@@ -8,6 +8,10 @@ var visitJudge;
 var visitQuiz;
 var visitAdvertise;
 var featureRanges = [];
+var wheelClicked = 'false';
+var looper;
+var degrees = 0;
+var rotationTime = 2000;
 
 // Function to load the map
 $(document).ready(function(){
@@ -105,10 +109,19 @@ function createMap(lat, lon) {
 			    });
 
     		//Default setup
-    		$("#buyBtn").attr("disabled", "disabled");
-			$("#mtgBtn").attr("disabled", "disabled");
-			$("#rdmBtn").attr("disabled", "disabled");
-			$("#selBtn").attr("disabled", "disabled");
+    		$('select option[value="base"]').attr("selected", true);
+    		$("#buyBtn").hide();
+			$("#mtgBtn").hide();
+			$("#rdmBtn").hide();
+			$("#selBtn").hide();
+			$("#payBtn").hide();
+			$("#takeBtn").hide();
+			$("#advBtn").hide();
+			$("#quzBtn").hide();
+			$("#skpBtn").hide();
+			$("#venueNamePanel").show();
+			$("#venueCategoryPanel").show();
+			$("#gameWheelResultPanel").hide();
 			$("#successMessage").hide();
 			$("#errorMessage").hide();
 			$("#okMsgModal").show();
@@ -136,8 +149,11 @@ function createMap(lat, lon) {
 							console.log('Unable to get retrieveVenueRent response');
 			            }
 			        });
+    			// Clean Mortgage End
+				$("#freeVenueMortgageDeadTime").text('');
+				$("#freeVenueMortgageLabel").text('');
     			// Enable buy button
-    			$("#buyBtn").removeAttr("disabled");
+    			$("#buyBtn").show();
     			// Set venue name on input field
     			if(e.layer.feature.properties["name"] != null){
     				$("#inputVenueName").val(e.layer.feature.properties.name);
@@ -165,6 +181,42 @@ function createMap(lat, lon) {
     			}
     			$("#occupiedVenueIcon").attr("src",e.layer.feature.properties.icon.iconUrl);
     			$("#occupiedVenueValue").text(e.layer.feature.properties.value);
+    			// Game Wheel Result
+    			var wheel = e.layer.feature.properties.wheel;
+    			wheelClicked = 'false';
+    			var wheelAction = getGameWheelAction(wheel);
+    			switch(wheelAction){
+    				case 'PAY':
+    					rotationTime = 1500;
+    					$("#resultTitle").attr("src",'/images/title_pay.png');
+    					$("#resultDescription").text('Oh no! You have to pay the entrance fee!');
+    					$("#payBtn").show();
+						break;
+					case 'TAKE':
+						rotationTime = 1750;
+						$("#resultTitle").attr("src",'/images/title_take.png');
+						$("#resultDescription").text('You have the chance to take possession of this Venue against its Owner\'s will! But you have to pay 150% of its value');
+						$("#takeBtn").show();
+						break;
+					case 'ADVERTISE':
+						rotationTime = 2500;
+						$("#resultTitle").attr("src",'/images/title_advertise.png');
+						$("#resultDescription").text('Ok, you have been hired to produce an Advertisement Poster for this Venue\nYou will be asked to provide the inputs to complete the Poster; you\'ll be paid for each provided input.\nTake care! If you insert the wrong input your Karma will punish you!');
+						$("#advBtn").show();
+						break;
+					case 'QUIZ':
+						rotationTime = 2250;
+						$("#resultTitle").attr("src",'/images/title_quiz.png');
+						$("#resultDescription").text('Hey, Mr. Expert, are you ready to gain money? You\'ll be asked from 1 to 3 questions about this Venue. In each quiz, choose at least 1 of the provided options or declare your ignorance on the subject: we appreciate your expertise.. and also your limits!');
+						$("#quzBtn").show();
+						break;
+					default:
+						rotationTime = 2000;
+						$("#resultTitle").attr("src",'/images/title_skip.png');
+						$("#resultDescription").text('Wow, you skipped the misfortune! And you also earned');
+						$("#skpBtn").show();
+						break;
+    			}
     			// Quiz Modal Setup
     			$("#quizTabsNav").empty();
     			$("#quizTabsContent").empty();
@@ -308,7 +360,7 @@ function createMap(lat, lon) {
     			if(typeof e.layer.feature.properties.advertise != 'undefined'){
     				visitAdvertise = e.layer.feature.properties.advertise;
     				var featureTypes = e.layer.feature.properties.advertise["featureTypes"];
-    				$("#advertiseContent").text("ADVETISE CONTENT: " + featureTypes);
+    				$("#advertiseContent").text("ADVERTISE CONTENT: " + featureTypes);
     				console.log('ADV QUESTIONS: ', featureTypes.length - 1);
     				for(var k=0; k < featureTypes.length; k++){
     					console.log(k + '. ' + featureTypes[k].advertiseQuestion);
@@ -381,14 +433,25 @@ function createMap(lat, lon) {
     			$("#freeVenueCategory").text(e.layer.feature.properties.category);
     			$("#freeVenueValue").text(e.layer.feature.properties.value);
     			// Enable sell button
-    			$("#selBtn").removeAttr("disabled");
+    			$("#selBtn").show();
     			if (e.layer.feature.properties["state"] == 'MINE'){
+    				// Clean Mortgage End
+					$("#freeVenueMortgageDeadTime").text('');
+					$("#freeVenueMortgageLabel").text('');
     				// Enable mortgage button
-    				$("#mtgBtn").removeAttr("disabled");
+    				$("#mtgBtn").show();
     			}
     			else if (e.layer.feature.properties["state"] == 'MINE_MORTGAGED'){
+    				// Show Mortgage End
+    				var day = e.layer.feature.properties.deadTime.dayOfMonth;
+    				var month = e.layer.feature.properties.deadTime.month + 1;
+    				var year = e.layer.feature.properties.deadTime.year;
+    				var deadTime = day + '/' + month + '/' + year;
+    				console.log('DEADTIME: ', deadTime);
+    				$("#freeVenueMortgageDeadTime").text(deadTime);
+    				$("#freeVenueMortgageLabel").text('Mortgage End');
     				// Enable redeem button
-    				$("#rdmBtn").removeAttr("disabled");
+    				$("#rdmBtn").show();
     			}
     			if(visitJudge != null){
 
@@ -435,6 +498,82 @@ function requestUpdatedMap(lat, lon) {
             }
         });
 };
+
+function getGameWheelAction(wheel){
+	console.log('getGameWheelAction Starts...');
+	var wheelAction;
+	//Create the random int
+	var randomInt = Math.random() * 100;
+	console.log('RANDOM INT: ', randomInt);
+	//Define answer thresholds
+	var takeThreshold = wheel.takePercentage;
+	console.log('takeThreshold: ', takeThreshold);
+	var skipThreshold = takeThreshold + wheel.skipPercentage;
+	console.log('skipThreshold: ', skipThreshold);
+	var payThreshold = skipThreshold + wheel.payPercentage;
+	console.log('payThreshold: ', payThreshold);
+	var advertiseThreshold = payThreshold + wheel.advertisePercentage;
+	console.log('advertiseThreshold: ', advertiseThreshold);
+	var quizThreshold = advertiseThreshold + wheel.quizPercentage;
+	console.log('quizThreshold: ', quizThreshold);
+	//Find the answer
+	if(0 < randomInt && randomInt <= takeThreshold){
+		wheelAction = 'TAKE';
+	}else if(takeThreshold < randomInt && randomInt <= skipThreshold){
+		wheelAction = 'SKIP';
+	}else if(skipThreshold < randomInt && randomInt <= payThreshold){
+		wheelAction = 'PAY';
+	}else if (payThreshold < randomInt && randomInt <= advertiseThreshold){
+		wheelAction = 'ADVERTISE';
+	}else if(advertiseThreshold < randomInt && randomInt <= quizThreshold){
+		wheelAction = 'QUIZ';
+	}else{
+		wheelAction = 'SKIP';
+	}
+	console.log('wheelAction: ', wheelAction);
+	console.log('getGameWheelAction Finish...');
+	return wheelAction;
+};
+
+//GameWheel Rotation function
+function rotateAnimation(el, speed){
+	var elem = document.getElementById(el);
+	if(navigator.userAgent.match("Chrome")){
+		elem.style.WebkitTransform = "rotate("+degrees+"deg)";
+	} else if(navigator.userAgent.match("Firefox")){
+		elem.style.MozTransform = "rotate("+degrees+"deg)";
+	} else if(navigator.userAgent.match("MSIE")){
+		elem.style.msTransform = "rotate("+degrees+"deg)";
+	} else if(navigator.userAgent.match("Opera")){
+		elem.style.OTransform = "rotate("+degrees+"deg)";
+	} else {
+		elem.style.transform = "rotate("+degrees+"deg)";
+	}
+	looper = setTimeout('rotateAnimation(\''+el+'\','+speed+')',speed);
+	degrees++;
+	if(degrees > 359){
+		degrees = 1;
+	}
+	$("#status").text("rotate(" + degrees + "deg)");
+	$("#speed").text("speed(" + speed + "units)");
+}
+//GameWheel Stop function
+function stopAnimation(){
+	clearTimeout(looper);
+	$("#venueNamePanel").hide();
+	$("#venueCategoryPanel").hide();
+	$("#gameWheelResultPanel").show();
+};
+
+//GameWheel Spin event
+$("#wheel").click(function(event) {
+	//If the wheel isn't spining yet
+	if(wheelClicked == 'false'){
+		rotateAnimation("wheel", 1);
+		setTimeout(function(){stopAnimation()}, rotationTime);	
+	}
+	wheelClicked = 'true';
+});
 
 // Default Location Controls
 $("#location1").click(function() {
@@ -485,6 +624,7 @@ $("#parentSelect").change(function() {
 	console.log($("#parentSelect").val());
 	// Clean childSelect
 	$("#childSelect").empty();
+	$("#childSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
 	console.log('REQUEST URL: ', url);
@@ -536,14 +676,20 @@ $("#buyButton").click(function() {
             data: jsonData,
             success: function (result) {
 				console.log('BuyAction REQUEST RESULT: ', JSON.stringify(result));
-				//Success message
-				$("#scsMsgContent").text(result.message.text);
-				$("#successMessage").show();
-				$("#okMsgModal").hide();
-				$("#yesMsgModal").show();
-				$("#yesMsgModal").attr("disabled", "disabled");
-				$("#noMsgModal").show();
-				$("#errorMessage").hide();
+				if(result.visit == null){
+					//Error message
+					console.log('MESSAGE: ', result.message.text);
+					$("#errMsgContent").text(result.message.text);
+					$("#errorMessage").show();
+				}else{
+					//Success message
+					$("#scsMsgContent").text(result.message.text);
+					$("#successMessage").show();
+					$("#okMsgModal").hide();
+					$("#yesMsgModal").show();
+					$("#noMsgModal").show();
+					$("#errorMessage").hide();
+				}
 				//Reload player data on footer
 				$("#userCash").text(result.player.cash);
 				$("#userNumVenues").text(result.player.numVenues);
@@ -710,6 +856,7 @@ $("#takeParentSelect").change(function() {
 	console.log($("#takeParentSelect").val());
 	// Clean childSelect
 	$("#takeChildSelect").empty();
+	$("#takeChildSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
 	console.log('REQUEST URL: ', url);
@@ -869,6 +1016,7 @@ $("#advertiseParentSelect").change(function() {
 	console.log($("#advertiseParentSelect").val());
 	// Clean childSelect
 	$("#advertiseChildSelect").empty();
+	$("#advertiseChildSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
 	console.log('REQUEST URL: ', url);
@@ -1319,7 +1467,7 @@ $("#skpBtn").click(function() {
 	var url = '/SkipAction';
 	var jsonData = { "venue":selectedVenue };
 	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
@@ -1347,6 +1495,28 @@ $("#skpBtn").click(function() {
 
 // Ok message modal event
 $("#okMsgModal").click(function() {
+	//Reload updated map
+	requestUpdatedMap(lat, lon);
+});
+
+// Yes message modal event used to share on facebook
+$("#yesMsgModal").click(function() {
+	console.log('SHARE ON FB CLICKED');
+	// Request to Share
+	var url = '/Share';
+	console.log('REQUEST URL: ', url);
+	$.ajax(
+		{
+            type: 'POST',
+            url: '/Share',
+            success: function (result) {
+				console.log('SHARE REQUEST RESULT: ', result);
+            },
+            error: function (req, status, error) {
+				console.log('ERROR: ' + error);
+				console.log('Unable to get Share response');
+            }
+        });
 	//Reload updated map
 	requestUpdatedMap(lat, lon);
 });

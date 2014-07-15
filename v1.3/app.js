@@ -50,7 +50,7 @@ app.get('/credits',pageController.getCredits);
 // ROUTES - User (@return - redirect)
 app.get('/login', userController.logUserIn);
 app.get('/logout', userController.logUserOut);
-app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email', 'publish_actions'] }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
             successRedirect : '/profile',
             failureRedirect : '/'
@@ -74,6 +74,7 @@ app.post('/TakeAction', pageController.getTakeAction);
 app.post('/QuizAction', pageController.getQuizAction);
 app.post('/AdvertiseAction', pageController.getAdvertiseAction);
 app.post('/SkipAction', pageController.getSkipAction);
+app.post('/Share', pageController.getShare);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

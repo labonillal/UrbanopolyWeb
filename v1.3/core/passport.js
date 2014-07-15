@@ -7,6 +7,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var userController = require('../controllers/UserController');
 var player = require('../models/player');
 var pics = [];
+var tokens = [];
 
 // load the auth variables
 var configAuth = require('./auth');
@@ -31,6 +32,7 @@ module.exports = function(passport) {
         console.log('deserializeUser: ' + id);
         userController.subscribePlayer(id, '', function(err, player){
             player["picture"] = pics[player.id];
+            player["token"] = tokens[player.id];
             done(err, player);
         });       
      });
@@ -49,7 +51,7 @@ module.exports = function(passport) {
     },
 
     // facebook will send back the token and profile
-    function(token, refreshToken, profile, done) {
+    function(accessToken, refreshToken, profile, done) {
 
         // asynchronous
         process.nextTick(function() {
@@ -58,6 +60,11 @@ module.exports = function(passport) {
             //Once the user is authenticated subscribe
             var playerID = profile.id;
             var playerName = profile.name.givenName + ' ' + profile.name.familyName;
+
+            //Test
+            console.log('PROFILE:', profile);
+            console.log('ACCESS TOKEN:', accessToken);
+
             //Profile Picture
             console.log('PHOTOS:',profile.photos[0].value);
             
@@ -70,7 +77,8 @@ module.exports = function(passport) {
                 // if the user is found, then log them in
                 if (player){
                     pics[profile.id] = profile.photos[0].value;
-                    console.log('PASSPORT PLAYER: %j', player);
+                    tokens[profile.id] = accessToken;
+                    console.log('PASSPORT PLAYER: ', player);
                     return done(null, player); 
                 }
             });

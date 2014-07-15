@@ -13,6 +13,7 @@ exports.parse = function(json) {
 	player.id = json.id;
 	player.name = json.name;
 	player.picture = json.picture;
+	player.token = json.token;
 	player.cash = json.cash;
 	player.numVenues = json.numVenues;
 	player.totalVenuesValue = json.totalVenuesValue;
