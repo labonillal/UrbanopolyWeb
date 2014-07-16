@@ -226,7 +226,7 @@ function createMap(lat, lon) {
 					visitQuiz.selected = [];
 					visitQuiz.skips = [];
 					var questions = e.layer.feature.properties.quiz["questions"];
-					$("#quizContent").text("QUIZ CONTENT: " + questions);
+					//$("#quizContent").text("QUIZ CONTENT: " + questions);
 					var options = e.layer.feature.properties.quiz["options"];
 					console.log('QUESTIONS: ', questions);
 					var currentStep = 0;
@@ -360,12 +360,12 @@ function createMap(lat, lon) {
     			if(typeof e.layer.feature.properties.advertise != 'undefined'){
     				visitAdvertise = e.layer.feature.properties.advertise;
     				var featureTypes = e.layer.feature.properties.advertise["featureTypes"];
-    				$("#advertiseContent").text("ADVERTISE CONTENT: " + featureTypes);
+    				//$("#advertiseContent").text("ADVERTISE CONTENT: " + featureTypes);
     				console.log('ADV QUESTIONS: ', featureTypes.length - 1);
     				for(var k=0; k < featureTypes.length; k++){
     					console.log(k + '. ' + featureTypes[k].advertiseQuestion);
     				}
-    				$(featureTypes.advertiseQuestion).appendTo('#advertiseContent');
+    				//$(featureTypes.advertiseQuestion).appendTo('#advertiseContent');
     				var currentStep = 1;
 					var nextStep = 2;
     				for(var i in featureTypes){
@@ -374,7 +374,7 @@ function createMap(lat, lon) {
 						nextStep++;
 						//Nav tab
 						$('<li id= "adv'+ currentStep +'"> <a href="#advStep'+ currentStep +'" data-toggle="tab"> <strong>Step '+ currentStep +'</strong> </a></li>').appendTo('#advertiseTabsNav');
-						//Tab pane active
+						//Tab pane
 						var content =	'<div class="tab-pane" id="advStep'+ currentStep +'">';
 							content +=		'<div class="panel">';
 							content +=			'<div class="panel-heading">';
@@ -577,9 +577,9 @@ $("#wheel").click(function(event) {
 
 // Default Location Controls
 $("#location1").click(function() {
-	lat = 45.480265;
-	lon = 9.223666;
-	createMap(45.480265, 9.223666);
+	lat = 45.464098; //45.480265;
+	lon = 9.191926; //9.223666;
+	createMap(45.464098, 9.191926);
 	$("#defaultLocationModal").modal('hide');
 });
 
@@ -598,9 +598,9 @@ $("#location3").click(function() {
 });
 
 $("#location4").click(function() {
-	lat = 45.8124104;
-	lon = 9.0928468;
-	createMap(45.8124104, 9.0928468);
+	lat = 45.811847; //45.8124104;
+	lon = 9.083665; //9.0928468;
+	createMap(45.811847, 9.083665);
 	$("#defaultLocationModal").modal('hide');
 });
 
@@ -999,6 +999,8 @@ $("#payButton").click(function() {
 	
 //Advertise button event
 $("#advBtn").click(function() {
+	$("#adv1").attr('class', 'active');
+	$("#advStep1").attr('class', 'tab-pane active');
 	$("#occupiedModal").modal('hide');
 	$("#advertiseModal").modal('show');
 	$('#advertiseParentPanel').hide();
