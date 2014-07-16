@@ -23,13 +23,13 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(player, done) {
-        console.log('serializeUser: ' + player.id);
+        //console.log('serializeUser: ' + player.id);
         done(null, player.id);
     });
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        console.log('deserializeUser: ' + id);
+        //console.log('deserializeUser: ' + id);
         userController.subscribePlayer(id, '', function(err, player){
             player["picture"] = pics[player.id];
             player["token"] = tokens[player.id];
@@ -62,14 +62,14 @@ module.exports = function(passport) {
             var playerName = profile.name.givenName + ' ' + profile.name.familyName;
 
             //Test
-            console.log('PROFILE:', profile);
-            console.log('ACCESS TOKEN:', accessToken);
+            //console.log('PROFILE:', profile);
+            //console.log('ACCESS TOKEN:', accessToken);
 
             //Profile Picture
-            console.log('PHOTOS:',profile.photos[0].value);
+            //console.log('PHOTOS:',profile.photos[0].value);
             
             userController.subscribePlayer(playerID, playerName, function(err, player){
-                console.log('INNER CALLBACK EXECUTED');
+                //console.log('INNER CALLBACK EXECUTED');
                 if (err){
                     console.log('ERROR:', err);
                     return done(err);
@@ -78,7 +78,7 @@ module.exports = function(passport) {
                 if (player){
                     pics[profile.id] = profile.photos[0].value;
                     tokens[profile.id] = accessToken;
-                    console.log('PASSPORT PLAYER: ', player);
+                    //console.log('PASSPORT PLAYER: ', player);
                     return done(null, player); 
                 }
             });

@@ -22,15 +22,15 @@ exports.getMapData = function (req, res){
 	var venuesCollection = [];
 	var visitsCollection = [];
 
-	console.log('PLAYER ID: ' + req.user.id);
-	console.log('LATITUD: ' + req.query.lat);
-	console.log('LONGITUD: ' + req.query.lon);
+	//console.log('PLAYER ID: ' + req.user.id);
+	//console.log('LATITUD: ' + req.query.lat);
+	//console.log('LONGITUD: ' + req.query.lon);
 
 	// Prepare a request object
 	var str = "{0}/{1}?uid={2}&lat={3}&lon={4}&maxDist={5}";
 	var requestUrl = str.format(Utility.getServerAddress(), servicePlayArea, req.user.id, req.query.lat, req.query.lon, gameConf.maxDistance);
-	console.log("PLAYER: %j", req.user.id);
-	console.log("REQUEST_URL: %j", requestUrl);
+	//console.log("PLAYER: %j", req.user.id);
+	//console.log("REQUEST_URL: %j", requestUrl);
 
 	// Request to retrieve game area info from url
   	request({
@@ -43,8 +43,8 @@ exports.getMapData = function (req, res){
 			var reply = JSON.parse(data);
 			var venuesJson = reply[0];
 			//TO DO: Uncomment
-			var visitsJson = [{"type":"QUIZ"},{"type":"ADVERTISE"}];
-			//var visitsJson = reply[1];
+			//var visitsJson = [{"type":"QUIZ"},{"type":"ADVERTISE"}];
+			var visitsJson = reply[1];
 			var playerJson = reply[2];
 			var playDay = reply[3];
 			var dayDuration = reply[4];
@@ -59,13 +59,13 @@ exports.getMapData = function (req, res){
 				var visit;
 				if(visitsJson[j]["type"] == 'QUIZ'){
 					//TO DO: Uncomment
-					visit = VisitQuiz.parse(myQuiz);
-					//visit = VisitQuiz.parse(visitsJson[j]);
+					//visit = VisitQuiz.parse(myQuiz);
+					visit = VisitQuiz.parse(visitsJson[j]);
 					visitsCollection.push(visit);
 				}else if(visitsJson[j]["type"] == 'ADVERTISE'){
 					//TO DO: Uncomment
-					visit = VisitAdvertise.parse(myAdvertise);
-					//visit = VisitAdvertise.parse(visitsJson[j]);
+					//visit = VisitAdvertise.parse(myAdvertise);
+					visit = VisitAdvertise.parse(visitsJson[j]);
 					visitsCollection.push(visit);
 				}else{
 					visit = Visit.parse(visitsJson[j]);
@@ -162,14 +162,14 @@ exports.getMapData = function (req, res){
 				venuesCollection.push(venue);
 			}
 			
-			console.log('VENUES COLLECTION LENGTH: %j', venuesCollection.length);
-			console.log('COLLECTION venuesCollection[0]:');
-			console.log(venuesCollection[0]);
-			console.log('VISITS COLLECTION LENGTH: %j', visitsCollection.length);
-			console.log('COLLECTION visitsCollection[0]:');
-			console.log(visitsCollection[0]);
-			console.log('COLLECTION visitsCollection[1]:');
-			console.log(visitsCollection[1]);
+			//console.log('VENUES COLLECTION LENGTH: %j', venuesCollection.length);
+			//console.log('COLLECTION venuesCollection[0]:');
+			//console.log(venuesCollection[0]);
+			//console.log('VISITS COLLECTION LENGTH: %j', visitsCollection.length);
+			//console.log('COLLECTION visitsCollection[0]:');
+			//console.log(visitsCollection[0]);
+			//console.log('COLLECTION visitsCollection[1]:');
+			//console.log(visitsCollection[1]);
 
 			venueController.addVenues(venuesCollection);
 			visitController.addInVisits(visitsCollection);

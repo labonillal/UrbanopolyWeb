@@ -26,8 +26,8 @@ exports.downloadMyVenues = function(playerId, callback){
 	var str = "{0}/{1}?uid={2}";
   	var requestUrl = str.format(Utility.getServerAddress(), serviceUserVenues, playerId);
 
-  	console.log("PLAYER: %j", playerId);
-	console.log("REQUEST_URL: %j", requestUrl);
+  	//console.log("PLAYER: %j", playerId);
+	//console.log("REQUEST_URL: %j", requestUrl);
 
 	// Request to retrieve the venues of the player
 	request({
@@ -42,7 +42,7 @@ exports.downloadMyVenues = function(playerId, callback){
 			var venuesJson = reply[0];
 			var visitsJson = reply[1];
 			var playerJson = reply[2];
-			console.log('VENUES:');
+			//console.log('VENUES:');
 			//Iterating over the venues info turning onto local Venue objects
 			for(var i = 0; i < venuesJson.length; i++){
 				if(venuesJson[i]["mortgaged"] == true){
@@ -90,15 +90,15 @@ exports.downloadMyVenues = function(playerId, callback){
 				
 				//Create an object from the json representation
 				var venue = Venue.parse(venuesJson[i]);
-				console.log(venue);
+				//console.log(venue);
 				//Add the object to the collection
 				venuesCollection.push(venue);
 			}
-			console.log('VISITS:');
+			//console.log('VISITS:');
 			//Iterating over the visits info turning onto local Visit objects
 			for(var j = 0; j < visitsJson.length; j++){
 				var visit = Visit.parse(visitsJson[j]);
-				console.log(visit);
+				//console.log(visit);
 				visitsCollection.push(visit);
 			}
 			console.log('Function downloadMyVenues finish...');

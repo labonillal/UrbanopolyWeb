@@ -3,10 +3,10 @@
 */
 exports.parse = function(json) {
 	console.log('Executing Player Model...');
-	console.log('Player Model JSON: '+JSON.stringify(json));
+	//console.log('Player Model JSON: '+JSON.stringify(json));
 	if ('string' == typeof json){
 		json = JSON.parse(json);
-		console.log('Player Model IF Executed');
+		//console.log('Player Model IF Executed');
 	}
   
 	var player = {};

@@ -19,8 +19,8 @@ String.prototype.format = function(){
 
 /* Method to get the server address*/
 exports.getServerAddress = function(){
-	return gameConf.localhostServerUrl;
-    //return gameConf.cefrielServerUrl;
+	//return gameConf.localhostServerUrl;
+    return gameConf.cefrielServerUrl;
 };
 
 /* Method to request JSON data using a URL */
@@ -32,7 +32,7 @@ exports.getStringResponse = function (requestURL){
 	}, function (error, response, body) {
 
     	if (!error && response.statusCode === 200) {
-            console.log(body); // Print the response
+            //console.log(body); // Print the response
             console.log('Function getStringResponse Finish...');
             return body;
     	}else{

@@ -77,11 +77,10 @@ block content
 										h4(id="freeVenueRent") 
 										h5 Rent
 						div(class="btn-group-wrap" style="text-align: center")
-								div(class="btn-group")
-									button.btn.btn-primary(id="buyBtn" type="button") Buy
-									button.btn.btn-primary(id="mtgBtn" type="button") Mortgage
-									button.btn.btn-primary(id="rdmBtn" type="button") Redeem
-									button.btn.btn-primary(id="selBtn" type="button") Sell
+								button.btn.btn-primary(id="buyBtn" type="button") Buy
+								button.btn.btn-primary(id="mtgBtn" type="button") Mortgage
+								button.btn.btn-primary(id="rdmBtn" type="button") Redeem
+								button.btn.btn-primary(id="selBtn" type="button") Sell
 						div(class="modal-footer" style="text-align:left")
 							p &copy;&nbsp;
 								a(href='#') Urbanopoly
@@ -302,7 +301,6 @@ block content
 							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
 							img(src='/images/title_advertise.png')
 						div(class="modal-body")
-							p(id="advertiseContent")
 							<!-- Nav tabs -->
 							ul(id="advertiseTabsNav" class="nav nav-tabs")
 								li(id= "adv1" class="active")
@@ -310,7 +308,7 @@ block content
 							
 							<!-- Tab panes -->
 							div(id="advertiseTabsContent" class="tab-content")
-								div(class="tab-pane active" id="advStep1")
+								div(id="advStep1" class="tab-pane active")
 									div(class="panel panel-info")
 										div(class="panel-heading")
 											h4(class="panel-title") Confirm or Edit the Venue's name
@@ -354,7 +352,6 @@ block content
 							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
 							img(src='/images/title_quiz.png')
 						div(class="modal-body")
-							p(id="quizContent")
 							<!-- Nav tabs -->
 							ul(id="quizTabsNav" class="nav nav-tabs")
 								

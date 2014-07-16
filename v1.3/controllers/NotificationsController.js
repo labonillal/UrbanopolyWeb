@@ -26,8 +26,8 @@ exports.loadNotifications = function(playerId, callback){
 			console.log('DATA: ' + data)
 			//Parse server response object
 			// TODO: Uncomment and delete test data
-			//var reply = JSON.parse(data);
-			var reply = [{	"deltaCash":64487,
+			var reply = JSON.parse(data);
+			/**var reply = [{	"deltaCash":64487,
 										"type":"DAILY_BONUS",
 										"venue":null,
 										"id":119901,
@@ -102,7 +102,7 @@ exports.loadNotifications = function(playerId, callback){
 									 	"venue":35443,
 									 	"id":119985,
 									 	"venueName":"San Giuliano",
-									 	"date":{"year":2014,"month":5,"dayOfMonth":14,"hourOfDay":0,"minute":0,"second":12}}]
+									 	"date":{"year":2014,"month":5,"dayOfMonth":14,"hourOfDay":0,"minute":0,"second":12}}]*/
 
 			console.log('REPLY: ' + reply);
 			var notificationsJson = reply;

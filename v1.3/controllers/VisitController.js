@@ -13,18 +13,18 @@ exports.addInVisits = function(visits){
 	for(var i in visits){
 		var visit = visits[i];
 		if(visit.type == 'JUDGE'){
-			console.log('Judge Visit!');
+			//console.log('Judge Visit!');
 			var judgeIsPresent = 'false';
 			for(var j in inVisits){
 				var inVisit = inVisits[i];
 				if(inVisit.type == 'JUDGE' && inVisit.sent == 'false' && inVisit.venue == visit.venue){
-					console.log("judgedVisits: ", judgedVisits.length);
+					//console.log("judgedVisits: ", judgedVisits.length);
 					var index = judgedVisits.indexOf(inVisit);
 					if (index == -1){
-						console.log('judge present!!');
+						//console.log('judge present!!');
 						judgeIsPresent = 'true';
 					}else{
-						console.log('judged visit contained');
+						//console.log('judged visit contained');
 					}
 				}
 			}
@@ -35,9 +35,9 @@ exports.addInVisits = function(visits){
 			addInVisit(visit);
 		}
 	}
-	console.log('AFTER ADD IN VISITS: ');
+	//console.log('AFTER ADD IN VISITS: ');
 	for(var i = 0; i < inVisits.length; i++){
-		console.log('inVisits['+i+']: ', inVisits[i]);
+		//console.log('inVisits['+i+']: ', inVisits[i]);
 	}
 };
 
@@ -70,7 +70,7 @@ exports.getVisitAdvertise = function(venue){
 // Add element to outVisits array
 exports.addOutVisit = function(visit){
 	console.log('Function addOutVisit start');
-	console.log('addOutVisit VISIT: ', visit);
+	//console.log('addOutVisit VISIT: ', visit);
 	outVisits.push(visit);
 };
 
@@ -86,7 +86,7 @@ exports.deleteVisit = function(visit){
 // Send Visits
 exports.sendVisits = function(callback){
 	console.log('Function sendVisits start');
-	console.log('outVisits length: %j', outVisits.length);
+	//console.log('outVisits length: %j', outVisits.length);
 	// Iterate over the array sending the visits
 	var visitsToSend = [];
 	var jsonVisits;
@@ -97,13 +97,13 @@ exports.sendVisits = function(callback){
 	}
 
 	jsonVisits = JSON.stringify(visitsToSend);
-	console.log('VISITS TO SEND:');
-	console.log(jsonVisits);
+	//console.log('VISITS TO SEND:');
+	//console.log(jsonVisits);
 
 	// Prepare a request object
 	var str = "{0}/{1}";
 	var requestUrl = str.format(Utility.getServerAddress(), serviceVisit);
-	console.log('Formatted URL: ', requestUrl);
+	//console.log('Formatted URL: ', requestUrl);
 
 	// Request to retrieve game area info from url
   	request.post({
@@ -116,7 +116,7 @@ exports.sendVisits = function(callback){
     		for(var j = 0;j < visitsToSend.length;j++){
 		        visitsToSend[j].sent = true;
 		    }
-    		console.log('RESPONSE: ', response.statusCode);
+    		//console.log('RESPONSE: ', response.statusCode);
     		console.log('Function sendVisits finish');
     		callback(null, response.statusCode);
     	}

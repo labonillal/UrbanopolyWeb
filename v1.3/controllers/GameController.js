@@ -119,10 +119,10 @@ exports.downloadArea = function(req, res, lat, lon){
 
 // Method to perform the buy action
 exports.buyFreeVenue = function(venue, player, venueCategory, venueName, callback){
-  console.log('PLAYER: %j', player);
-  console.log('VENUE: %j', venue);
-  console.log('NEW CATEGORY: %j', venueCategory);
-  console.log('NEW NAME: %j', venueName);
+  //console.log('PLAYER: %j', player);
+  //console.log('VENUE: %j', venue);
+  //console.log('NEW CATEGORY: %j', venueCategory);
+  //console.log('NEW NAME: %j', venueName);
 
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
@@ -140,11 +140,11 @@ exports.buyFreeVenue = function(venue, player, venueCategory, venueName, callbac
   player.cash -= parseInt(venue.value);
   venue.state = 'MINE';
   player.numVenues += 1;
-  console.log('PLAYER CASH UPDATED: %j', player);
+  //console.log('PLAYER CASH UPDATED: %j', player);
   
   //Update venue
   venueController.updateVenue(venue);
-  console.log('VENUE: ', venue);
+  //console.log('VENUE: ', venue);
   
   // Set the values to create a visit
   var json = { "type" : "BUY",
@@ -167,11 +167,11 @@ exports.buyFreeVenue = function(venue, player, venueCategory, venueName, callbac
   visitController.sendVisits(function (err, result){
     if(result){
       venueController.addVisitedVenue(venue);
-      console.log('ADDED VISIT: %j', visit);
+      //console.log('ADDED VISIT: %j', visit);
       callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
-      console.log('DELETED VISIT: %j', visit);
+      //console.log('DELETED VISIT: %j', visit);
       callback(err);
     }
     //5) Share on facebook    
@@ -180,8 +180,8 @@ exports.buyFreeVenue = function(venue, player, venueCategory, venueName, callbac
 
 // Method to sell a venue
 exports.sellVenue = function(venue, player, callback){
-  console.log('PLAYER: %j', player);
-  console.log('VENUE: %j', venue);
+  //console.log('PLAYER: %j', player);
+  //console.log('VENUE: %j', venue);
 
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
@@ -202,7 +202,7 @@ exports.sellVenue = function(venue, player, callback){
   if(venue.state == 'MINE_MORTGAGED'){
     // Set the new cash value of the player
     player.cash += mortgageValue;
-    console.log('PLAYER CASH UPDATED: %j', player);
+    //console.log('PLAYER CASH UPDATED: %j', player);
     player.numVenues -= 1;
     // Set the values to create a visit
     var json = { "type" : "SELL",
@@ -217,12 +217,12 @@ exports.sellVenue = function(venue, player, callback){
     venue.state = 'FREE';
     //Update venue
     venueController.updateVenue(venue);
-    console.log('VENUE: ', venue);
+    //console.log('VENUE: ', venue);
   }else{
     // Set the new cash value of the player
     player.cash += venue.value;
     player.numVenues -= 1;
-    console.log('PLAYER CASH UPDATED: %j', player);
+    //console.log('PLAYER CASH UPDATED: %j', player);
     // Set the values to create a visit
     var json = { "type" : "SELL",
       "player" : player.id,
@@ -236,7 +236,7 @@ exports.sellVenue = function(venue, player, callback){
     venue.state = 'FREE';
     //Update venue
     venueController.updateVenue(venue);
-    console.log('VENUE: ', venue);
+    //console.log('VENUE: ', venue);
   }
   
   // Add it to the array of visits
@@ -246,11 +246,11 @@ exports.sellVenue = function(venue, player, callback){
   visitController.sendVisits(function (err, result){
     if(result){
       venueController.addVisitedVenue(venue);
-      console.log('ADDED VISIT: %j', visit);
+      //console.log('ADDED VISIT: %j', visit);
       callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
-      console.log('DELETED VISIT: %j', visit);
+      //console.log('DELETED VISIT: %j', visit);
       callback(err);
     }
   });
@@ -258,8 +258,8 @@ exports.sellVenue = function(venue, player, callback){
 
 // Method to mortgage venue
 exports.mortgageVenue = function(venue, player, callback){
-  console.log('PLAYER: %j', player);
-  console.log('VENUE: %j', venue);
+  //console.log('PLAYER: %j', player);
+  //console.log('VENUE: %j', venue);
 
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
@@ -284,7 +284,7 @@ exports.mortgageVenue = function(venue, player, callback){
 
   // Set the new cash value of the player
   player.cash += mortgageValue;
-  console.log('PLAYER CASH UPDATED: %j', player);
+  //console.log('PLAYER CASH UPDATED: %j', player);
   venue.state = 'MINE_MORTGAGED';
   var today = new Date();
   var tomorrow = new Date();
@@ -298,7 +298,7 @@ exports.mortgageVenue = function(venue, player, callback){
   
   //Update venue
   venueController.updateVenue(venue);
-  console.log('VENUE: ', venue);
+  //console.log('VENUE: ', venue);
   
   // Set the values to create a visit
   var json = { "type" : "MORTGAGE",
@@ -318,11 +318,11 @@ exports.mortgageVenue = function(venue, player, callback){
   visitController.sendVisits(function (err, result){
     if(result){
       venueController.addVisitedVenue(venue);
-      console.log('ADDED VISIT: %j', visit);
+      //console.log('ADDED VISIT: %j', visit);
       callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
-      console.log('DELETED VISIT: %j', visit);
+      //console.log('DELETED VISIT: %j', visit);
       callback(err);
     }
   });
@@ -330,8 +330,8 @@ exports.mortgageVenue = function(venue, player, callback){
 
 // Method to redeem mortgaged venue
 exports.redeemMortgagedVenue = function(venue, player, callback){
-  console.log('PLAYER: %j', player);
-  console.log('VENUE: %j', venue);
+  //console.log('PLAYER: %j', player);
+  //console.log('VENUE: %j', venue);
 
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
@@ -362,11 +362,11 @@ exports.redeemMortgagedVenue = function(venue, player, callback){
   }
   // Set the new cash value of the player
   player.cash -= mortgageValue;
-  console.log('PLAYER CASH UPDATED: %j', player);
+  //console.log('PLAYER CASH UPDATED: %j', player);
   venue.state = 'MINE';
   //Update venue
   venueController.updateVenue(venue);
-  console.log('VENUE: ', venue);
+  //console.log('VENUE: ', venue);
   
   // Set the values to create a visit
   var json = { "type" : "REDEEM",
@@ -386,11 +386,11 @@ exports.redeemMortgagedVenue = function(venue, player, callback){
   visitController.sendVisits(function (err, result){
     if(result){
       venueController.addVisitedVenue(venue);
-      console.log('ADDED VISIT: %j', visit);
+      //console.log('ADDED VISIT: %j', visit);
       callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
-      console.log('DELETED VISIT: %j', visit);
+      //console.log('DELETED VISIT: %j', visit);
       callback(err);
     }
   });
@@ -398,8 +398,8 @@ exports.redeemMortgagedVenue = function(venue, player, callback){
 
 // Method to perform the PAY option on the GameWheel
 exports.payFee = function(venue, player, callback){
-	console.log('PLAYER: %j', player);
-	console.log('VENUE: %j', venue);
+	//console.log('PLAYER: %j', player);
+	//console.log('VENUE: %j', venue);
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
@@ -426,7 +426,7 @@ exports.payFee = function(venue, player, callback){
   }
   // Set the new cash value of the player
   player.cash -= parseInt(venue.value*gameConf.feePercentage/100);
-  console.log('PLAYER CASH UPDATED: %j', player);
+  //console.log('PLAYER CASH UPDATED: %j', player);
   
   // Set the values to create a visit
   var json = { "type" : "PAY",
@@ -449,11 +449,11 @@ exports.payFee = function(venue, player, callback){
     console.log('sendVisits ERROR: ', err);
     if(result){
       venueController.addVisitedVenue(venue);
-      console.log('ADDED VISIT: %j', visit);
+      //console.log('ADDED VISIT: %j', visit);
       callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
-      console.log('DELETED VISIT: %j', visit);
+      //console.log('DELETED VISIT: %j', visit);
       callback(err);
     }
   });
@@ -461,10 +461,10 @@ exports.payFee = function(venue, player, callback){
 
 // Method to perform the TAKE option on the GameWheel
 exports.takeVenue = function(venue, player, venueName, venueCategory, callback){
-  console.log('PLAYER: %j', player);
-  console.log('VENUE: %j', venue);
-  console.log('VENUE NAME: %j', venueName);
-  console.log('VENUE CATEGORY: %j', venueCategory);
+  //console.log('PLAYER: %j', player);
+  //console.log('VENUE: %j', venue);
+  //console.log('VENUE NAME: %j', venueName);
+  //console.log('VENUE CATEGORY: %j', venueCategory);
   // Take cost
   var takeCost = venue.value * gameConf.takePercentage/100;
   // Not undefined validation
@@ -494,7 +494,7 @@ exports.takeVenue = function(venue, player, venueName, venueCategory, callback){
   //Player takes the venue
   player.cash -= takeCost;
   player.numVenues += 1;
-  console.log('PLAYER CASH UPDATED: %j', player);
+  //console.log('PLAYER CASH UPDATED: %j', player);
   venue.state = 'MINE';
   //Update venue
   venueController.updateVenue(venue);
@@ -519,11 +519,11 @@ exports.takeVenue = function(venue, player, venueName, venueCategory, callback){
   visitController.sendVisits(function (err, result){
     if(result){
       venueController.addVisitedVenue(venue);
-      console.log('ADDED VISIT: %j', visit);
+      //console.log('ADDED VISIT: %j', visit);
       callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
-      console.log('DELETED VISIT: %j', visit);
+      //console.log('DELETED VISIT: %j', visit);
       callback(err);
     }
   });
@@ -531,10 +531,10 @@ exports.takeVenue = function(venue, player, venueName, venueCategory, callback){
 
 // Method to perform the QUIZ option on the GameWheel
 exports.quiz = function(venue, player, selected, skips, callback){
-  console.log('PLAYER: %j', player);
-  console.log('VENUE: %j', venue);
-  console.log('SELECTED: %j', selected);
-  console.log('SKIPS: %j', skips);
+  //console.log('PLAYER: %j', player);
+  //console.log('VENUE: %j', venue);
+  //console.log('SELECTED: %j', selected);
+  //console.log('SKIPS: %j', skips);
   // Not undefined validation
   if(venue == undefined && player == undefined){
     console.log('ERROR: Undefined');
@@ -561,12 +561,12 @@ exports.quiz = function(venue, player, selected, skips, callback){
     if(skip == false){
       money += parseInt(gameConf.moneyForQuizQuestion);
     }
-	console.log('MONEY EARNED: %j', money);
+	//console.log('MONEY EARNED: %j', money);
   }
 
   // Set player cash
   player.cash += money;
-  console.log('PLAYER CASH UPDATED: %j', player);
+  //console.log('PLAYER CASH UPDATED: %j', player);
   // Get visits of quiz type
   var visit = visitController.getVisitQuiz(venue);
   console.log('VISIT: %j', visit);
@@ -584,11 +584,11 @@ exports.quiz = function(venue, player, selected, skips, callback){
     visitController.sendVisits(function (err, result){
       if(result){
         venueController.addVisitedVenue(venue);
-        console.log('ADDED VISIT: %j', visit);
+        //console.log('ADDED VISIT: %j', visit);
         callback(null, visit);
       }else{
         visitController.deleteVisit(visit);
-        console.log('DELETED VISIT: %j', visit);
+        //console.log('DELETED VISIT: %j', visit);
         callback(err);
       }
     });
@@ -599,13 +599,13 @@ exports.quiz = function(venue, player, selected, skips, callback){
 // Method to perform the ADVERTISE option on the GameWheel
 exports.advertise = function(venueAdvertise, player, category, venueName, featureValues, skips, deltaCash, callback){
   var venue = Venue.parse(venueAdvertise);
-  console.log('PLAYER: %j', player);
-  console.log('VENUE: %j', venue);
-  console.log('CATEGORY: %j', category);
-  console.log('VENUE NAME: %j', venueName);
-  console.log('FEATURE VALUES: %j', featureValues);
-  console.log('SKIPS: %j', skips);
-  console.log('DELTA CASH: %j', deltaCash);
+  //console.log('PLAYER: %j', player);
+  //console.log('VENUE: %j', venue);
+  //console.log('CATEGORY: %j', category);
+  //console.log('VENUE NAME: %j', venueName);
+  //console.log('FEATURE VALUES: %j', featureValues);
+  //console.log('SKIPS: %j', skips);
+  //console.log('DELTA CASH: %j', deltaCash);
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
@@ -626,15 +626,15 @@ exports.advertise = function(venueAdvertise, player, category, venueName, featur
   }
   // Get visits of advertise type
   var visitAdvertise = visitController.getVisitAdvertise(venue);
-  console.log('VISIT FOUND BEFORE PARSE: ', visitAdvertise);
+  //console.log('VISIT FOUND BEFORE PARSE: ', visitAdvertise);
   var visit;
   if(typeof visitAdvertise != 'undefined'){
     visit = VisitAdvertise.parse(visitController.getVisitAdvertise(venue));
   }
-  console.log('VISIT FOUND AFTER PARSE: ', visit);
+  //console.log('VISIT FOUND AFTER PARSE: ', visit);
   // Set player cash
   player.cash += deltaCash;
-  console.log('PLAYER CASH UPDATED: %j', player);
+  //console.log('PLAYER CASH UPDATED: %j', player);
 
   if(typeof visit != 'undefined'){
     visit.date = Utility.getCurrentDate();
@@ -651,11 +651,11 @@ exports.advertise = function(venueAdvertise, player, category, venueName, featur
     visitController.sendVisits(function (err, result){
       if(result){
         venueController.addVisitedVenue(venue);
-        console.log('ADDED VISIT: %j', visit);
+        //console.log('ADDED VISIT: %j', visit);
         callback(null, visit);
       }else{
         visitController.deleteVisit(visit);
-        console.log('DELETED VISIT: %j', visit);
+        //console.log('DELETED VISIT: %j', visit);
         callback(err);
       }
     });
@@ -665,8 +665,8 @@ exports.advertise = function(venueAdvertise, player, category, venueName, featur
 
 // Method to perform the SKIP option on the GameWheel
 exports.skip = function(venue, player, callback){
-  console.log('PLAYER: %j', player);
-  console.log('VENUE: %j', venue);
+  //console.log('PLAYER: %j', player);
+  //console.log('VENUE: %j', venue);
   // Not undefined validation
   if(typeof venue == 'undefined' && typeof player == 'undefined'){
     console.log('ERROR: Undefined');
@@ -688,7 +688,7 @@ exports.skip = function(venue, player, callback){
 
   // Set player cash
   player.cash += parseInt(gameConf.moneyForSkip);
-  console.log('PLAYER CASH UPDATED: %j', player);
+  //console.log('PLAYER CASH UPDATED: %j', player);
 
   // Set the values to create a visit
   var json = { "type" : "SKIP",
@@ -709,11 +709,11 @@ exports.skip = function(venue, player, callback){
   visitController.sendVisits(function (err, result){
     if(result){
       venueController.addVisitedVenue(venue);
-      console.log('ADDED VISIT: %j', visit);
+      //console.log('ADDED VISIT: %j', visit);
       callback(null, visit);
     }else{
       visitController.deleteVisit(visit);
-      console.log('DELETED VISIT: %j', visit);
+      //console.log('DELETED VISIT: %j', visit);
       callback(err);
     }
   });
@@ -722,14 +722,14 @@ exports.skip = function(venue, player, callback){
 // Method to get the fee to pay for a venue
 exports.getFeeToPay = function(venue){
   var feeToPay = { "rent" : parseInt(venue.value * gameConf.feePercentage/100) };
-  console.log('FEE TO PAY: ', feeToPay);
+  //console.log('FEE TO PAY: ', feeToPay);
   return feeToPay;
 };
 
 // Method to get the cost of take a venue
 exports.getTakeCost = function(venue){
   var takeCost = { "cost" : parseInt(venue.value * gameConf.takePercentage/100)};
-  console.log('TAKE COST: ', takeCost);
+  //console.log('TAKE COST: ', takeCost);
   return takeCost;
 };
 
@@ -740,20 +740,19 @@ exports.getHighscores = function(playerId, fromPosition, toPosition, callback){
   var str = "{0}/{1}?uid={2}&lowerthreshold={3}&upperthreshold={4}";
   var requestUrl = str.format(Utility.getServerAddress(), serviceGetHighScores, playerId,parseInt(fromPosition),parseInt(toPosition));
 
-  console.log("PLAYER: %j", playerId);
-  console.log("REQUEST_URL: %j", requestUrl);
+  //console.log("PLAYER: %j", playerId);
+  //console.log("REQUEST_URL: %j", requestUrl);
 
   // Request to retrieve the venues of the player
   request({
     url: requestUrl,
-    method: "GET",
-    timeout: 10000
+    method: "GET"
   }, function (error, response, data) {
     if (!error && response.statusCode === 200) {
-      console.log('DATA: ', data);
+      //console.log('DATA: ', data);
       //Parse server response object
       var reply = JSON.parse(data);
-      console.log('REPLY: ', reply);
+      //console.log('REPLY: ', reply);
 
       console.log('Function getHighscores finish...');
       callback(null, reply);
