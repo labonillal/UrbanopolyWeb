@@ -84,8 +84,8 @@ function createMap(lat, lon) {
 
 		// Marker event handler
 		myMarkersLayer.on('click',function(e) {
-    		console.log(e.layer.feature.properties);
-    		console.log('JSON: ', JSON.stringify(e.layer.feature.properties));
+    		//console.log(e.layer.feature.properties);
+    		//console.log('JSON: ', JSON.stringify(e.layer.feature.properties));
     		selectedVenue = JSON.stringify(e.layer.feature.properties);
     		// Request to get the category of the venue
     		$.ajax(
@@ -137,7 +137,7 @@ function createMap(lat, lon) {
 			            type: 'GET',
 			            url: '/retrieveVenueRent?venueValue=' + e.layer.feature.properties["value"],
 			            success: function (result) {
-			            	console.log('RENT: ', result);
+			            	//console.log('RENT: ', result);
 			            	if(result.length != 0){
 								$("#freeVenueRent").text(result.rent);
 							}else{
@@ -228,7 +228,7 @@ function createMap(lat, lon) {
 					var questions = e.layer.feature.properties.quiz["questions"];
 					//$("#quizContent").text("QUIZ CONTENT: " + questions);
 					var options = e.layer.feature.properties.quiz["options"];
-					console.log('QUESTIONS: ', questions);
+					//console.log('QUESTIONS: ', questions);
 					var currentStep = 0;
 					var nextStep = 1;
 					for(var i in questions){
@@ -361,10 +361,10 @@ function createMap(lat, lon) {
     				visitAdvertise = e.layer.feature.properties.advertise;
     				var featureTypes = e.layer.feature.properties.advertise["featureTypes"];
     				//$("#advertiseContent").text("ADVERTISE CONTENT: " + featureTypes);
-    				console.log('ADV QUESTIONS: ', featureTypes.length - 1);
-    				for(var k=0; k < featureTypes.length; k++){
-    					console.log(k + '. ' + featureTypes[k].advertiseQuestion);
-    				}
+    				//console.log('ADV QUESTIONS: ', featureTypes.length - 1);
+    				//for(var k=0; k < featureTypes.length; k++){
+    				//	console.log(k + '. ' + featureTypes[k].advertiseQuestion);
+    				//}
     				//$(featureTypes.advertiseQuestion).appendTo('#advertiseContent');
     				var currentStep = 1;
 					var nextStep = 2;
@@ -412,7 +412,7 @@ function createMap(lat, lon) {
 			            type: 'GET',
 			            url: '/retrieveVenueRent?venueValue=' + e.layer.feature.properties["value"],
 			            success: function (result) {
-			            	console.log('RENT: ', result);
+			            	//console.log('RENT: ', result);
 			            	if(result.length != 0){
 								$("#freeVenueRent").text(result.rent);
 							}else{
@@ -447,7 +447,7 @@ function createMap(lat, lon) {
     				var month = e.layer.feature.properties.deadTime.month + 1;
     				var year = e.layer.feature.properties.deadTime.year;
     				var deadTime = day + '/' + month + '/' + year;
-    				console.log('DEADTIME: ', deadTime);
+    				//console.log('DEADTIME: ', deadTime);
     				$("#freeVenueMortgageDeadTime").text(deadTime);
     				$("#freeVenueMortgageLabel").text('Mortgage End');
     				// Enable redeem button
@@ -478,7 +478,7 @@ function createMap(lat, lon) {
 
 function requestUpdatedMap(lat, lon) {
 	var temp = '/RetrieveMap?lat=' + lat + '&lon=' + lon;
-	console.log('REQUEST URL: ',temp);
+	//console.log('REQUEST URL: ',temp);
     $.ajax(
 		{
             type: 'GET',
@@ -504,18 +504,18 @@ function getGameWheelAction(wheel){
 	var wheelAction;
 	//Create the random int
 	var randomInt = Math.random() * 100;
-	console.log('RANDOM INT: ', randomInt);
+	//console.log('RANDOM INT: ', randomInt);
 	//Define answer thresholds
 	var takeThreshold = wheel.takePercentage;
-	console.log('takeThreshold: ', takeThreshold);
+	//console.log('takeThreshold: ', takeThreshold);
 	var skipThreshold = takeThreshold + wheel.skipPercentage;
-	console.log('skipThreshold: ', skipThreshold);
+	//console.log('skipThreshold: ', skipThreshold);
 	var payThreshold = skipThreshold + wheel.payPercentage;
-	console.log('payThreshold: ', payThreshold);
+	//console.log('payThreshold: ', payThreshold);
 	var advertiseThreshold = payThreshold + wheel.advertisePercentage;
-	console.log('advertiseThreshold: ', advertiseThreshold);
+	//console.log('advertiseThreshold: ', advertiseThreshold);
 	var quizThreshold = advertiseThreshold + wheel.quizPercentage;
-	console.log('quizThreshold: ', quizThreshold);
+	//console.log('quizThreshold: ', quizThreshold);
 	//Find the answer
 	if(0 < randomInt && randomInt <= takeThreshold){
 		wheelAction = 'TAKE';
@@ -530,7 +530,7 @@ function getGameWheelAction(wheel){
 	}else{
 		wheelAction = 'SKIP';
 	}
-	console.log('wheelAction: ', wheelAction);
+	//console.log('wheelAction: ', wheelAction);
 	console.log('getGameWheelAction Finish...');
 	return wheelAction;
 };
@@ -621,13 +621,13 @@ $("#insertNameOk").click(function() {
 
 //Parent category selection event
 $("#parentSelect").change(function() {
-	console.log($("#parentSelect").val());
+	//console.log($("#parentSelect").val());
 	// Clean childSelect
 	$("#childSelect").empty();
 	$("#childSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'GET',
@@ -656,26 +656,26 @@ $("#childSelect").change(function() {
 
 //Buy submit event handle
 $("#buyButton").click(function() {
-	console.log('BUY CLICKED');
+	//console.log('BUY CLICKED');
 	var inputVenueName = $("#inputVenueName").val();
 	var parentCategory = $("#parentSelect").val();
 	var childCategory = $("#childSelect").val();
-	console.log('VENUE: ' + selectedVenue);
-	console.log('VENUE NAME: ' + inputVenueName);
-	console.log('VENUE PARENT CATEGORY: ' + parentCategory + ' NAME: ' + $("#parentSelect option:selected").text());
-	console.log('VENUE CHILD CATEGORY: ' + childCategory  + ' NAME: ' + $("#childSelect option:selected").text());
+	//console.log('VENUE: ' + selectedVenue);
+	//console.log('VENUE NAME: ' + inputVenueName);
+	//console.log('VENUE PARENT CATEGORY: ' + parentCategory + ' NAME: ' + $("#parentSelect option:selected").text());
+	//console.log('VENUE CHILD CATEGORY: ' + childCategory  + ' NAME: ' + $("#childSelect option:selected").text());
 	// Request to BuyAction
 	var url = '/BuyAction';
 	var jsonData = {"venueCategory":childCategory,"venueName":inputVenueName,"venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: ', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/BuyAction',
             data: jsonData,
             success: function (result) {
-				console.log('BuyAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('BuyAction REQUEST RESULT: ', JSON.stringify(result));
 				if(result.visit == null){
 					//Error message
 					console.log('MESSAGE: ', result.message.text);
@@ -707,20 +707,20 @@ $("#buyButton").click(function() {
 
 //Mortgage button event
 $("#mtgBtn").click(function() {
-	console.log('MORTGAGE CLICKED');
-	console.log('VENUE: ' + selectedVenue);
+	//console.log('MORTGAGE CLICKED');
+	//console.log('VENUE: ' + selectedVenue);
 	// Request to MortgageAction
 	var url = '/MortgageAction';
 	var jsonData = { "venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL:' , url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL:' , url);
     $.ajax(
 		{
             type: 'POST',
             url: '/MortgageAction',
             data: jsonData,
             success: function (result) {
-				console.log('MortgageAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('MortgageAction REQUEST RESULT: ', JSON.stringify(result));
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
@@ -741,20 +741,20 @@ $("#mtgBtn").click(function() {
 
 //Redeem button event
 $("#rdmBtn").click(function() {
-	console.log('REDEEM CLICKED');
-	console.log('VENUE: ' + selectedVenue);
+	//console.log('REDEEM CLICKED');
+	//console.log('VENUE: ' + selectedVenue);
 	// Request to RedeemAction
 	var url = '/RedeemAction';
 	var jsonData = { "venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: ', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/RedeemAction',
             data: jsonData,
             success: function (result) {
-				console.log('RedeemAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('RedeemAction REQUEST RESULT: ', JSON.stringify(result));
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
@@ -775,20 +775,20 @@ $("#rdmBtn").click(function() {
 
 //Sell button event
 $("#selBtn").click(function() {
-	console.log('SELL CLICKED');
-	console.log('VENUE: ' + selectedVenue);
+	//console.log('SELL CLICKED');
+	//console.log('VENUE: ' + selectedVenue);
 	// Request to SellAction
 	var url = '/SellAction';
 	var jsonData = { "venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: %j', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/SellAction',
             data: jsonData,
             success: function (result) {
-				console.log('SellAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('SellAction REQUEST RESULT: ', JSON.stringify(result));
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
@@ -817,7 +817,7 @@ $("#takeBtn").click(function() {
 			type: 'GET',
 			url: '/retrieveTakeCost?venueValue=' + $("#occupiedVenueValue").text(),
 			success: function (result) {
-				console.log('TAKE COST: ', result);
+				//console.log('TAKE COST: ', result);
 				if(result.length != 0){
 					$("#costTakeValue").text(result.cost);
 				}else{
@@ -853,13 +853,13 @@ $("#takeInsertNameOk").click(function() {
 
 //Parent category selection event
 $("#takeParentSelect").change(function() {
-	console.log($("#takeParentSelect").val());
+	//console.log($("#takeParentSelect").val());
 	// Clean childSelect
 	$("#takeChildSelect").empty();
 	$("#takeChildSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'GET',
@@ -889,19 +889,19 @@ $("#takeChildSelect").change(function() {
 
 //Take button event
 $("#takeButton").click(function(){
-	console.log('TAKE CLICKED');
+	//console.log('TAKE CLICKED');
 	var takeInputVenueName = $("#takeInputVenueName").val();
 	var takeParentCategory = $("#takeParentSelect").val();
 	var takeChildCategory = $("#takeChildSelect").val();
-	console.log('VENUE: ' + selectedVenue);
-	console.log('VENUE NAME: ' + takeInputVenueName);
-	console.log('VENUE PARENT CATEGORY: ' + takeParentCategory + ' NAME: ' + $("#takeParentSelect option:selected").text());
-	console.log('VENUE CHILD CATEGORY: ' + takeChildCategory  + ' NAME: ' + $("#takeChildSelect option:selected").text());
+	//console.log('VENUE: ' + selectedVenue);
+	//console.log('VENUE NAME: ' + takeInputVenueName);
+	//console.log('VENUE PARENT CATEGORY: ' + takeParentCategory + ' NAME: ' + $("#takeParentSelect option:selected").text());
+	//console.log('VENUE CHILD CATEGORY: ' + takeChildCategory  + ' NAME: ' + $("#takeChildSelect option:selected").text());
 	// Request to TakeAction
 	var url = '/TakeAction';
 	var jsonData = {"venueCategory":takeChildCategory,"venueName":takeInputVenueName,"venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: ', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
@@ -934,16 +934,16 @@ $("#takeButton").click(function(){
 //Go to pay button event
 $("#payBtn").click(function() {
 	var venue = JSON.parse(selectedVenue);
-	console.log('VENUE: ' + venue);
+	//console.log('VENUE: ' + venue);
 	// Request to get rent info
 	var url = '/retrieveVenueRent?venueValue=' + venue["value"];
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
 			type: 'GET',
 			url: url,			
 			success: function (result) {
-			    console.log('RENT: ', result);
+			    //console.log('RENT: ', result);
 			    if(result.length != 0){
 					$("#costPayValue").text(result.rent);
 				}else{
@@ -966,19 +966,19 @@ $("#payBtn").click(function() {
 
 //Pay button event
 $("#payButton").click(function() {
-	console.log('PAY CLICKED');
+	//console.log('PAY CLICKED');
 	// Request to PayAction
 	var url = '/PayAction';
 	var jsonData = {"venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: %j', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/PayAction',
             data: jsonData,
             success: function (result) {
-				console.log('PayAction REQUEST RESULT: %j', result);
+				//console.log('PayAction REQUEST RESULT: %j', result);
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
@@ -1015,13 +1015,13 @@ $("#advertiseInsertNameOk").click(function() {
 
 //Parent category selection event
 $("#advertiseParentSelect").change(function() {
-	console.log($("#advertiseParentSelect").val());
+	//console.log($("#advertiseParentSelect").val());
 	// Clean childSelect
 	$("#advertiseChildSelect").empty();
 	$("#advertiseChildSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
 	$.ajax(
 		{
 			type: 'GET',
@@ -1050,7 +1050,7 @@ $("#advertiseChildSelect").change(function() {
 
 // Advertise Next StepX Event
 $('#advertiseTabsContent').on( "click", "a.btn", function(event){
-	console.log(event.target.id + ' BUTTON CLICKED!');
+	//console.log(event.target.id + ' BUTTON CLICKED!');
 	var inputValue;
 	switch(event.target.id) {
 		case 'okAdvStp2':
@@ -1078,7 +1078,7 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 				featureRanges[1] = 'open';
 				//Take the value of the text input
 				inputValue = $("#advStep3Input").val();
-				console.log(inputValue);
+				//console.log(inputValue);
 				visitAdvertise.featureValues[1] = inputValue;
 			}else{
 				//Take the value of the options
@@ -1097,7 +1097,7 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 				featureRanges[2] = 'open';
 				//Take the value of the text input
 				inputValue = $("#advStep4Input").val();
-				console.log(inputValue);
+				//console.log(inputValue);
 				visitAdvertise.featureValues[2] = inputValue;
 			}else{
 				//Take the value of the options
@@ -1105,20 +1105,20 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 			//mark the feature like responded
 			visitAdvertise.skips[2] = 'false';
 			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
-			console.log('VISIT ADVERTISE :', visitAdvertise);
-			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
-			console.log('SKIPS :', visitAdvertise.skips);
-			console.log('FEATURE RANGES :', featureRanges);
+			//console.log('VISIT ADVERTISE :', visitAdvertise);
+			//console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			//console.log('SKIPS :', visitAdvertise.skips);
+			//console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'idkAdvStp4':
 			visitAdvertise.featureValues[2] = 'undefined';
 			featureRanges[2] = 'undefined';
 			visitAdvertise.skips[2] = 'true';
 			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
-			console.log('VISIT ADVERTISE :', visitAdvertise);
-			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
-			console.log('SKIPS :', visitAdvertise.skips);
-			console.log('FEATURE RANGES :', featureRanges);
+			//console.log('VISIT ADVERTISE :', visitAdvertise);
+			//console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			//console.log('SKIPS :', visitAdvertise.skips);
+			//console.log('FEATURE RANGES :', featureRanges);
 			break;
 		default:
 			break;
@@ -1127,21 +1127,21 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 });
 
 function advertise(featureValues, skips, featureRanges){
-	console.log('START ADVETISING...');
+	//console.log('START ADVETISING...');
 	var advertiseChildCategory = $("#advertiseChildSelect").val();
 	var advertiseInputVenueName = $("#advertiseInputVenueName").val();
 	// Request to AdvertiseAction
 	var url = '/AdvertiseAction';
 	var jsonData = {"venue":selectedVenue, "venueCategory":advertiseChildCategory,"venueName":advertiseInputVenueName, "featureValues":featureValues, "skips":skips, "featureRanges":featureRanges };
-	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: %j', url);
 	$.ajax(
 		{
 			type: 'POST',
 			url: '/AdvertiseAction',
 			data: jsonData,
 			success: function (result) {
-				console.log('AdvertiseAction REQUEST RESULT: ', result);
+				//console.log('AdvertiseAction REQUEST RESULT: ', result);
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
@@ -1167,8 +1167,8 @@ $("#quzBtn").click(function() {
 
 // Quiz Answer Button Event
 $('#quizTabsContent').on( "click", "a.btn", function(event){
-	console.log(event.target.id + ' BUTTON CLICKED!');
-	console.log('VISIT QUIZ: ', visitQuiz);
+	//console.log(event.target.id + ' BUTTON CLICKED!');
+	//console.log('VISIT QUIZ: ', visitQuiz);
 	var optionSelected = [];
 	switch(event.target.id) {
 		case 'yesStp1':
@@ -1250,7 +1250,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp2':
 			var index = $('input[name="optionsRadios"]:checked').val();
-			console.log('SELECTED INDEX: ', index);
+			//console.log('SELECTED INDEX: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[1].length; i++){
 					if(i == index){
@@ -1374,7 +1374,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			}
 			visitQuiz.selected.push(optionSelected);
 			visitQuiz.skips.push('false');
-			console.log('QUIZ AFTER PLAY: ', visitQuiz);
+			//console.log('QUIZ AFTER PLAY: ', visitQuiz);
 			quiz(visitQuiz);
 			break;
 		case 'noFinishQz':
@@ -1387,7 +1387,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			}
 			visitQuiz.selected.push(optionSelected);
 			visitQuiz.skips.push('false');
-			console.log('QUIZ AFTER PLAY: ', visitQuiz);
+			//console.log('QUIZ AFTER PLAY: ', visitQuiz);
 			quiz(visitQuiz);
 			break;
 		case 'idkFinishQz':
@@ -1396,7 +1396,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			}
 			visitQuiz.selected.push(optionSelected);
 			visitQuiz.skips.push('true');
-			console.log('QUIZ AFTER PLAY: ', visitQuiz);
+			//console.log('QUIZ AFTER PLAY: ', visitQuiz);
 			quiz(visitQuiz);
 			break;
 		case 'finishQz':
@@ -1417,7 +1417,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 				visitQuiz.skips.push('true');
 			}
 			visitQuiz.selected.push(optionSelected);
-			console.log('QUIZ AFTER PLAY: ', visitQuiz);
+			//console.log('QUIZ AFTER PLAY: ', visitQuiz);
 			quiz(visitQuiz);
 			break;
 		default:
@@ -1428,21 +1428,21 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 });
 
 function quiz(visit){
-	console.log('START QUIZ...');
+	//console.log('START QUIZ...');
 	var selected = visit.selected;
 	var skips = visit.skips;
 	// Request to QuizAction
 	var url = '/QuizAction';
 	var jsonData = {"venue":selectedVenue, "selected":selected, "skips": skips };
-	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: %j', url);
 	$.ajax(
 		{
 			type: 'POST',
 			url: '/QuizAction',
 			data: jsonData,
 			success: function (result) {
-				console.log('QuizAction REQUEST RESULT: %j', result);
+				//console.log('QuizAction REQUEST RESULT: %j', result);
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
@@ -1462,21 +1462,21 @@ function quiz(visit){
 
 //Skip button event
 $("#skpBtn").click(function() {
-	console.log('SKIP CLICKED');
+	//console.log('SKIP CLICKED');
 	$("#occupiedModal").modal('hide');
 	$("#skipModal").modal('show');
 	// Request to SkipAction
 	var url = '/SkipAction';
 	var jsonData = { "venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: ', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/SkipAction',
             data: jsonData,
             success: function (result) {
-				console.log('SkipAction REQUEST RESULT: %j', result);
+				//console.log('SkipAction REQUEST RESULT: %j', result);
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
@@ -1503,16 +1503,16 @@ $("#okMsgModal").click(function() {
 
 // Yes message modal event used to share on facebook
 $("#yesMsgModal").click(function() {
-	console.log('SHARE ON FB CLICKED');
+	//console.log('SHARE ON FB CLICKED');
 	// Request to Share
 	var url = '/Share';
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
 	$.ajax(
 		{
             type: 'POST',
             url: '/Share',
             success: function (result) {
-				console.log('SHARE REQUEST RESULT: ', result);
+				//console.log('SHARE REQUEST RESULT: ', result);
             },
             error: function (req, status, error) {
 				console.log('ERROR: ' + error);
