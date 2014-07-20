@@ -5,10 +5,10 @@ $('table tr').click(function() {
     console.log('Row clicked!: ' + $(event.target).closest('tr').data('id'));
     var venueId = $(event.target).closest('tr').data('id');
     //Default setup
-    $("#buyBtn").attr("disabled", "disabled");
-	$("#mtgBtn").attr("disabled", "disabled");
-	$("#rdmBtn").attr("disabled", "disabled");
-	$("#selBtn").attr("disabled", "disabled");
+    $("#buyBtn").hide();
+	$("#mtgBtn").hide();
+	$("#rdmBtn").hide();
+	$("#selBtn").hide();
 	$("#okMsgModal").hide();
 	$("#yesMsgModal").hide();
 	$("#noMsgModal").hide();
@@ -27,13 +27,13 @@ $('table tr').click(function() {
 					$("#venueValue").text(venueDetails.value);
 					$("#venueRent").text(venueDetails.rent);
 					// Enable sell button
-    				$("#selBtn").removeAttr("disabled");
+    				$("#selBtn").show();
 					if(venueDetails.state == 'MINE'){
 						// Enable mortgage button
-    					$("#mtgBtn").removeAttr("disabled");
+    					$("#mtgBtn").show();
 					}else if (venueDetails.state == 'MINE_MORTGAGED'){
 						// Enable redeem button
-    					$("#rdmBtn").removeAttr("disabled");
+    					$("#rdmBtn").show();
 					}
 				}else{
 					$("#venueRent").text("Unknown Rent");
