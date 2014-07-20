@@ -59,6 +59,12 @@ body {
 #header-2 a:hover {
   text-decoration: none;
 }
+#title img {
+  padding-left: 20px;
+  padding-top: 20px;
+  float: left;
+  width: 260px;
+}
 
 /** Login Button **/
 #login a {
@@ -90,7 +96,7 @@ body {
   margin-right: 10px;
 }
 #user p {
-  font-size: 12px;
+  font-size: 14px;
   margin: 0px;
   font-weight: bold;
   margin-top: 5px;
