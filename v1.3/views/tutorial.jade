@@ -3,14 +3,18 @@ extends layout
 block content
 	div.container
 		#header-2
-			a(href="/profile")
-				h1 Urbanopoly
+			#title
+				a(href="/profile")
+					img(src='/images/title.png')
 			#user
 				img(src= user_pic)
 				p #{user_name}
-				a(href="/")
+				a(href="/logout")
 					p Logout
-
+		ol(class="breadcrumb")
+			li
+				a(href="/profile") Home
+			li(class="active") Tutorial
 		#content
 			div(class="panel panel-default")
 				div(class="panel-body")
@@ -29,7 +33,7 @@ block content
 						div(class="carousel-inner")
 							<!-- Page 1 -->
 							div(class="item active")
-								img(src="http://placehold.it/950x500/979c9f/979c9f" alt="950x500")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
 								div(class="container")
 									div(class="carousel-caption")
 										div
@@ -42,7 +46,7 @@ block content
 										p Create your venues, portfolio and become the greatest landlord ever!
 							<!-- Page 2 -->
 							div(class="item")
-								img(src="http://placehold.it/950x500/979c9f/979c9f" alt="950x500")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
 								div(class="container")
 									div(class="carousel-caption")
 										h1 The venues
@@ -52,7 +56,7 @@ block content
 										p To start creating your venues portfolio, visit a blue venue on the map and discover if it is free or owned by someone else.
 							<!-- Page 3 -->
 							div(class="item")
-								img(src="http://placehold.it/950x500/979c9f/979c9f" alt="950x500")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
 								div(class="container")
 									div(class="carousel-caption")
 										h1 Free Venues
@@ -61,7 +65,7 @@ block content
 										p Remember! Your actions determine your destiny: inaccurate information will be discovered and you will be penalized over time.
 							<!-- Page 4 -->
 							div(class="item")
-								img(src="http://placehold.it/950x500/979c9f/979c9f" alt="950x500")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
 								div(class="container")
 									div(class="carousel-caption")
 										h1 Occupied Venues
@@ -70,7 +74,7 @@ block content
 										p Earn money by helping advertising venues or answering questions. If you are lucky you can take the ownership from another player, if not you must pay a fee.
 							<!-- Page 5 -->
 							div(class="item")
-								img(src="http://placehold.it/950x500/979c9f/979c9f" alt="950x500")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
 								div(class="container")
 									div(class="carousel-caption")
 										h1 Sell &amp; Mortgage
@@ -80,7 +84,7 @@ block content
 										p Do not forget to redeem the mortgage within the expiry date or you will lose the ownership.
 							<!-- Page 6 -->
 							div(class="item")
-								img(src="http://placehold.it/950x500/979c9f/979c9f" alt="950x500")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
 								div(class="container")
 									div(class="carousel-caption")
 										h1 Homepage
@@ -88,7 +92,7 @@ block content
 										p From the homepage you can manage your properties, check the mortgaged venues and see how you rank compared to your friends.
 							<!-- Page 7 -->
 							div(class="item")
-								img(src="http://placehold.it/950x500/979c9f/979c9f" alt="950x500")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
 								div(class="container")
 									div(class="carousel-caption")
 										h1 Play now!

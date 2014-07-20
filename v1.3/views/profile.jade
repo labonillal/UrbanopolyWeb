@@ -3,60 +3,67 @@ extends layout
 block content
 	div.container
 		#header-2
-			a(href="/profile")
-				h1 Urbanopoly
+			#title
+				a(href="/profile")
+					img(src='/images/title.png')
 			#user
 				img(src= user_pic)
 				p #{user_name}
 				a(href="/logout")
 					p Logout
+		ol(class="breadcrumb")
+			li
+				a(href="/profile") Home
+			li(class="active") Profile
 
 		#content
-			div(class="row")
-				div(class="col-md-2")
-				div(class="col-md-4")
-					div(class="row" style="text-align: center")
-						a(href="/venues")
-							img(src='/images/profile/profile_my_venues.png')
-					div(class="row" style="text-align: center")
-						a(href="/venues") MyVenues
-				div(class="col-md-4")
-					div(class="row" style="text-align: center")
-						a(href="/map")
-							img(src='/images/profile/profile_map.png')
-					div(class="row" style="text-align: center")
-						a(href="/map") Map
-				div(class="col-md-2")
-			div(class="row")
-				div(class="col-md-2")
-				div(class="col-md-4")
-					div(class="row" style="text-align: center")
-						a(href="/leaderboard")
-							img(src='/images/profile/profile_leaderboard.png')
-					div(class="row" style="text-align: center")
-						a(href="/leaderboard") Leaderboard
-				div(class="col-md-4")
-					div(class="row" style="text-align: center")
-						a(href="/notifications")
-							img(src='/images/profile/profile_recent.png')
-					div(class="row" style="text-align: center")
-						a(href="/notifications") Notifications
-				div(class="col-md-2")
-			div(class="row")
-				div(class="col-md-2")
-				div(class="col-md-4")
-					div(class="row" style="text-align: center")
-						a(href="/tutorial")
-							img(src='/images/profile/profile_tutorial.png')
-					div(class="row" style="text-align: center")
-						a(href="/tutorial") Tutorial
-				div(class="col-md-4")
-					div(class="row" style="text-align: center")
-						a(href="/credits")
-							img(src='/images/profile/profile_credits.png')
-					div(class="row" style="text-align: center")
-						a(href="/credits") Credits
-				div(class="col-md-2")
+			div(class="panel panel-default")
+				div(class="panel-body")
+					div(class="row")
+							div(class="col-md-2")
+							div(class="col-md-4")
+								div(class="row" style="text-align: center")
+									a(href="/venues")
+										img(src='/images/profile/profile_my_venues.png')
+								div(class="row" style="text-align: center")
+									a(href="/venues") MyVenues
+							div(class="col-md-4")
+								div(class="row" style="text-align: center")
+									a(href="/map")
+										img(src='/images/profile/profile_map.png')
+								div(class="row" style="text-align: center")
+									a(href="/map") Map
+							div(class="col-md-2")
+					div(class="row")
+							div(class="col-md-2")
+							div(class="col-md-4")
+								div(class="row" style="text-align: center")
+									a(href="/leaderboard")
+										img(src='/images/profile/profile_leaderboard.png')
+								div(class="row" style="text-align: center")
+									a(href="/leaderboard") Leaderboard
+							div(class="col-md-4")
+								div(class="row" style="text-align: center")
+									a(href="/notifications")
+										img(src='/images/profile/profile_recent.png')
+								div(class="row" style="text-align: center")
+									a(href="/notifications") Notifications
+							div(class="col-md-2")
+					div(class="row")
+							div(class="col-md-2")
+							div(class="col-md-4")
+								div(class="row" style="text-align: center")
+									a(href="/tutorial")
+										img(src='/images/profile/profile_tutorial.png')
+								div(class="row" style="text-align: center")
+									a(href="/tutorial") Tutorial
+							div(class="col-md-4")
+								div(class="row" style="text-align: center")
+									a(href="/credits")
+										img(src='/images/profile/profile_credits.png')
+								div(class="row" style="text-align: center")
+									a(href="/credits") Credits
+							div(class="col-md-2")
 
 	div.container
 		#footer-score

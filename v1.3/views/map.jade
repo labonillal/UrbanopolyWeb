@@ -3,14 +3,18 @@ extends layout
 block content
 	div.container
 		#header-2
-			a(href="/profile")
-				h1 Urbanopoly
+			#title
+				a(href="/profile")
+					img(src='/images/title.png')
 			#user
 				img(src= user_pic)
 				p #{user_name}
-				a(href="/")
+				a(href="/logout")
 					p Logout
-
+		ol(class="breadcrumb")
+			li
+				a(href="/profile") Home
+			li(class="active") Map
 		#content
 			div(class="panel panel-default")
 				div(class="panel-heading")
