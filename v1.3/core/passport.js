@@ -31,8 +31,8 @@ module.exports = function(passport) {
     passport.deserializeUser(function(id, done) {
         //console.log('deserializeUser: ' + id);
         userController.subscribePlayer(id, '', function(err, player){
-            player["picture"] = pics[player.id];
-            player["token"] = tokens[player.id];
+            player["picture"] = pics[id];
+            player["token"] = tokens[id];
             done(err, player);
         });       
      });

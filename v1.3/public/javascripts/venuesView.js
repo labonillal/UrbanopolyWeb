@@ -1,6 +1,6 @@
 var selectedVenue;
 
-$('table tr').click(function() {
+$('table tr').click(function(event) {
     // Get id of the clicked venue
     console.log('Row clicked!: ' + $(event.target).closest('tr').data('id'));
     var venueId = $(event.target).closest('tr').data('id');
