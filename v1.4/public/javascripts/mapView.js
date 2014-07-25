@@ -1,6 +1,7 @@
 var myMarkersLayer;
 var myPositionLayer;
 var map;
+var loader = document.getElementById('loader');
 var lat;
 var lon;
 var selectedVenue;
@@ -17,17 +18,18 @@ var rotationTime = 2000;
 $(document).ready(function(){
 	// MapBox Map
 	map = L.mapbox.map('map', 'lbonillal.i2gblid1').setView([45, 9], 9);
-
-	myMarkersLayer = L.mapbox.featureLayer().addTo(map);
+	// Start the loading screen
+	startLoading();
+	myMarkersLayer = L.mapbox.featureLayer()
+		.addTo(map) // Add tiles to the map
 
 	map.locate();
-			
+
 	map.on('locationfound', function(e){
 		lat = e.latlng.lat;
 		lon = e.latlng.lng;
 		//Create the map on the location position
 		createMap(lat, lon);
-		map.fitBounds(e.bounds);
 	});
 
 	// If the user chooses not to allow their location
@@ -37,6 +39,24 @@ $(document).ready(function(){
 		console.log('Position could not be found!');
 	});
 });
+
+// Function to start the loader over the map
+function startLoading() {
+    loader.className = '';
+}
+
+// Function to finish the loader over the map
+function finishedLoading() {
+    // first, toggle the class 'done', which makes the loading screen
+    // fade out
+    loader.className = 'done';
+    setTimeout(function() {
+        // then, after a half-second, add the class 'hide', which hides
+        // it completely and ensures that the user can interact with the
+        // map again.
+        loader.className = 'hide';
+    }, 500);
+}
 
 // Function to animate the dropdowns like a selection item
 $(document.body).on( 'click', '.dropdown-menu li', function( event ) {
@@ -487,6 +507,8 @@ function requestUpdatedMap(lat, lon) {
             	if(result != ""){
             		myMarkersLayer.setGeoJSON(result);
 					map.fitBounds(myMarkersLayer.getBounds());
+					finishedLoading(); // When the tiles load, remove the loading screen;
+					console.log('requestUpdatedMap finish...')
             	}else{
             		console.log('No data available for this location');
             		map.fitBounds(myPositionLayer.getBounds());

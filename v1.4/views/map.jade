@@ -20,7 +20,11 @@ block content
 				div(class="panel-heading")
 					img(src='/images/title_map.png')
 				div(class="panel-body")
-					#map
+					div(id="mapContainer")
+						div(id="map")
+						div(id="loader")
+							div(class="message" style="margin: -32px -32px; width: 64px; height: 64px; position: absolute; top: 50%; left: 50%;")
+								img(src="/images/loader.gif")
 
 			// Default Location Modal
 			div(class="modal fade", id="defaultLocationModal", tabindex="-1", role="dialog", aria-labelledby="defaultLocationModal", aria-hidden="true")
