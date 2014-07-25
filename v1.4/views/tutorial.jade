@@ -1,0 +1,108 @@
+extends layout
+
+block content
+	div.container
+		#header-2
+			#title
+				a(href="/profile")
+					img(src='/images/title.png')
+			#user
+				img(src= user_pic)
+				p #{user_name}
+				a(href="/logout")
+					p Logout
+		ol(class="breadcrumb")
+			li
+				a(href="/profile") Home
+			li(class="active") Tutorial
+		#content
+			div(class="panel panel-default")
+				div(class="panel-body")
+					div(id="carousel-example-generic" class="carousel slide" data-ride="carousel")
+						<!-- Indicators -->
+						ol(class="carousel-indicators")
+							li(data-target="#carousel-example-generic" data-slide-to="0" class="active")
+							li(data-target="#carousel-example-generic" data-slide-to="1")
+							li(data-target="#carousel-example-generic" data-slide-to="2")
+							li(data-target="#carousel-example-generic" data-slide-to="3")
+							li(data-target="#carousel-example-generic" data-slide-to="4")
+							li(data-target="#carousel-example-generic" data-slide-to="5")
+							li(data-target="#carousel-example-generic" data-slide-to="6")
+
+						<!-- Wrapper for slides -->
+						div(class="carousel-inner")
+							<!-- Page 1 -->
+							div(class="item active")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
+								div(class="container")
+									div(class="carousel-caption")
+										div
+											img(src="/images/urbanopoly.png")
+										div
+											img(src="/images/tutorial_image_page_1.jpg")
+										h1 Welcome!
+										p Play with the neighborhood around you!
+										p Buy venues, earn money and collect information about your city.
+										p Create your venues, portfolio and become the greatest landlord ever!
+							<!-- Page 2 -->
+							div(class="item")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
+								div(class="container")
+									div(class="carousel-caption")
+										h1 The venues
+										img(src="/images/tutorial_image_page_2.jpg")
+										p How does it work?
+										p Venues are real places around you: shops, restaurants, monuments…
+										p To start creating your venues portfolio, visit a blue venue on the map and discover if it is free or owned by someone else.
+							<!-- Page 3 -->
+							div(class="item")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
+								div(class="container")
+									div(class="carousel-caption")
+										h1 Free Venues
+										img(src="/images/tutorial_image_page_3.jpg")
+										p Oh Yes! The Venue is free, you can buy it! Insert the most precise information you know on this venue and pay for its value.
+										p Remember! Your actions determine your destiny: inaccurate information will be discovered and you will be penalized over time.
+							<!-- Page 4 -->
+							div(class="item")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
+								div(class="container")
+									div(class="carousel-caption")
+										h1 Occupied Venues
+										img(src="/images/tutorial_image_page_4.jpg")
+										p If the Venue is owned by another player, don't worry and spin the wheel to see what's your destiny.
+										p Earn money by helping advertising venues or answering questions. If you are lucky you can take the ownership from another player, if not you must pay a fee.
+							<!-- Page 5 -->
+							div(class="item")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
+								div(class="container")
+									div(class="carousel-caption")
+										h1 Sell &amp; Mortgage
+										img(src="/images/tutorial_image_page_5.jpg")
+										p You do not have enough money to buy a venue or pay the rent?
+										p You can sell your venues or mortgage them to get 50% of their value immediately.
+										p Do not forget to redeem the mortgage within the expiry date or you will lose the ownership.
+							<!-- Page 6 -->
+							div(class="item")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
+								div(class="container")
+									div(class="carousel-caption")
+										h1 Homepage
+										img(src="/images/tutorial_image_page_6.jpg")
+										p From the homepage you can manage your properties, check the mortgaged venues and see how you rank compared to your friends.
+							<!-- Page 7 -->
+							div(class="item")
+								img(src="http://placehold.it/950x400/979c9f/979c9f" alt="950x400")
+								div(class="container")
+									div(class="carousel-caption")
+										h1 Play now!
+										p Become the greatest landlord ever!
+										p Login to enter and start the game:
+										p
+											a(class="btn btn-lg btn-primary" href="/profile" role="button") Finish
+
+						<!-- Controls -->
+						a(class="left carousel-control" href="#carousel-example-generic" data-slide="prev")
+							span(class="glyphicon glyphicon-chevron-left")
+						a(class="right carousel-control" href="#carousel-example-generic" data-slide="next")
+							span(class="glyphicon glyphicon-chevron-right")

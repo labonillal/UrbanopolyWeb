@@ -1,0 +1,90 @@
+1;Transport;;
+2;Tourism;;
+3;Amenity;;
+4;Shopping;;
+5;Food and drink;;
+6;Sport;;
+7;Accomodation
+575;Airport;Transport;TRUE
+576;Archaeological site;Tourism;FALSE
+577;Artwork;Tourism;TRUE
+578;Atm;Amenity;TRUE
+579;Attraction;Tourism;FALSE
+580;Bakery;Shopping;TRUE
+581;Bank;Amenity;TRUE
+582;Bar;Food and drink;TRUE
+583;Bench;Amenity;FALSE
+584;BicycleParking;Transport;TRUE
+585;BicycleRental;Transport;TRUE
+586;Bicycle Shop;Shopping;TRUE
+587;Bookshop;Shopping;TRUE
+588;Butcher;Shopping;TRUE
+589;Cafe;Food and drink;TRUE
+590;CarRental;Transport;TRUE
+591;Car Repair;Shopping;TRUE
+592;Car Shop;Shopping;TRUE
+593;CarWash;Transport;TRUE
+594;Castle;Tourism;FALSE
+595;Cemetery;Amenity;TRUE
+596;Cinema;Tourism;TRUE
+597;Clothes shop;Shopping;TRUE
+598;College;Amenity;TRUE
+599;Convenience store;Shopping;TRUE
+600;Do-it-yourself store;Shopping;TRUE
+601;Drinking Water;Amenity;FALSE
+602;Electronics shop;Shopping;TRUE
+603;Fast food;Food and drink;TRUE
+604;Fire Station;Amenity;FALSE
+605;Florist;Shopping;FALSE
+606;Fountain;Amenity;FALSE
+607;Fuel station;Transport;TRUE
+608;Golf course;Sport;FALSE
+609;Guest house;Accomodation;TRUE
+610;Hairdresser;Shopping;TRUE
+611;Hospital;Amenity;TRUE
+612;Hostel;Accomodation;TRUE
+613;Hotel;Accomodation;TRUE
+614;Tourism information source;Tourism;FALSE
+615;Jewelry;Shopping;TRUE
+616;Kindergarten;Amenity;TRUE
+617;Kiosk;Shopping;FALSE
+618;Laundry;Shopping;TRUE
+619;Library;Amenity;TRUE
+620;Mall;Shopping;FALSE
+621;Memorial;Tourism;FALSE
+622;Monument;Tourism;FALSE
+623;Motel;Accomodation;TRUE
+624;Motorcycle Shop;Shopping;TRUE
+625;Museum;Tourism;TRUE
+626;Music shop;Shopping;TRUE
+627;Park;Amenity;FALSE
+628;Parking;Transport;TRUE
+629;Pharmacy;Shopping;TRUE
+630;Pitch;Sport;FALSE
+631;Place of worship;Amenity;TRUE
+632;Playground;Sport;TRUE
+633;Police;Amenity;FALSE
+634;PostBox;Amenity;FALSE
+635;Post Office;Amenity;TRUE
+636;Pub;Food and drink;TRUE
+637;Public transport stop;Transport;TRUE
+638;Recycling center or container;Amenity;FALSE
+639;Restaurant;Food and drink;TRUE
+640;Ruins;Tourism;FALSE
+641;School;Amenity;TRUE
+642;Sports centre;Sport;TRUE
+643;Stadium;Sport;TRUE
+644;Station;Transport;FALSE
+645;Supermarket;Shopping;TRUE
+646;Swimming Pool;Amenity;TRUE
+647;Taxi stand;Transport;FALSE
+648;Theatre;Tourism;FALSE
+649;Toilets;Amenity;FALSE
+650;Tower;Tourism;TRUE
+651;Townhall;Amenity;TRUE
+652;Toy store;Shopping;TRUE
+653;University;Amenity;TRUE
+654;Vending Machine;Amenity;TRUE
+655;Viewpoint;Tourism;FALSE
+656;Zoo;Tourism;FALSE
+657;Agriturismo;Food and drink;TRUE

@@ -1,0 +1,397 @@
+extends layout
+
+block content
+	div.container
+		#header-2
+			#title
+				a(href="/profile")
+					img(src='/images/title.png')
+			#user
+				img(src= user_pic)
+				p #{user_name}
+				a(href="/logout")
+					p Logout
+		ol(class="breadcrumb")
+			li
+				a(href="/profile") Home
+			li(class="active") Map
+		#content
+			div(class="panel panel-default")
+				div(class="panel-heading")
+					img(src='/images/title_map.png')
+				div(class="panel-body")
+					#map
+
+			// Default Location Modal
+			div(class="modal fade", id="defaultLocationModal", tabindex="-1", role="dialog", aria-labelledby="defaultLocationModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							h4(class="modal-title" style="text-align:center") Default Location
+						div(class="modal-body")
+							div(class="alert alert-info" style="text-align:center")
+								|	<strong>Location could not be found!.</strong> Please share your location or select one of our default locations.
+							<!-- Single button -->
+							div(class="btn-group")
+								button(type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown") Default Location 
+									span(class="caret")
+								ul(class="dropdown-menu" role="menu")
+									li
+										a(id="location1") Milano
+									li 
+										a(id="location2") Boston
+									li
+										a(id="location3") Amsterdam
+									li
+										a(id="location4") Como
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+
+			// Free Venue Modal
+			div(class="modal fade", id="freeModal", tabindex="-1", role="dialog", aria-labelledby="freeModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(id="freeModalHeader", src='/images/title_free_venue.png')
+						div(class="modal-body")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="freeVenueName") Venue Name
+									div(class="col-md-4")
+										img(id="freeVenueIcon")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="freeVenueCategory") Venue Category
+										h5 Category
+									div(class="col-md-4")
+										h4(id="freeVenueMortgageDeadTime")
+										h5(id="freeVenueMortgageLabel")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="freeVenueValue")
+										h5 Value
+									div(class="col-md-4")
+										h4(id="freeVenueRent") 
+										h5 Rent
+						div(class="btn-group-wrap" style="text-align: center")
+								button.btn.btn-primary(id="buyBtn" type="button") Buy
+								button.btn.btn-primary(id="mtgBtn" type="button") Mortgage
+								button.btn.btn-primary(id="rdmBtn" type="button") Redeem
+								button.btn.btn-primary(id="selBtn" type="button") Sell
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+			
+			// Occupied Venue Modal
+			div(class="modal fade", id="occupiedModal", tabindex="-1", role="dialog", aria-labelledby="occupiedModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_occupied_venue.png')
+						div(class="modal-body")
+							div(id="GameWheelPanel" class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-2")
+									div(class="col-md-8")
+										div(style="position: relative; left: 0; top: 0;")
+											img(id="wheelBorder" src="/images/wheel_border.png" alt="wheelBorder")
+											img(id="wheel" src="/images/wheel.png" alt="wheel" style="position: absolute; top: 0px; left: 0px;")
+											img(id="wheelPin" src="/images/wheel_pin.png" alt="wheelPin" style="position: absolute; top: 0px; left: 126px;")
+									div(class="col-md-2")
+							div(id="venueNamePanel" class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="occupiedVenueName")
+									div(class="col-md-4")
+										img(id="occupiedVenueIcon")
+							div(id="venueCategoryPanel" class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="occupiedVenueCategory")
+										h5 Category
+									div(class="col-md-4")
+										h4(id="occupiedVenueValue") &euro; 
+										h5 Value
+							div(id="gameWheelResultPanel" class="panel panel-info")
+								div(class="panel-heading" style="text-align: center")
+									img(id="resultTitle" width="146" height="25" src='')
+								div(class="panel-body" style="text-align: center")
+									p(id="resultDescription")
+									div(class="btn-group-wrap" style="text-align: center")
+										button.btn.btn-primary(id="takeBtn" type="button") Go to Take
+										button.btn.btn-primary(id="payBtn" type="button") Go to Pay
+										button.btn.btn-primary(id="advBtn" type="button") Go to Advertise
+										button.btn.btn-primary(id="quzBtn" type="button") Go to Quiz
+										button.btn.btn-primary(id="skpBtn" type="button") Skip
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+
+			// Free Buy Modal
+			div(class="modal fade", id="buyModal", tabindex="-1", role="dialog", aria-labelledby="buyModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header" style="text-align:center")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_buy.png')
+						div(class="modal-body")
+							div(class="panel panel-info")
+								div(class="panel-heading")
+									h4(class="panel-title") Confirm or Edit the Venue's name
+								div(class="panel-body")
+									div(class="input-group")
+										input(id="inputVenueName" type="text" class="form-control")
+										span(class="input-group-btn")
+											button(id="insertNameOk" class="btn btn-default" type="button") OK
+
+							div(id="parentPanel" class="panel panel-info")
+								div(class="panel-heading")
+									h4(class="panel-title") Select Venue's category
+								div(class="panel-body")
+									select(id="parentSelect")
+										option(selected value="base") Please Select
+										for category in categories
+											if (typeof(category.parent) == 'undefined' || category.parent == "")
+												option(value=category.id)=category.name
+							
+							div
+								div(id="childPanel" class="panel panel-info")
+									div(class="panel-heading")
+										h4(class="panel-title") Select Venue's Subcategory
+									div(class="panel-body")
+										select(id="childSelect")
+											option Please Select			
+							
+							div(style="text-align:center")
+								button(id="buyButton" type="button" class="btn btn-primary") BUY
+			
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+				
+			// Occupied Take Cost Modal
+			div(class="modal fade", id="takeCostModal", tabindex="-1", role="dialog", aria-labelledby="takeCostModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_take.png')
+						div(class="modal-body")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="takeVenueName") Venue Name
+										h5(id="takeVenueCategory") Venue Category
+									div(class="col-md-4")
+										img(id="takeVenueIcon")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-4")
+										img(src='/images/image_take.png')
+									div(class="col-md-8")
+										h4 Take the venue
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h3(id="costTakeValue")
+										h5 Cost to take
+									div(class="col-md-4")
+										h3(id="yourMoneyValue") 
+										h5 Your money
+							div(style="text-align:center")
+								button(id="takeInfoButton" type="button" class="btn btn-primary") TAKE
+								button(id="cancelButton" type="button" class="btn btn-primary" data-dismiss="modal") CANCEL
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+
+			// Occupied Take Modal
+			div(class="modal fade", id="takeModal", tabindex="-1", role="dialog", aria-labelledby="takeModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_take.png')
+						div(class="modal-body")
+							div(class="panel panel-info")
+								div(class="panel-heading")
+									h4(class="panel-title") Confirm or Edit the Venue's name
+								div(class="panel-body")
+									div(class="input-group")
+										input(id="takeInputVenueName" type="text" class="form-control")
+										span(class="input-group-btn")
+											button(id="takeInsertNameOk" class="btn btn-default" type="button") OK
+
+							div(id="takeParentPanel" class="panel panel-info")
+								div(class="panel-heading")
+									h4(class="panel-title") Select Venue's category
+								div(class="panel-body")
+									select(id="takeParentSelect")
+										option(selected value="base") Please Select
+											for category in categories
+												if (typeof(category.parent) == 'undefined' || category.parent == "")
+													option(value=category.id)=category.name
+							
+							div
+								div(id="takeChildPanel" class="panel panel-info")
+									div(class="panel-heading")
+										h4(class="panel-title") Select Venue's Subcategory
+									div(class="panel-body")
+										select(id="takeChildSelect")
+											option Please Select
+							
+							div(style="text-align:center")
+								button(id="takeButton" type="button" class="btn btn-primary") TAKE
+							
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+								
+			// Occupied Pay Modal
+			div(class="modal fade", id="payModal", tabindex="-1", role="dialog", aria-labelledby="payModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_pay.png')
+						div(class="modal-body")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h4(id="payVenueName") Venue Name
+										h5(id="payVenueCategory") Venue Category
+									div(class="col-md-4")
+										img(id="payVenueIcon")
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-4")
+										img(src='/images/notifications/notif_lost_money.png')
+									div(class="col-md-8")
+										h4 You need to pay for passing in this venue
+							div(class="panel panel-default")
+								div(class="panel-body")
+									div(class="col-md-8")
+										h3(id="costPayValue")
+										h5 Fee to pay
+									div(class="col-md-4")
+										h3(id="payYourMoneyValue") 
+										h5 Your money
+							div(style="text-align:center")
+								button(id="payButton" type="button" class="btn btn-primary") PAY
+						
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+								
+			// Occupied Advertise Modal
+			div(class="modal fade", id="advertiseModal", tabindex="-1", role="dialog", aria-labelledby="advertiseModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_advertise.png')
+						div(class="modal-body")
+							<!-- Nav tabs -->
+							ul(id="advertiseTabsNav" class="nav nav-tabs")
+								li(id= "adv1" class="active")
+										a(href="#advStep1" data-toggle="tab") <strong>Step 1</strong>
+							
+							<!-- Tab panes -->
+							div(id="advertiseTabsContent" class="tab-content")
+								div(id="advStep1" class="tab-pane active")
+									div(class="panel panel-info")
+										div(class="panel-heading")
+											h4(class="panel-title") Confirm or Edit the Venue's name
+										div(class="panel-body")
+											div(class="input-group")
+												input(id="advertiseInputVenueName" type="text" class="form-control")
+												span(class="input-group-btn")
+													button(id="advertiseInsertNameOk" class="btn btn-default" type="button") OK
+
+									div(id="advertiseParentPanel" class="panel panel-info")
+										div(class="panel-heading")
+											h4(class="panel-title") Select Venue's category
+										div(class="panel-body")
+											select(id="advertiseParentSelect")
+												option(selected value="base") Please Select
+													for category in categories
+														if (typeof(category.parent) == 'undefined' || category.parent == "")
+															option(value=category.id)=category.name
+									
+									div
+										div(id="advertiseChildPanel" class="panel panel-info")
+											div(class="panel-heading")
+												h4(class="panel-title") Select Venue's Subcategory
+											div(class="panel-body")
+												select(id="advertiseChildSelect")
+													option Please Select
+
+									div(style="text-align:center")
+										a(id="nextAdvStp1" href="#advStep2" class="btn btn-primary" data-toggle="tab") Next
+						
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+		
+			// Occupied Quiz Modal
+			div(class="modal fade", id="quizModal", tabindex="-1", role="dialog", aria-labelledby="quizModal", aria-hidden="true")
+				div(class="modal-dialog")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal" aria-hidden="true") &times;
+							img(src='/images/title_quiz.png')
+						div(class="modal-body")
+							<!-- Nav tabs -->
+							ul(id="quizTabsNav" class="nav nav-tabs")
+								
+							<!-- Tab panes -->
+							div(id="quizTabsContent" class="tab-content")
+						
+						div(class="modal-footer" style="text-align:left")
+							p &copy;&nbsp;
+								a(href='http://swa.cefriel.it/urbangames/urbanopoly/index.html') Urbanopoly
+								|  2014
+
+			// Message Modal
+			div(class="modal fade", id="messageModal")
+				div(class="modal-dialog modal-sm")
+					div(class="modal-content")
+						div(class="modal-body")
+							div(id="successMessage", class="alert alert-success")
+								h4(style="text-align:center") <strong>Well done!</strong>
+								p(id="scsMsgContent") You successfully read this important alert message.
+							div(id="errorMessage", class="alert alert-danger")
+								h4(style="text-align:center") <strong>Oh snap!</strong>
+								p(id="errMsgContent") Change a few things up and try submitting again.
+						div(class="modal-footer")
+							button(id="okMsgModal" type="button" class="btn btn-default" data-dismiss="modal") Ok
+							button(id="yesMsgModal" type="button" class="btn btn-default" data-dismiss="modal") Yes
+							button(id="noMsgModal" type="button" class="btn btn-default" data-dismiss="modal") No
+
+			script(src="https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js")
+			script(src='http://code.jquery.com/jquery-2.1.0.min.js')
+			script(src='./javascripts/mapView.js')
+
+	div.container
+		#footer-score
+			div(id="footer")
+				div.container
+					p(id="userNumVenues") #{user_numVenues}
+					img(src= "../images/venue_small.png")
+					p(id="userCash") #{user_cash}
+					img(src= "../images/euro_symbol.png")
