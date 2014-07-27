@@ -246,8 +246,8 @@ exports.getTakeAction = function(req, res){
 			//console.log('RESULT: ', result);
 			res.send(result);
 		}else{
-			message = Utility.getMessageBuilder("success", 5, venueName);
-			result = {"visit" : visit, "message" : message, "player": player };
+			message = Utility.getMessageBuilder("error", err.code, venueName);
+			result = {"visit" : null, "message" : message, "player": player };
 			//console.log('RESULT: ', result);
 			res.send(result);
 		}
@@ -268,13 +268,13 @@ exports.getQuizAction = function(req, res){
 		var message;
 		var result;
 		if(visit){
-			message = Utility.getMessageBuilder("success", 7, venue.name);
+			message = Utility.getMessageBuilder("success", 7, visit.deltaMoney);
 			result = {"visit" : visit, "message" : message, "player": player };
 			//console.log('RESULT: ', result);
 			res.send(result);
 		}else{
-			message = Utility.getMessageBuilder("success", 5, venueName);
-			result = {"visit" : visit, "message" : message, "player": player };
+			message = Utility.getMessageBuilder("error", err.code, venue.name);
+			result = {"visit" : null, "message" : message, "player": player };
 			//console.log('RESULT: ', result);
 			res.send(result);
 		}
@@ -316,8 +316,8 @@ exports.getAdvertiseAction = function(req, res){
 			//console.log('RESULT: ', result);
 			res.send(result);
 		}else{
-			message = Utility.getMessageBuilder("success", 5, venueName);
-			result = {"visit" : visit, "message" : message, "player": player };
+			message = Utility.getMessageBuilder("error", err.code, venueName);
+			result = {"visit" : null, "message" : message, "player": player };
 			//console.log('RESULT: ', result);
 			res.send(result);
 		}
@@ -338,8 +338,8 @@ exports.getSkipAction = function(req, res){
 			//console.log('RESULT: ', result);
 			res.send(result);
 		}else{
-			message = Utility.getMessageBuilder("success", 5, venueName);
-			result = {"visit" : visit, "message" : message, "player": player };
+			message = Utility.getMessageBuilder("error", err.code, venue.name);
+			result = {"visit" : null, "message" : message, "player": player };
 			//console.log('RESULT: ', result);
 			res.send(result);
 		}
