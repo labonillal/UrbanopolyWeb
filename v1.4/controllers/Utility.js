@@ -124,7 +124,7 @@ exports.getMessageBuilder = function(type, code, venueName){
             case 7:
                 //Quiz venue
                 message.code = code;
-                message.text = 'Quiz session finished!.';
+                message.text = 'Quiz session finished!. You earned ' + venueName + ' €.';
                 break;
             case 8:
                 //Skip venue
