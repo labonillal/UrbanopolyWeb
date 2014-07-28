@@ -27,7 +27,7 @@ block content
 								img(src="/images/loader.gif")
 
 			// Default Location Modal
-			div(class="modal fade", id="defaultLocationModal", role="dialog", aria-labelledby="defaultLocationModal", aria-hidden="true")
+			div(class="modal fade", id="defaultLocationModal", role="dialog", aria-labelledby="defaultLocationModal", aria-hidden="true", data-backdrop="static")
 				div(class="modal-dialog")
 					div(class="modal-content")
 						div(class="modal-header")
@@ -86,17 +86,17 @@ block content
 									button.btn.btn-primary(id="selBtn" type="button") Sell
 			
 			// Occupied Venue Modal
-			div(class="modal fade", id="occupiedModal", role="dialog", aria-labelledby="occupiedModal", aria-hidden="true")
+			div(class="modal fade", id="occupiedModal", role="dialog", aria-labelledby="occupiedModal", aria-hidden="true", data-backdrop="static")
 				div(class="modal-dialog")
 					div(class="modal-content")
 						div(class="modal-header")
 							img(src='/images/title_occupied_venue.png')
 						div(class="modal-body")
-							div(id="GameWheelPanel" class="panel panel-default")
+							div(class="panel panel-default")
 								div(class="panel-body")
 									div(class="col-md-2")
 									div(class="col-md-8")
-										div(style="position: relative; left: 0; top: 0;")
+										div(id="GameWheelPanel" style="position: relative; left: 0; top: 0;")
 											img(id="wheelBorder" src="/images/wheel_border.png" alt="wheelBorder")
 											img(id="wheel" src="/images/wheel.png" alt="wheel" style="position: absolute; top: 0px; left: 0px;")
 											img(id="wheelPin" src="/images/wheel_pin.png" alt="wheelPin" style="position: absolute; top: 0px; left: 126px;")
@@ -166,7 +166,7 @@ block content
 								button(id="buyButton" type="button" class="btn btn-primary") BUY
 				
 			// Occupied Take Cost Modal
-			div(class="modal fade", id="takeCostModal", role="dialog", aria-labelledby="takeCostModal", aria-hidden="true")
+			div(class="modal fade", id="takeCostModal", role="dialog", aria-labelledby="takeCostModal", aria-hidden="true", data-backdrop="static")
 				div(class="modal-dialog")
 					div(class="modal-content")
 						div(class="modal-header")
@@ -198,7 +198,7 @@ block content
 								button(id="cancelButton" type="button" class="btn btn-primary" data-dismiss="modal") CANCEL
 
 			// Occupied Take Modal
-			div(class="modal fade", id="takeModal", role="dialog", aria-labelledby="takeModal", aria-hidden="true")
+			div(class="modal fade", id="takeModal", role="dialog", aria-labelledby="takeModal", aria-hidden="true", data-backdrop="static")
 				div(class="modal-dialog")
 					div(class="modal-content")
 						div(class="modal-header")
@@ -235,7 +235,7 @@ block content
 								button(id="takeButton" type="button" class="btn btn-primary") TAKE
 								
 			// Occupied Pay Modal
-			div(class="modal fade", id="payModal", role="dialog", aria-labelledby="payModal", aria-hidden="true")
+			div(class="modal fade", id="payModal", role="dialog", aria-labelledby="payModal", aria-hidden="true", data-backdrop="static")
 				div(class="modal-dialog")
 					div(class="modal-content")
 						div(class="modal-header")
@@ -266,7 +266,7 @@ block content
 								button(id="payButton" type="button" class="btn btn-primary") PAY
 								
 			// Occupied Advertise Modal
-			div(class="modal fade", id="advertiseModal", role="dialog", aria-labelledby="advertiseModal", aria-hidden="true")
+			div(class="modal fade", id="advertiseModal", role="dialog", aria-labelledby="advertiseModal", aria-hidden="true", data-backdrop="static")
 				div(class="modal-dialog")
 					div(class="modal-content")
 						div(class="modal-header")
@@ -311,7 +311,7 @@ block content
 										a(id="nextAdvStp1" href="#advStep2" class="btn btn-primary" data-toggle="tab") Next
 		
 			// Occupied Quiz Modal
-			div(class="modal fade", id="quizModal", role="dialog", aria-labelledby="quizModal", aria-hidden="true")
+			div(class="modal fade", id="quizModal", role="dialog", aria-labelledby="quizModal", aria-hidden="true", data-backdrop="static")
 				div(class="modal-dialog")
 					div(class="modal-content")
 						div(class="modal-header")
