@@ -209,31 +209,41 @@ function createMap(lat, lon) {
     				case 'PAY':
     					rotationTime = 1500;
     					$("#resultTitle").attr("src",'/images/title_pay.png');
+    					$("#resultTitle").attr("width",'105');
+    					$("#resultTitle").attr("height",'25');
     					$("#resultDescription").text('Oh no! You have to pay the entrance fee!');
     					$("#payBtn").show();
 						break;
 					case 'TAKE':
 						rotationTime = 1750;
 						$("#resultTitle").attr("src",'/images/title_take.png');
+						$("#resultTitle").attr("width",'105');
+    					$("#resultTitle").attr("height",'25');
 						$("#resultDescription").text('You have the chance to take possession of this Venue against its Owner\'s will! But you have to pay 150% of its value');
 						$("#takeBtn").show();
 						break;
 					case 'ADVERTISE':
 						rotationTime = 2500;
 						$("#resultTitle").attr("src",'/images/title_advertise.png');
+						$("#resultTitle").attr("width",'146');
+    					$("#resultTitle").attr("height",'25');
 						$("#resultDescription").text('Ok, you have been hired to produce an Advertisement Poster for this Venue\nYou will be asked to provide the inputs to complete the Poster; you\'ll be paid for each provided input.\nTake care! If you insert the wrong input your Karma will punish you!');
 						$("#advBtn").show();
 						break;
 					case 'QUIZ':
 						rotationTime = 2250;
 						$("#resultTitle").attr("src",'/images/title_quiz.png');
+						$("#resultTitle").attr("width",'105');
+    					$("#resultTitle").attr("height",'25');
 						$("#resultDescription").text('Hey, Mr. Expert, are you ready to gain money? You\'ll be asked from 1 to 3 questions about this Venue. In each quiz, choose at least 1 of the provided options or declare your ignorance on the subject: we appreciate your expertise.. and also your limits!');
 						$("#quzBtn").show();
 						break;
 					default:
 						rotationTime = 2000;
 						$("#resultTitle").attr("src",'/images/title_skip.png');
-						$("#resultDescription").text('Wow, you skipped the misfortune! And you also earned');
+						$("#resultTitle").attr("width",'105');
+    					$("#resultTitle").attr("height",'25');
+						$("#resultDescription").text('Wow, you skipped the misfortune. And you also earned some money!');
 						$("#skpBtn").show();
 						break;
     			}
@@ -249,6 +259,7 @@ function createMap(lat, lon) {
 					//$("#quizContent").text("QUIZ CONTENT: " + questions);
 					var options = e.layer.feature.properties.quiz["options"];
 					console.log('QUESTIONS: ', questions);
+					console.log('OPTIONS: ', options);
 					var currentStep = 0;
 					var nextStep = 1;
 					for(var i in questions){
@@ -270,22 +281,22 @@ function createMap(lat, lon) {
 							if(options[i][2] != null && options[i][3] != null){
 								content += 			'<div style="text-align:left">';
 								content +=				'<div class="radio">';
-								content +=					'<input type="radio" name="optionsRadios" id="optionsRadios1" value="0">';
+								content +=					'<input type="checkbox" name="optionsRadios" id="optionsRadios1" value="0">';
 								content +=						options[i][0];
 								content +=					'</input>';
 								content +=				'</div>';
 								content +=				'<div class="radio">';
-								content +=					'<input type="radio" name="optionsRadios" id="optionsRadios2" value="1">';
+								content +=					'<input type="checkbox" name="optionsRadios" id="optionsRadios2" value="1">';
 								content +=						options[i][1];
 								content +=					'</input>';
 								content +=				'</div>';
 								content +=				'<div class="radio">';
-								content +=					'<input type="radio" name="optionsRadios" id="optionsRadios3" value="2">';
+								content +=					'<input type="checkbox" name="optionsRadios" id="optionsRadios3" value="2">';
 								content +=						options[i][2];
 								content +=					'</input>';
 								content +=				'</div>';
 								content +=				'<div class="radio">';
-								content +=					'<input type="radio" name="optionsRadios" id="optionsRadios4" value="3">';
+								content +=					'<input type="checkbox" name="optionsRadios" id="optionsRadios4" value="3">';
 								content +=						options[i][3];
 								content +=					'</input>';
 								content +=				'</div>';
@@ -324,22 +335,22 @@ function createMap(lat, lon) {
 								content +=			'<div class="panel-body">';
 							if(options[i][2] != null && options[i][3] != null){
 								content +=  '<div class="radio">';
-								content +=		'<input type="radio" name="optionsRadios" id="optionsRadios1" value="0">';
+								content +=		'<input type="checkbox" name="optionsRadios" id="optionsRadios1" value="0">';
 								content +=			options[i][0];
 								content +=		'</input>';
 								content +=	'</div>';
 								content +=  '<div class="radio">';
-								content +=		'<input type="radio" name="optionsRadios" id="optionsRadios2" value="1">';
+								content +=		'<input type="checkbox" name="optionsRadios" id="optionsRadios2" value="1">';
 								content +=			options[i][1];
 								content +=		'</input>';
 								content +=	'</div>';
 								content +=	'<div class="radio">';
-								content +=		'<input type="radio" name="optionsRadios" id="optionsRadios3" value="2">';
+								content +=		'<input type="checkbox" name="optionsRadios" id="optionsRadios3" value="2">';
 								content +=			options[i][2];
 								content +=		'</input>';
 								content +=	'</div>';
 								content +=	'<div class="radio">';
-								content +=		'<input type="radio" name="optionsRadios" id="optionsRadios4" value="3">';
+								content +=		'<input type="checkbox" name="optionsRadios" id="optionsRadios4" value="3">';
 								content +=			options[i][3];
 								content +=		'</input>';
 								content +=	'</div>';
@@ -390,6 +401,7 @@ function createMap(lat, lon) {
 					var nextStep = 2;
     				for(var i in featureTypes){
     					var featureType = featureTypes[i];
+    					console.log('featureType['+i+'] : ', featureType);
 						currentStep++;
 						nextStep++;
 						//Nav tab
@@ -398,6 +410,14 @@ function createMap(lat, lon) {
 						var content =	'<div class="tab-pane" id="advStep'+ currentStep +'">';
 							content +=		'<div class="panel">';
 							content +=			'<div class="panel-heading">';
+							//Type of question
+							if(featureType.featureRange.type == 'open'){
+								content +=	'<img id="gain_3000" src="/images/gain_3000.png" alt="gain_3000" style="position: absolute; top: 0px; right: 0px;"> </img>';
+							}else if(featureType.featureRange.type == 'closed'){
+								content +=	'<img id="gain_1000" src="/images/gain_1000.png" alt="gain_1000" style="position: absolute; top: 0px; right: 0px;"> </img>';
+							}else{
+								content +=	'<img id="gain_2000" src="/images/gain_2000.png" alt="gain_2000" style="position: absolute; top: 0px; right: 0px;"> </img>';
+							}
 							content +=				'<div class="alert alert-info">';
 							content +=					'<strong>'+ currentStep +'.</strong> '+ featureType.advertiseQuestion +'.';
 							content +=				'</div>';
@@ -410,10 +430,12 @@ function createMap(lat, lon) {
 							content +=				'<div style="text-align:center">';
 						if(i == featureTypes.length - 1){
 							content += '<a id="okAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-dismiss="modal"> Ok </a>';
-							content += '<a id="idkAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-dismiss="modal"> I dont know </a> </div>';
+							content += '<a id="idkAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-dismiss="modal"> I dont know </a>';
+							content += '<a id="finishAdvStp'+ currentStep +'" class="btn btn-primary" data-dismiss="modal"> Finish </a> </div>';
 						}else{
 							content += '<a id="okAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-toggle="tab"> Ok </a>';
-							content += '<a id="idkAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-toggle="tab"> I dont know </a> </div>';
+							content += '<a id="idkAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-toggle="tab"> I dont know </a>';
+							content += '<a id="finishAdvStp'+ currentStep +'" class="btn btn-primary" data-dismiss="modal"> Finish </a> </div>';
 						}
 						content += '</div> </div> </div>';
 						//Adding the content
@@ -1027,7 +1049,7 @@ $("#advBtn").click(function() {
 	$("#advertiseModal").modal('show');
 	$('#advertiseParentPanel').hide();
 	$('#advertiseChildPanel').hide();
-	$('#nextAdvStp1').attr("disabled", "disabled");
+	$('#nextAdvStp1').hide();
 });
 
 //Advertise insert name ok event
@@ -1067,7 +1089,7 @@ $("#advertiseParentSelect").change(function() {
 
 //Advertise child selection event
 $("#advertiseChildSelect").change(function() {
-	$('#nextAdvStp1').removeAttr("disabled");
+	$('#nextAdvStp1').show();
 });
 
 // Advertise Next StepX Event
@@ -1084,15 +1106,37 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 				console.log(inputValue);
 				visitAdvertise.featureValues[0] = inputValue;
 			}else{
+				//Save the type of the question
+				featureRanges[0] = 'closed';
 				//Take the value of the options
+				inputValue = $("#advStep2Input").val();
+				console.log(inputValue);
+				visitAdvertise.featureValues[0] = inputValue;
 			}
 			//mark the feature like responded
 			visitAdvertise.skips[0] = 'false';
 			break;
 		case 'idkAdvStp2':
+			if(visitAdvertise.featureTypes[0].featureRange.type == 'open'){
+				featureRanges[0] = 'open';
+				visitAdvertise.featureValues[0] = 'undefined';
+			}else{
+				featureRanges[0] = 'closed';
+				visitAdvertise.featureValues[0] = 'undefined';
+			}
+			visitAdvertise.skips[0] = 'false';
+			break;
+		case 'finishAdvStp2':
 			visitAdvertise.featureValues[0] = 'undefined';
 			featureRanges[0] = 'undefined';
 			visitAdvertise.skips[0] = 'true';
+			visitAdvertise.skips[1] = 'true';
+			visitAdvertise.skips[2] = 'true';
+			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
+			console.log('VISIT ADVERTISE :', visitAdvertise);
+			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			console.log('SKIPS :', visitAdvertise.skips);
+			console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'okAdvStp3':
 			if(visitAdvertise.featureTypes[1].featureRange.type == 'open'){
@@ -1103,15 +1147,36 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 				console.log(inputValue);
 				visitAdvertise.featureValues[1] = inputValue;
 			}else{
+				//Save the type of the question
+				featureRanges[1] = 'closed';
 				//Take the value of the options
+				inputValue = $("#advStep2Input").val();
+				console.log(inputValue);
+				visitAdvertise.featureValues[1] = inputValue;
 			}
 			//mark the feature like responded
 			visitAdvertise.skips[1] = 'false';
 			break;
 		case 'idkAdvStp3':
+			if(visitAdvertise.featureTypes[1].featureRange.type == 'open'){
+				featureRanges[1] = 'open';
+				visitAdvertise.featureValues[1] = 'undefined';
+			}else{
+				featureRanges[1] = 'closed';
+				visitAdvertise.featureValues[1] = 'undefined';
+			}
+			visitAdvertise.skips[1] = 'false';
+			break;
+		case 'finishAdvStp3':
 			visitAdvertise.featureValues[1] = 'undefined';
 			featureRanges[1] = 'undefined';
 			visitAdvertise.skips[1] = 'true';
+			visitAdvertise.skips[2] = 'true';
+			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
+			console.log('VISIT ADVERTISE :', visitAdvertise);
+			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			console.log('SKIPS :', visitAdvertise.skips);
+			console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'okAdvStp4':
 			if(visitAdvertise.featureTypes[2].featureRange.type == 'open'){
@@ -1122,7 +1187,12 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 				console.log(inputValue);
 				visitAdvertise.featureValues[2] = inputValue;
 			}else{
+				//Save the type of the question
+				featureRanges[2] = 'closed';
 				//Take the value of the options
+				inputValue = $("#advStep2Input").val();
+				console.log(inputValue);
+				visitAdvertise.featureValues[2] = inputValue;
 			}
 			//mark the feature like responded
 			visitAdvertise.skips[2] = 'false';
@@ -1133,6 +1203,21 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 			console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'idkAdvStp4':
+			if(visitAdvertise.featureTypes[2].featureRange.type == 'open'){
+				featureRanges[2] = 'open';
+				visitAdvertise.featureValues[2] = 'undefined';
+			}else{
+				featureRanges[2] = 'closed';
+				visitAdvertise.featureValues[2] = 'undefined';
+			}
+			visitAdvertise.skips[2] = 'false';
+			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
+			console.log('VISIT ADVERTISE :', visitAdvertise);
+			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			console.log('SKIPS :', visitAdvertise.skips);
+			console.log('FEATURE RANGES :', featureRanges);
+			break;
+		case 'finishAdvStp4':
 			visitAdvertise.featureValues[2] = 'undefined';
 			featureRanges[2] = 'undefined';
 			visitAdvertise.skips[2] = 'true';
@@ -1224,6 +1309,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp1':
 			var index = $('input[name="optionsRadios"]:checked').val();
+			console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[0].length; i++){
 					if(i == index){
@@ -1272,7 +1358,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp2':
 			var index = $('input[name="optionsRadios"]:checked').val();
-			console.log('SELECTED INDEX: ', index);
+			console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[1].length; i++){
 					if(i == index){
@@ -1321,6 +1407,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp3':
 			var index = $('input[name="optionsRadios"]:checked').val();
+			console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[2].length; i++){
 					if(i == index){
@@ -1369,6 +1456,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp4':
 			var index = $('input[name="optionsRadios"]:checked').val();
+			console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[3].length; i++){
 					if(i == index){
@@ -1423,6 +1511,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'finishQz':
 			var index = $('input[name="optionsRadios"]:checked').val();
+			console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[visitQuiz.skips.length].length; i++){
 					if(i == index){
