@@ -11,8 +11,8 @@ var visitAdvertise;
 var featureRanges = [];
 var wheelClicked = 'false';
 var looper;
-var degrees = 0;
-var rotationTime = 2000;
+var degrees = 1;
+var rotationObjective = 1;
 
 // Function to load the map
 $(document).ready(function(){
@@ -26,6 +26,7 @@ $(document).ready(function(){
 	map.locate();
 
 	map.on('locationfound', function(e){
+		$("#defaultLocationModal").modal('hide');
 		lat = e.latlng.lat;
 		lon = e.latlng.lng;
 		//Create the map on the location position
@@ -33,11 +34,20 @@ $(document).ready(function(){
 	});
 
 	// If the user chooses not to allow their location
-	// to be shared, display an error message.
+	// to be shared, display the default location option.
 	map.on('locationerror', function() {
 		$("#defaultLocationModal").modal('show');
 		console.log('Position could not be found!');
 	});
+	// If the user spend more than 10 segs thinking about
+	//sharing its location, display the default location option.
+	var waitTime = 10000;
+	var t = setTimeout(function () {
+       if ($("#loader").attr("class") != 'hide') {
+            $("#defaultLocationModal").modal('show');
+			console.log('Position could not be found!');
+        }
+    }, waitTime);
 });
 
 // Function to start the loader over the map
@@ -130,6 +140,14 @@ function createMap(lat, lon) {
 
     		//Default setup
     		$('select option[value="base"]').attr("selected", true);
+    		//GameWheel
+    		$("#GameWheelPanel").empty();
+    		degrees = 1;
+    		var gameWheel = '<img id="wheelBorder" src="/images/wheel_border.png" alt="wheelBorder"></img>';
+			gameWheel +=	'<img id="wheel" src="/images/wheel.png" alt="wheel" style="position: absolute; top: 0px; left: 0px;"></img>';
+			gameWheel +=	'<img id="wheelPin" src="/images/wheel_pin.png" alt="wheelPin" style="position: absolute; top: 0px; left: 126px;"></img>';
+			$(gameWheel).appendTo('#GameWheelPanel');
+    		//Buttons
     		$("#buyBtn").hide();
 			$("#mtgBtn").hide();
 			$("#rdmBtn").hide();
@@ -139,11 +157,14 @@ function createMap(lat, lon) {
 			$("#advBtn").hide();
 			$("#quzBtn").hide();
 			$("#skpBtn").hide();
+			//Panels
 			$("#venueNamePanel").show();
 			$("#venueCategoryPanel").show();
 			$("#gameWheelResultPanel").hide();
+			//Messages
 			$("#successMessage").hide();
 			$("#errorMessage").hide();
+			//Modals
 			$("#okMsgModal").show();
 			$("#yesMsgModal").hide();
 			$("#noMsgModal").hide();
@@ -207,7 +228,7 @@ function createMap(lat, lon) {
     			var wheelAction = getGameWheelAction(wheel);
     			switch(wheelAction){
     				case 'PAY':
-    					rotationTime = 1500;
+    					rotationObjective = 555;
     					$("#resultTitle").attr("src",'/images/title_pay.png');
     					$("#resultTitle").attr("width",'105');
     					$("#resultTitle").attr("height",'25');
@@ -215,7 +236,7 @@ function createMap(lat, lon) {
     					$("#payBtn").show();
 						break;
 					case 'TAKE':
-						rotationTime = 1750;
+						rotationObjective = 525;
 						$("#resultTitle").attr("src",'/images/title_take.png');
 						$("#resultTitle").attr("width",'105');
     					$("#resultTitle").attr("height",'25');
@@ -223,7 +244,7 @@ function createMap(lat, lon) {
 						$("#takeBtn").show();
 						break;
 					case 'ADVERTISE':
-						rotationTime = 2500;
+						rotationObjective = 495;
 						$("#resultTitle").attr("src",'/images/title_advertise.png');
 						$("#resultTitle").attr("width",'146');
     					$("#resultTitle").attr("height",'25');
@@ -231,7 +252,7 @@ function createMap(lat, lon) {
 						$("#advBtn").show();
 						break;
 					case 'QUIZ':
-						rotationTime = 2250;
+						rotationObjective = 465;
 						$("#resultTitle").attr("src",'/images/title_quiz.png');
 						$("#resultTitle").attr("width",'105');
     					$("#resultTitle").attr("height",'25');
@@ -239,7 +260,7 @@ function createMap(lat, lon) {
 						$("#quzBtn").show();
 						break;
 					default:
-						rotationTime = 2000;
+						rotationObjective = 615;
 						$("#resultTitle").attr("src",'/images/title_skip.png');
 						$("#resultTitle").attr("width",'105');
     					$("#resultTitle").attr("height",'25');
@@ -580,41 +601,38 @@ function getGameWheelAction(wheel){
 };
 
 //GameWheel Rotation function
-function rotateAnimation(el, speed){
-	var elem = document.getElementById(el);
-	if(navigator.userAgent.match("Chrome")){
-		elem.style.WebkitTransform = "rotate("+degrees+"deg)";
-	} else if(navigator.userAgent.match("Firefox")){
-		elem.style.MozTransform = "rotate("+degrees+"deg)";
-	} else if(navigator.userAgent.match("MSIE")){
-		elem.style.msTransform = "rotate("+degrees+"deg)";
-	} else if(navigator.userAgent.match("Opera")){
-		elem.style.OTransform = "rotate("+degrees+"deg)";
-	} else {
-		elem.style.transform = "rotate("+degrees+"deg)";
-	}
-	looper = setTimeout('rotateAnimation(\''+el+'\','+speed+')',speed);
-	degrees++;
-	if(degrees > 359){
-		degrees = 1;
-	}
-	$("#status").text("rotate(" + degrees + "deg)");
-	$("#speed").text("speed(" + speed + "units)");
+function rotateAnimation(objective){
+	var elem = document.getElementById("wheel");
+
+	setTimeout(function () {    //  call a 1s setTimeout when the loop is called
+		if(navigator.userAgent.match("Chrome")){
+			elem.style.WebkitTransform = "rotate("+degrees+"deg)";
+		}else if(navigator.userAgent.match("Firefox")){
+			elem.style.MozTransform = "rotate("+degrees+"deg)";
+		}else if(navigator.userAgent.match("MSIE")){
+			elem.style.msTransform = "rotate("+degrees+"deg)";
+		}else if(navigator.userAgent.match("Opera")){
+			elem.style.OTransform = "rotate("+degrees+"deg)";
+		}else {
+			elem.style.transform = "rotate("+degrees+"deg)";
+		}
+		degrees++;						//  increment the counter
+		if (degrees < objective) {		//  if the counter < 10, call the loop function
+			rotateAnimation(objective);		//  ..  again which will trigger another 
+		}else{
+			console.log('Actual degrees: ', degrees);
+			$("#venueNamePanel").hide();
+			$("#venueCategoryPanel").hide();
+			$("#gameWheelResultPanel").show();
+		}									//  ..  setTimeout()
+	},1)
 }
-//GameWheel Stop function
-function stopAnimation(){
-	clearTimeout(looper);
-	$("#venueNamePanel").hide();
-	$("#venueCategoryPanel").hide();
-	$("#gameWheelResultPanel").show();
-};
 
 //GameWheel Spin event
-$("#wheel").click(function(event) {
+$('#GameWheelPanel').on( "click", "img", function(event) {
 	//If the wheel isn't spining yet
 	if(wheelClicked == 'false'){
-		rotateAnimation("wheel", 1);
-		setTimeout(function(){stopAnimation()}, rotationTime);	
+		rotateAnimation(rotationObjective);
 	}
 	wheelClicked = 'true';
 });
