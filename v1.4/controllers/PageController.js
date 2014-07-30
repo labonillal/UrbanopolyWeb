@@ -6,11 +6,6 @@ var venueController = require('./VenueController');
 var notificationsController = require('./NotificationsController');
 var Utility = require('./Utility');
 
-//Local variables
-var myQuiz = {"type":"QUIZ","player":"774274788","venue":35289,"date":null,"deltaMoney":0,"sent":0,"questions":["does it sell drugs without prescription? (yes/no)","what\u0027s its cuisine type?","do wheelchairs have full unrestricted access? (yes/no)", "what type of transport is there available?","does it sell drugs without prescription? (yes/no)"],"skips":null,"options":[["yes","no",null,null],["japanese","Brazilian","Chicken","Sandwich"],["no","yes",null,null],["bus","tram","aerialway","monorail"],["yes","no",null,null]],"selected":[],"feature":[{"name":"dispensing","id":363,"advertiseQuestion":"does it sell drugs without prescription? (yes/no)","featureRange":{"id":135,"values":["no"],"type":"closed","openDataType":"null"},"multivalue":false},{"name":"wheel chair","id":428,"advertiseQuestion":"do wheelchairs have full unrestricted access? (yes/no)","featureRange":{"id":135,"values":["yes"],"type":"closed","openDataType":"null"},"multivalue":false}],"offensive":false};
-
-var myAdvertise = {"type":"ADVERTISE","player":"774274788","venue":33912,"date":null,"deltaMoney":0,"sent":0,"venueName":"Valduce","venueCategory":null,"skips":[],"featureTypes":[{"name":"street","id":326,"advertiseQuestion":"what is the name of the street?","featureRange":{"id":133,"values":[],"type":"open","openDataType":"null"},"multivalue":false},{"name":"housenumber","id":324,"advertiseQuestion":"what is the house number?","featureRange":{"id":133,"values":[],"type":"open","openDataType":"null"},"multivalue":false},{"name":"postcode","id":325,"advertiseQuestion":"what is the post code?","featureRange":{"id":133,"values":[],"type":"open","openDataType":"null"},"multivalue":false}],"featureValues":[],"offensive":false,"finishAt":-1};
-
 /* GET cover page. */
 exports.getCover = function(req, res) {
 	res.render('cover', { title: 'Urbanopoly' });
@@ -21,24 +16,29 @@ exports.getProfile = function(req, res){
 	//console.log('Executing: PageController.getProfile...');
 	//console.log('Sesion: %j', req.user);
 	//console.log('Express Sesion: %j', req.session);
-	res.render('profile', { title: 'Profile', user_name: req.user.name, user_pic: req.user.picture, user_cash: req.user.cash, user_numVenues: req.user.numVenues });
+	var userCash = Utility.formatCurrency(req.user.cash);
+	res.render('profile', { title: 'Profile', user_name: req.user.name, user_pic: req.user.picture, user_cash: userCash, user_numVenues: req.user.numVenues });
 };
 
 /* GET My Venues page. */
 exports.getVenues = function(req, res) {
 	// Download player venues
 	console.log("Download player's venues");
+	var userCash = Utility.formatCurrency(req.user.cash);
 	venueController.downloadMyVenues(req.user.id, function(err, myVenues){
 		if (err){
 			console.log('ERROR:', err);
 			res.send(500, { error: 'Something went wrong' });
 		}else{
-			//console.log('myVenues: %j', myVenues);
+			for(var i in myVenues){
+				var venueFormat = myVenues[i];
+				venueFormat.value = Utility.formatCurrency(venueFormat.value);
+			}
 			res.render('venues', {	title: 'My Venues',
 									venues: myVenues,
 						   			user_name: req.user.name,
 									user_pic: req.user.picture,
-									user_cash: req.user.cash,
+									user_cash: userCash,
 									user_numVenues: req.user.numVenues });
 		}	
 	});
@@ -46,10 +46,11 @@ exports.getVenues = function(req, res) {
 
 /* GET Map page. */
 exports.getMap = function(req, res){
+	var userCash = Utility.formatCurrency(req.user.cash);
 	res.render('map', { title: 'Map',
 						user_name: req.user.name,
 						user_pic: req.user.picture,
-						user_cash: req.user.cash,
+						user_cash: userCash,
 						user_numVenues: req.user.numVenues,
 						categories:  gameController.getAllCategories()});
 };
@@ -57,17 +58,22 @@ exports.getMap = function(req, res){
 /* GET Leaderboard page. */
 exports.getLeaderboard = function(req, res){
 	console.log("Loading scores...");
+	var userCash = Utility.formatCurrency(req.user.cash);
 	gameController.getHighscores(req.user.id, 1, 20, function(err, ranking){
 		if (err){
 			console.log('ERROR:', err);
 			res.send(500, { error: 'Something went wrong' });
 		}else{
-			//console.log('leaderboard: %j', ranking);
+			for(var i in ranking){
+				var entryFormat = ranking[i];
+				entryFormat.Money = Utility.formatCurrency(entryFormat.Money);
+				entryFormat.heritage = Utility.formatCurrency(entryFormat.heritage);
+			}
 			res.render('leaderboard', { title: 'Leaderboard',
 										leaderboard: ranking,
 										user_name: req.user.name,
 										user_pic: req.user.picture,
-										user_cash: req.user.cash,
+										user_cash: userCash,
 										user_numVenues: req.user.numVenues });
 		}
 	});
@@ -77,6 +83,7 @@ exports.getLeaderboard = function(req, res){
 exports.getNotifications = function(req, res){
 	// Download player notifications
 	console.log("Download player's notifications");
+	var userCash = Utility.formatCurrency(req.user.cash);
 	notificationsController.loadNotifications(req.user.id, function(err, myNotifications){
 		if (err){
 			console.log('ERROR:', err);
@@ -91,11 +98,15 @@ exports.getNotifications = function(req, res){
 					// TODO: Apply notifications
 					//notificationsController.applyNotifications(false, req.user, myNotifications);
 					//console.log('myCompleteNotifications: %j', myCompleteNotifications);
+					for(var i in myCompleteNotifications){
+						var notificationFormat = myCompleteNotifications[i];
+						notificationFormat.deltaCash = Utility.formatCurrency(notificationFormat.deltaCash);
+					}
 					res.render('notifications', {	title: 'Notifications',
 													notifications: myCompleteNotifications,
 								   					user_name: req.user.name,
 													user_pic: req.user.picture,
-													user_cash: req.user.cash,
+													user_cash: userCash,
 													user_numVenues: req.user.numVenues });
 				}
 			});
@@ -268,7 +279,7 @@ exports.getQuizAction = function(req, res){
 		var message;
 		var result;
 		if(visit){
-			message = Utility.getMessageBuilder("success", 7, visit.deltaMoney);
+			message = Utility.getMessageBuilder("success", 7, Utility.formatCurrency(visit.deltaMoney));
 			result = {"visit" : visit, "message" : message, "player": player };
 			//console.log('RESULT: ', result);
 			res.send(result);
@@ -300,10 +311,13 @@ exports.getAdvertiseAction = function(req, res){
 	for(var i=0; i<ranges.length;i++){
 		if(skips[i] == 'false' && ranges[i] == 'open'){
 			moneyForQuestions += parseInt(gameConf.moneyForAdvertiseOpen);
+			console.log('Advertise open question');
 		}else if(skips[i] == 'false' && ranges[i] == 'semiclosed'){
 			moneyForQuestions += parseInt(gameConf.moneyForAdvertiseSemiclosed);
+			console.log('Advertise semi closed question');
 		}else if(skips[i] == 'false' && ranges[i] == 'closed'){
 			moneyForQuestions += parseInt(gameConf.moneyForAdvertiseClosed);
+			console.log('Advertise closed question');
 		}
 	}
 	gameController.advertise(venue, player, venueCategory, venueName, features, skips, moneyForQuestions, function(err, visit){
@@ -311,7 +325,7 @@ exports.getAdvertiseAction = function(req, res){
 		var message;
 		var result;
 		if(visit){
-			message = Utility.getMessageBuilder("success", 6, moneyForQuestions);
+			message = Utility.getMessageBuilder("success", 6, Utility.formatCurrency(moneyForQuestions));
 			result = {"visit" : visit, "message" : message, "player": player };
 			//console.log('RESULT: ', result);
 			res.send(result);
@@ -333,7 +347,7 @@ exports.getSkipAction = function(req, res){
 		var message;
 		var result;
 		if(visit){
-			message = Utility.getMessageBuilder("success", 8, gameConf.moneyForSkip);
+			message = Utility.getMessageBuilder("success", 8, Utility.formatCurrency(gameConf.moneyForSkip));
 			result = {"visit" : visit, "message" : message, "player": player };
 			//console.log('RESULT: ', result);
 			res.send(result);
