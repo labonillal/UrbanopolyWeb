@@ -37,7 +37,7 @@ $(document).ready(function(){
 	// to be shared, display the default location option.
 	map.on('locationerror', function() {
 		$("#defaultLocationModal").modal('show');
-		console.log('Position could not be found!');
+		//console.log('Position could not be found!');
 	});
 	// If the user spend more than 10 segs thinking about
 	//sharing its location, display the default location option.
@@ -45,7 +45,7 @@ $(document).ready(function(){
 	var t = setTimeout(function () {
        if ($("#loader").attr("class") != 'hide') {
             $("#defaultLocationModal").modal('show');
-			console.log('Position could not be found!');
+			//console.log('Position could not be found!');
         }
     }, waitTime);
 });
@@ -80,7 +80,7 @@ $(document.body).on( 'click', '.dropdown-menu li', function( event ) {
 });
 
 function createMap(lat, lon) {
-	console.log('Location Coordinates: ' + lon +' , ' + lat);
+	//console.log('Location Coordinates: ' + lon +' , ' + lat);
 
 		//request map data to the server
 		requestUpdatedMap(lat, lon);
@@ -114,8 +114,8 @@ function createMap(lat, lon) {
 
 		// Marker event handler
 		myMarkersLayer.on('click',function(e) {
-    		console.log(e.layer.feature.properties);
-    		console.log('JSON: ', JSON.stringify(e.layer.feature.properties));
+    		//console.log(e.layer.feature.properties);
+    		//console.log('JSON: ', JSON.stringify(e.layer.feature.properties));
     		selectedVenue = JSON.stringify(e.layer.feature.properties);
     		// Request to get the category of the venue
     		$.ajax(
@@ -178,9 +178,9 @@ function createMap(lat, lon) {
 			            type: 'GET',
 			            url: '/retrieveVenueRent?venueValue=' + e.layer.feature.properties["value"],
 			            success: function (result) {
-			            	console.log('RENT: ', result);
+			            	//console.log('RENT: ', result);
 			            	if(result.length != 0){
-								$("#freeVenueRent").text(result.rent);
+								$("#freeVenueRent").text(formatCurrency(result.rent, "€"));
 							}else{
 								$("#freeVenueRent").text("Unknown Rent");
 							}
@@ -205,7 +205,7 @@ function createMap(lat, lon) {
     			}
     			$("#freeVenueIcon").attr("src",e.layer.feature.properties.icon.iconUrl);
     			$("#freeVenueCategory").text(e.layer.feature.properties.category);
-    			$("#freeVenueValue").text(e.layer.feature.properties.value);
+    			$("#freeVenueValue").text(formatCurrency(e.layer.feature.properties.value, "€"));
     			// Show modal
     			$("#freeModal").modal('show');
     		}
@@ -221,7 +221,7 @@ function createMap(lat, lon) {
     				$("#advertiseInputVenueName").val("Unnamed Venue");
     			}
     			$("#occupiedVenueIcon").attr("src",e.layer.feature.properties.icon.iconUrl);
-    			$("#occupiedVenueValue").text(e.layer.feature.properties.value);
+    			$("#occupiedVenueValue").text(formatCurrency(e.layer.feature.properties.value, "€"));
     			// Game Wheel Result
     			var wheel = e.layer.feature.properties.wheel;
     			wheelClicked = 'false';
@@ -279,8 +279,8 @@ function createMap(lat, lon) {
 					var questions = e.layer.feature.properties.quiz["questions"];
 					//$("#quizContent").text("QUIZ CONTENT: " + questions);
 					var options = e.layer.feature.properties.quiz["options"];
-					console.log('QUESTIONS: ', questions);
-					console.log('OPTIONS: ', options);
+					//console.log('QUESTIONS: ', questions);
+					//console.log('OPTIONS: ', options);
 					var currentStep = 0;
 					var nextStep = 1;
 					for(var i in questions){
@@ -413,16 +413,16 @@ function createMap(lat, lon) {
     				visitAdvertise = e.layer.feature.properties.advertise;
     				var featureTypes = e.layer.feature.properties.advertise["featureTypes"];
     				//$("#advertiseContent").text("ADVERTISE CONTENT: " + featureTypes);
-    				console.log('ADV QUESTIONS: ', featureTypes.length - 1);
-    				for(var k=0; k < featureTypes.length; k++){
-    					console.log(k + '. ' + featureTypes[k].advertiseQuestion);
-    				}
+    				//console.log('ADV QUESTIONS: ', featureTypes.length - 1);
+    				//for(var k=0; k < featureTypes.length; k++){
+    				//	console.log(k + '. ' + featureTypes[k].advertiseQuestion);
+    				//}
     				//$(featureTypes.advertiseQuestion).appendTo('#advertiseContent');
     				var currentStep = 1;
 					var nextStep = 2;
     				for(var i in featureTypes){
     					var featureType = featureTypes[i];
-    					console.log('featureType['+i+'] : ', featureType);
+    					//console.log('featureType['+i+'] : ', featureType);
 						currentStep++;
 						nextStep++;
 						//Nav tab
@@ -475,9 +475,9 @@ function createMap(lat, lon) {
 			            type: 'GET',
 			            url: '/retrieveVenueRent?venueValue=' + e.layer.feature.properties["value"],
 			            success: function (result) {
-			            	console.log('RENT: ', result);
+			            	//console.log('RENT: ', result);
 			            	if(result.length != 0){
-								$("#freeVenueRent").text(result.rent);
+								$("#freeVenueRent").text(formatCurrency(result.rent, "€"));
 							}else{
 								$("#freeVenueRent").text("Unknown Rent");
 							}
@@ -494,7 +494,7 @@ function createMap(lat, lon) {
     			}
     			$("#freeVenueIcon").attr("src",e.layer.feature.properties.icon.iconUrl);
     			$("#freeVenueCategory").text(e.layer.feature.properties.category);
-    			$("#freeVenueValue").text(e.layer.feature.properties.value);
+    			$("#freeVenueValue").text(formatCurrency(e.layer.feature.properties.value, "€"));
     			// Enable sell button
     			$("#selBtn").show();
     			if (e.layer.feature.properties["state"] == 'MINE'){
@@ -510,7 +510,7 @@ function createMap(lat, lon) {
     				var month = e.layer.feature.properties.deadTime.month + 1;
     				var year = e.layer.feature.properties.deadTime.year;
     				var deadTime = day + '/' + month + '/' + year;
-    				console.log('DEADTIME: ', deadTime);
+    				//console.log('DEADTIME: ', deadTime);
     				$("#freeVenueMortgageDeadTime").text(deadTime);
     				$("#freeVenueMortgageLabel").text('Mortgage End');
     				// Enable redeem button
@@ -541,7 +541,7 @@ function createMap(lat, lon) {
 
 function requestUpdatedMap(lat, lon) {
 	var temp = '/RetrieveMap?lat=' + lat + '&lon=' + lon;
-	console.log('REQUEST URL: ',temp);
+	//console.log('REQUEST URL: ',temp);
     $.ajax(
 		{
             type: 'GET',
@@ -551,7 +551,7 @@ function requestUpdatedMap(lat, lon) {
             		myMarkersLayer.setGeoJSON(result);
 					map.fitBounds(myMarkersLayer.getBounds());
 					finishedLoading(); // When the tiles load, remove the loading screen;
-					console.log('requestUpdatedMap finish...')
+					//console.log('requestUpdatedMap finish...')
             	}else{
             		console.log('No data available for this location');
             		map.fitBounds(myPositionLayer.getBounds());
@@ -569,18 +569,18 @@ function getGameWheelAction(wheel){
 	var wheelAction;
 	//Create the random int
 	var randomInt = Math.random() * 100;
-	console.log('RANDOM INT: ', randomInt);
+	//console.log('RANDOM INT: ', randomInt);
 	//Define answer thresholds
 	var takeThreshold = wheel.takePercentage;
-	console.log('takeThreshold: ', takeThreshold);
+	//console.log('takeThreshold: ', takeThreshold);
 	var skipThreshold = takeThreshold + wheel.skipPercentage;
-	console.log('skipThreshold: ', skipThreshold);
+	//console.log('skipThreshold: ', skipThreshold);
 	var payThreshold = skipThreshold + wheel.payPercentage;
-	console.log('payThreshold: ', payThreshold);
+	//console.log('payThreshold: ', payThreshold);
 	var advertiseThreshold = payThreshold + wheel.advertisePercentage;
-	console.log('advertiseThreshold: ', advertiseThreshold);
+	//console.log('advertiseThreshold: ', advertiseThreshold);
 	var quizThreshold = advertiseThreshold + wheel.quizPercentage;
-	console.log('quizThreshold: ', quizThreshold);
+	//console.log('quizThreshold: ', quizThreshold);
 	//Find the answer
 	if(0 < randomInt && randomInt <= takeThreshold){
 		wheelAction = 'TAKE';
@@ -595,7 +595,7 @@ function getGameWheelAction(wheel){
 	}else{
 		wheelAction = 'SKIP';
 	}
-	console.log('wheelAction: ', wheelAction);
+	//console.log('wheelAction: ', wheelAction);
 	console.log('getGameWheelAction Finish...');
 	return wheelAction;
 };
@@ -620,7 +620,7 @@ function rotateAnimation(objective){
 		if (degrees < objective) {		//  if the counter < 10, call the loop function
 			rotateAnimation(objective);		//  ..  again which will trigger another 
 		}else{
-			console.log('Actual degrees: ', degrees);
+			//console.log('Actual degrees: ', degrees);
 			$("#venueNamePanel").hide();
 			$("#venueCategoryPanel").hide();
 			$("#gameWheelResultPanel").show();
@@ -683,13 +683,13 @@ $("#insertNameOk").click(function() {
 
 //Parent category selection event
 $("#parentSelect").change(function() {
-	console.log($("#parentSelect").val());
+	//console.log($("#parentSelect").val());
 	// Clean childSelect
 	$("#childSelect").empty();
 	$("#childSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'GET',
@@ -718,29 +718,29 @@ $("#childSelect").change(function() {
 
 //Buy submit event handle
 $("#buyButton").click(function() {
-	console.log('BUY CLICKED');
+	//console.log('BUY CLICKED');
 	var inputVenueName = $("#inputVenueName").val();
 	var parentCategory = $("#parentSelect").val();
 	var childCategory = $("#childSelect").val();
-	console.log('VENUE: ' + selectedVenue);
-	console.log('VENUE NAME: ' + inputVenueName);
-	console.log('VENUE PARENT CATEGORY: ' + parentCategory + ' NAME: ' + $("#parentSelect option:selected").text());
-	console.log('VENUE CHILD CATEGORY: ' + childCategory  + ' NAME: ' + $("#childSelect option:selected").text());
+	//console.log('VENUE: ' + selectedVenue);
+	//console.log('VENUE NAME: ' + inputVenueName);
+	//console.log('VENUE PARENT CATEGORY: ' + parentCategory + ' NAME: ' + $("#parentSelect option:selected").text());
+	//console.log('VENUE CHILD CATEGORY: ' + childCategory  + ' NAME: ' + $("#childSelect option:selected").text());
 	// Request to BuyAction
 	var url = '/BuyAction';
 	var jsonData = {"venueCategory":childCategory,"venueName":inputVenueName,"venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: ', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/BuyAction',
             data: jsonData,
             success: function (result) {
-				console.log('BuyAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('BuyAction REQUEST RESULT: ', JSON.stringify(result));
 				if(result.visit == null){
 					//Error message
-					console.log('MESSAGE: ', result.message.text);
+					//console.log('MESSAGE: ', result.message.text);
 					$("#errMsgContent").text(result.message.text);
 					$("#errorMessage").show();
 				}else{
@@ -753,7 +753,7 @@ $("#buyButton").click(function() {
 					$("#errorMessage").hide();
 				}
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
@@ -769,25 +769,25 @@ $("#buyButton").click(function() {
 
 //Mortgage button event
 $("#mtgBtn").click(function() {
-	console.log('MORTGAGE CLICKED');
-	console.log('VENUE: ' + selectedVenue);
+	//console.log('MORTGAGE CLICKED');
+	//console.log('VENUE: ' + selectedVenue);
 	// Request to MortgageAction
 	var url = '/MortgageAction';
 	var jsonData = { "venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL:' , url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL:' , url);
     $.ajax(
 		{
             type: 'POST',
             url: '/MortgageAction',
             data: jsonData,
             success: function (result) {
-				console.log('MortgageAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('MortgageAction REQUEST RESULT: ', JSON.stringify(result));
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
@@ -803,25 +803,25 @@ $("#mtgBtn").click(function() {
 
 //Redeem button event
 $("#rdmBtn").click(function() {
-	console.log('REDEEM CLICKED');
-	console.log('VENUE: ' + selectedVenue);
+	//console.log('REDEEM CLICKED');
+	//console.log('VENUE: ' + selectedVenue);
 	// Request to RedeemAction
 	var url = '/RedeemAction';
 	var jsonData = { "venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: ', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/RedeemAction',
             data: jsonData,
             success: function (result) {
-				console.log('RedeemAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('RedeemAction REQUEST RESULT: ', JSON.stringify(result));
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
@@ -837,25 +837,25 @@ $("#rdmBtn").click(function() {
 
 //Sell button event
 $("#selBtn").click(function() {
-	console.log('SELL CLICKED');
-	console.log('VENUE: ' + selectedVenue);
+	//console.log('SELL CLICKED');
+	//console.log('VENUE: ' + selectedVenue);
 	// Request to SellAction
 	var url = '/SellAction';
 	var jsonData = { "venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: %j', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/SellAction',
             data: jsonData,
             success: function (result) {
-				console.log('SellAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('SellAction REQUEST RESULT: ', JSON.stringify(result));
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
@@ -873,15 +873,16 @@ $("#selBtn").click(function() {
 //Go to Take button event
 $("#takeBtn").click(function() {
 	//Setup
+	var venue = JSON.parse(selectedVenue);
 	// Request to get take cost info
 	$.ajax(
 		{
 			type: 'GET',
-			url: '/retrieveTakeCost?venueValue=' + $("#occupiedVenueValue").text(),
+			url: '/retrieveTakeCost?venueValue=' + venue["value"],
 			success: function (result) {
-				console.log('TAKE COST: ', result);
+				//console.log('TAKE COST: ', result);
 				if(result.length != 0){
-					$("#costTakeValue").text(result.cost);
+					$("#costTakeValue").text(formatCurrency(result.cost, "€"));
 				}else{
 					$("#costTakeValue").text("Unknown Cost");
 				}
@@ -894,7 +895,7 @@ $("#takeBtn").click(function() {
 	$("#takeVenueName").text($("#occupiedVenueName").text());
 	$("#takeVenueCategory").text($("#occupiedVenueCategory").text());
 	$("#takeVenueIcon").attr("src",$("#occupiedVenueIcon").attr("src"));
-	$("#yourMoneyValue").text($("#userCash").text());
+	$("#yourMoneyValue").text("€ " + $("#userCash").text());
 	$("#occupiedModal").modal('hide');
 	$("#takeCostModal").modal('show');
 });
@@ -915,13 +916,13 @@ $("#takeInsertNameOk").click(function() {
 
 //Parent category selection event
 $("#takeParentSelect").change(function() {
-	console.log($("#takeParentSelect").val());
+	//console.log($("#takeParentSelect").val());
 	// Clean childSelect
 	$("#takeChildSelect").empty();
 	$("#takeChildSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'GET',
@@ -951,26 +952,26 @@ $("#takeChildSelect").change(function() {
 
 //Take button event
 $("#takeButton").click(function(){
-	console.log('TAKE CLICKED');
+	//console.log('TAKE CLICKED');
 	var takeInputVenueName = $("#takeInputVenueName").val();
 	var takeParentCategory = $("#takeParentSelect").val();
 	var takeChildCategory = $("#takeChildSelect").val();
-	console.log('VENUE: ' + selectedVenue);
-	console.log('VENUE NAME: ' + takeInputVenueName);
-	console.log('VENUE PARENT CATEGORY: ' + takeParentCategory + ' NAME: ' + $("#takeParentSelect option:selected").text());
-	console.log('VENUE CHILD CATEGORY: ' + takeChildCategory  + ' NAME: ' + $("#takeChildSelect option:selected").text());
+	//console.log('VENUE: ' + selectedVenue);
+	//console.log('VENUE NAME: ' + takeInputVenueName);
+	//console.log('VENUE PARENT CATEGORY: ' + takeParentCategory + ' NAME: ' + $("#takeParentSelect option:selected").text());
+	//console.log('VENUE CHILD CATEGORY: ' + takeChildCategory  + ' NAME: ' + $("#takeChildSelect option:selected").text());
 	// Request to TakeAction
 	var url = '/TakeAction';
 	var jsonData = {"venueCategory":takeChildCategory,"venueName":takeInputVenueName,"venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: ', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/TakeAction',
             data: jsonData,
             success: function (result) {
-				console.log('TakeAction REQUEST RESULT: ', JSON.stringify(result));
+				//console.log('TakeAction REQUEST RESULT: ', JSON.stringify(result));
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
@@ -979,7 +980,7 @@ $("#takeButton").click(function(){
 				$("#yesMsgModal").attr("disabled", "disabled");
 				$("#noMsgModal").show();
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
@@ -996,18 +997,18 @@ $("#takeButton").click(function(){
 //Go to pay button event
 $("#payBtn").click(function() {
 	var venue = JSON.parse(selectedVenue);
-	console.log('VENUE: ' + venue);
+	//console.log('VENUE: ' + venue);
 	// Request to get rent info
 	var url = '/retrieveVenueRent?venueValue=' + venue["value"];
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
 			type: 'GET',
 			url: url,			
 			success: function (result) {
-			    console.log('RENT: ', result);
+			    //console.log('RENT: ', result);
 			    if(result.length != 0){
-					$("#costPayValue").text(result.rent);
+					$("#costPayValue").text(formatCurrency(result.rent, "€"));
 				}else{
 					$("#costPayValue").text("Unknown Fee");
 				}
@@ -1021,31 +1022,31 @@ $("#payBtn").click(function() {
 	$("#payVenueName").text($("#occupiedVenueName").text());
 	$("#payVenueCategory").text($("#occupiedVenueCategory").text());
 	$("#payVenueIcon").attr("src",$("#occupiedVenueIcon").attr("src"));
-	$("#payYourMoneyValue").text($("#userCash").text());
+	$("#payYourMoneyValue").text("€ " + $("#userCash").text());
 	$("#occupiedModal").modal('hide');
 	$("#payModal").modal('show');
 });
 
 //Pay button event
 $("#payButton").click(function() {
-	console.log('PAY CLICKED');
+	//console.log('PAY CLICKED');
 	// Request to PayAction
 	var url = '/PayAction';
 	var jsonData = {"venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: %j', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/PayAction',
             data: jsonData,
             success: function (result) {
-				console.log('PayAction REQUEST RESULT: %j', result);
+				//console.log('PayAction REQUEST RESULT: %j', result);
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
@@ -1077,13 +1078,13 @@ $("#advertiseInsertNameOk").click(function() {
 
 //Parent category selection event
 $("#advertiseParentSelect").change(function() {
-	console.log($("#advertiseParentSelect").val());
+	//console.log($("#advertiseParentSelect").val());
 	// Clean childSelect
 	$("#advertiseChildSelect").empty();
 	$("#advertiseChildSelect").append("<option> Please Select </option>");
 	// Request to retrieveChildCategories
 	var url = '/retrieveChildCategories';
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
 	$.ajax(
 		{
 			type: 'GET',
@@ -1112,7 +1113,7 @@ $("#advertiseChildSelect").change(function() {
 
 // Advertise Next StepX Event
 $('#advertiseTabsContent').on( "click", "a.btn", function(event){
-	console.log(event.target.id + ' BUTTON CLICKED!');
+	//console.log(event.target.id + ' BUTTON CLICKED!');
 	var inputValue;
 	switch(event.target.id) {
 		case 'okAdvStp2':
@@ -1121,14 +1122,14 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 				featureRanges[0] = 'open';
 				//Take the value of the text input
 				inputValue = $("#advStep2Input").val();
-				console.log(inputValue);
+				//console.log(inputValue);
 				visitAdvertise.featureValues[0] = inputValue;
 			}else{
 				//Save the type of the question
 				featureRanges[0] = 'closed';
 				//Take the value of the options
 				inputValue = $("#advStep2Input").val();
-				console.log(inputValue);
+				//console.log(inputValue);
 				visitAdvertise.featureValues[0] = inputValue;
 			}
 			//mark the feature like responded
@@ -1151,10 +1152,10 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 			visitAdvertise.skips[1] = 'true';
 			visitAdvertise.skips[2] = 'true';
 			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
-			console.log('VISIT ADVERTISE :', visitAdvertise);
-			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
-			console.log('SKIPS :', visitAdvertise.skips);
-			console.log('FEATURE RANGES :', featureRanges);
+			//console.log('VISIT ADVERTISE :', visitAdvertise);
+			//console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			//console.log('SKIPS :', visitAdvertise.skips);
+			//console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'okAdvStp3':
 			if(visitAdvertise.featureTypes[1].featureRange.type == 'open'){
@@ -1162,14 +1163,14 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 				featureRanges[1] = 'open';
 				//Take the value of the text input
 				inputValue = $("#advStep3Input").val();
-				console.log(inputValue);
+				//console.log(inputValue);
 				visitAdvertise.featureValues[1] = inputValue;
 			}else{
 				//Save the type of the question
 				featureRanges[1] = 'closed';
 				//Take the value of the options
 				inputValue = $("#advStep2Input").val();
-				console.log(inputValue);
+				//console.log(inputValue);
 				visitAdvertise.featureValues[1] = inputValue;
 			}
 			//mark the feature like responded
@@ -1191,10 +1192,10 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 			visitAdvertise.skips[1] = 'true';
 			visitAdvertise.skips[2] = 'true';
 			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
-			console.log('VISIT ADVERTISE :', visitAdvertise);
-			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
-			console.log('SKIPS :', visitAdvertise.skips);
-			console.log('FEATURE RANGES :', featureRanges);
+			//console.log('VISIT ADVERTISE :', visitAdvertise);
+			//console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			//console.log('SKIPS :', visitAdvertise.skips);
+			//console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'okAdvStp4':
 			if(visitAdvertise.featureTypes[2].featureRange.type == 'open'){
@@ -1202,23 +1203,23 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 				featureRanges[2] = 'open';
 				//Take the value of the text input
 				inputValue = $("#advStep4Input").val();
-				console.log(inputValue);
+				//console.log(inputValue);
 				visitAdvertise.featureValues[2] = inputValue;
 			}else{
 				//Save the type of the question
 				featureRanges[2] = 'closed';
 				//Take the value of the options
 				inputValue = $("#advStep2Input").val();
-				console.log(inputValue);
+				//console.log(inputValue);
 				visitAdvertise.featureValues[2] = inputValue;
 			}
 			//mark the feature like responded
 			visitAdvertise.skips[2] = 'false';
 			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
-			console.log('VISIT ADVERTISE :', visitAdvertise);
-			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
-			console.log('SKIPS :', visitAdvertise.skips);
-			console.log('FEATURE RANGES :', featureRanges);
+			//console.log('VISIT ADVERTISE :', visitAdvertise);
+			//console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			//console.log('SKIPS :', visitAdvertise.skips);
+			//console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'idkAdvStp4':
 			if(visitAdvertise.featureTypes[2].featureRange.type == 'open'){
@@ -1230,20 +1231,20 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 			}
 			visitAdvertise.skips[2] = 'false';
 			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
-			console.log('VISIT ADVERTISE :', visitAdvertise);
-			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
-			console.log('SKIPS :', visitAdvertise.skips);
-			console.log('FEATURE RANGES :', featureRanges);
+			//console.log('VISIT ADVERTISE :', visitAdvertise);
+			//console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			//console.log('SKIPS :', visitAdvertise.skips);
+			//console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'finishAdvStp4':
 			visitAdvertise.featureValues[2] = 'undefined';
 			featureRanges[2] = 'undefined';
 			visitAdvertise.skips[2] = 'true';
 			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
-			console.log('VISIT ADVERTISE :', visitAdvertise);
-			console.log('FEATURE VALUES :', visitAdvertise.featureValues);
-			console.log('SKIPS :', visitAdvertise.skips);
-			console.log('FEATURE RANGES :', featureRanges);
+			//console.log('VISIT ADVERTISE :', visitAdvertise);
+			//console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			//console.log('SKIPS :', visitAdvertise.skips);
+			//console.log('FEATURE RANGES :', featureRanges);
 			break;
 		default:
 			break;
@@ -1252,26 +1253,26 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 });
 
 function advertise(featureValues, skips, featureRanges){
-	console.log('START ADVETISING...');
+	//console.log('START ADVETISING...');
 	var advertiseChildCategory = $("#advertiseChildSelect").val();
 	var advertiseInputVenueName = $("#advertiseInputVenueName").val();
 	// Request to AdvertiseAction
 	var url = '/AdvertiseAction';
 	var jsonData = {"venue":selectedVenue, "venueCategory":advertiseChildCategory,"venueName":advertiseInputVenueName, "featureValues":featureValues, "skips":skips, "featureRanges":featureRanges };
-	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: %j', url);
 	$.ajax(
 		{
 			type: 'POST',
 			url: '/AdvertiseAction',
 			data: jsonData,
 			success: function (result) {
-				console.log('AdvertiseAction REQUEST RESULT: ', result);
+				//console.log('AdvertiseAction REQUEST RESULT: ', result);
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
 			},
 			error: function (req, status, error) {
@@ -1292,8 +1293,8 @@ $("#quzBtn").click(function() {
 
 // Quiz Answer Button Event
 $('#quizTabsContent').on( "click", "a.btn", function(event){
-	console.log(event.target.id + ' BUTTON CLICKED!');
-	console.log('VISIT QUIZ: ', visitQuiz);
+	//console.log(event.target.id + ' BUTTON CLICKED!');
+	//console.log('VISIT QUIZ: ', visitQuiz);
 	var optionSelected = [];
 	switch(event.target.id) {
 		case 'yesStp1':
@@ -1327,7 +1328,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp1':
 			var index = $('input[name="optionsRadios"]:checked').val();
-			console.log('Options Selected: ', index);
+			//console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[0].length; i++){
 					if(i == index){
@@ -1376,7 +1377,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp2':
 			var index = $('input[name="optionsRadios"]:checked').val();
-			console.log('Options Selected: ', index);
+			//console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[1].length; i++){
 					if(i == index){
@@ -1425,7 +1426,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp3':
 			var index = $('input[name="optionsRadios"]:checked').val();
-			console.log('Options Selected: ', index);
+			//console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[2].length; i++){
 					if(i == index){
@@ -1474,7 +1475,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			break;
 		case 'nextQzStp4':
 			var index = $('input[name="optionsRadios"]:checked').val();
-			console.log('Options Selected: ', index);
+			//console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[3].length; i++){
 					if(i == index){
@@ -1502,7 +1503,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			}
 			visitQuiz.selected.push(optionSelected);
 			visitQuiz.skips.push('false');
-			console.log('QUIZ AFTER PLAY: ', visitQuiz);
+			//console.log('QUIZ AFTER PLAY: ', visitQuiz);
 			quiz(visitQuiz);
 			break;
 		case 'noFinishQz':
@@ -1515,7 +1516,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			}
 			visitQuiz.selected.push(optionSelected);
 			visitQuiz.skips.push('false');
-			console.log('QUIZ AFTER PLAY: ', visitQuiz);
+			//console.log('QUIZ AFTER PLAY: ', visitQuiz);
 			quiz(visitQuiz);
 			break;
 		case 'idkFinishQz':
@@ -1524,12 +1525,12 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 			}
 			visitQuiz.selected.push(optionSelected);
 			visitQuiz.skips.push('true');
-			console.log('QUIZ AFTER PLAY: ', visitQuiz);
+			//console.log('QUIZ AFTER PLAY: ', visitQuiz);
 			quiz(visitQuiz);
 			break;
 		case 'finishQz':
 			var index = $('input[name="optionsRadios"]:checked').val();
-			console.log('Options Selected: ', index);
+			//console.log('Options Selected: ', index);
 			if (typeof index != 'undefined'){
 				for(var i=0; i < visitQuiz.options[visitQuiz.skips.length].length; i++){
 					if(i == index){
@@ -1546,7 +1547,7 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 				visitQuiz.skips.push('true');
 			}
 			visitQuiz.selected.push(optionSelected);
-			console.log('QUIZ AFTER PLAY: ', visitQuiz);
+			//console.log('QUIZ AFTER PLAY: ', visitQuiz);
 			quiz(visitQuiz);
 			break;
 		default:
@@ -1557,26 +1558,26 @@ $('#quizTabsContent').on( "click", "a.btn", function(event){
 });
 
 function quiz(visit){
-	console.log('START QUIZ...');
+	//console.log('START QUIZ...');
 	var selected = visit.selected;
 	var skips = visit.skips;
 	// Request to QuizAction
 	var url = '/QuizAction';
 	var jsonData = {"venue":selectedVenue, "selected":selected, "skips": skips };
-	console.log(jsonData);
-	console.log('REQUEST URL: %j', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: %j', url);
 	$.ajax(
 		{
 			type: 'POST',
 			url: '/QuizAction',
 			data: jsonData,
 			success: function (result) {
-				console.log('QuizAction REQUEST RESULT: %j', result);
+				//console.log('QuizAction REQUEST RESULT: %j', result);
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
 			},
 			error: function (req, status, error) {
@@ -1591,26 +1592,26 @@ function quiz(visit){
 
 //Skip button event
 $("#skpBtn").click(function() {
-	console.log('SKIP CLICKED');
+	//console.log('SKIP CLICKED');
 	$("#occupiedModal").modal('hide');
 	$("#skipModal").modal('show');
 	// Request to SkipAction
 	var url = '/SkipAction';
 	var jsonData = { "venue":selectedVenue };
-	console.log(jsonData);
-	console.log('REQUEST URL: ', url);
+	//console.log(jsonData);
+	//console.log('REQUEST URL: ', url);
     $.ajax(
 		{
             type: 'POST',
             url: '/SkipAction',
             data: jsonData,
             success: function (result) {
-				console.log('SkipAction REQUEST RESULT: %j', result);
+				//console.log('SkipAction REQUEST RESULT: %j', result);
 				//Success message
 				$("#scsMsgContent").text(result.message.text);
 				$("#successMessage").show();
 				//Reload player data on footer
-				$("#userCash").text(result.player.cash);
+				$("#userCash").text(formatCurrency(result.player.cash));
 				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
@@ -1632,16 +1633,16 @@ $("#okMsgModal").click(function() {
 
 // Yes message modal event used to share on facebook
 $("#yesMsgModal").click(function() {
-	console.log('SHARE ON FB CLICKED');
+	//console.log('SHARE ON FB CLICKED');
 	// Request to Share
 	var url = '/Share';
-	console.log('REQUEST URL: ', url);
+	//console.log('REQUEST URL: ', url);
 	$.ajax(
 		{
             type: 'POST',
             url: '/Share',
             success: function (result) {
-				console.log('SHARE REQUEST RESULT: ', result);
+				//console.log('SHARE REQUEST RESULT: ', result);
             },
             error: function (req, status, error) {
 				console.log('ERROR: ' + error);
@@ -1657,3 +1658,15 @@ $("#noMsgModal").click(function() {
 	//Reload updated map
 	requestUpdatedMap(lat, lon);
 });
+
+function formatCurrency(n, currency) {
+    if(typeof currency != 'undefined'){
+        return currency + " " + n.toFixed().replace(/./g, function(c, i, a) {
+            return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
+        });
+    }else{
+        return n.toFixed().replace(/./g, function(c, i, a) {
+            return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
+        });        
+    }
+}
