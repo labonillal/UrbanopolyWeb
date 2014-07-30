@@ -32,8 +32,7 @@ exports.downloadMyVenues = function(playerId, callback){
 	// Request to retrieve the venues of the player
 	request({
 		url: requestUrl,
-		method: "GET",
-		timeout: 10000
+		method: "GET"
 	}, function (error, response, data) {
 		if (!error && response.statusCode === 200) {
 			console.log(data);
