@@ -224,3 +224,15 @@ exports.formatDate = function(jsonDate){
 
     return formattedDate;
 };
+
+exports.formatCurrency = function(n, currency) {
+    if(typeof currency != 'undefined'){
+        return currency + " " + n.toFixed().replace(/./g, function(c, i, a) {
+            return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
+        });
+    }else{
+        return n.toFixed().replace(/./g, function(c, i, a) {
+            return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
+        });        
+    }
+}
