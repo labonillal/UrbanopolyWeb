@@ -1,0 +1,177 @@
+/** Main Containers **/
+body {
+  background-image: url('../images/pattern-body.png');
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100%;
+  min-width:800px;
+  width: auto !important;
+  width:800px;
+}
+
+#content {
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+/** Headers **/
+#header-1 {
+  background-color: #EDF0F1;
+  height: 350px;
+  text-align: center;
+}
+#header-1 h1 {
+  letter-spacing: 5px;
+}
+#header-1 p:first-of-type {
+  letter-spacing: 5px;
+}
+#header-1 p {
+  font-size: 14px;
+  width: 430px;
+  color: #979c9f;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: normal;
+  padding-top: 20px;
+}
+#header-2 {
+  background-color: #EDF0F1;
+  height: 80px;
+  margin-top: 0px;
+}
+#header-2 h1 {
+  letter-spacing: 5px;
+}
+#header-2 h1 {
+  font-size: 20px;
+  letter-spacing: 5px;
+  padding-left: 20px;
+  padding-top: 10px;
+  float: left;
+  width: 260px;
+}
+#header-2 a {
+  color: #333;
+  text-decoration: none;
+}
+#header-2 a:hover {
+  text-decoration: none;
+}
+#title img {
+  padding-left: 20px;
+  padding-top: 20px;
+  float: left;
+  width: 260px;
+}
+
+/** Login Button **/
+#login a {
+  display: block;
+  background-color: #EDF0F1;
+  padding: 10px;
+  color: #333;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 160px;
+}
+#login a:hover {
+  text-decoration: none;
+}
+
+/** Logged User **/
+#user {
+  padding-top: 15px;
+  height: 50px;
+  float: right;
+  width: 180px;
+  margin-right: 10px;
+}
+#user img {
+  float: left;
+  margin-right: 10px;
+}
+#user p {
+  font-size: 14px;
+  margin: 0px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+#user a p {
+  margin-top: 0px;
+  font-weight: normal;
+}
+#user a:hover {
+  text-decoration: underline;
+}
+
+/** Map **/
+#map { 
+  height: 300px;
+}
+/** Loader **/
+#mapContainer {
+  position: relative;
+  left: 0;
+  top: 0;
+  background: #54B4F5;
+}
+#loader {
+  position:absolute; top:0; bottom:0; width:100%;
+  background:rgba(255, 255, 255, 1);
+  transition:background 1s ease-out;
+  -webkit-transition:background 1s ease-out;
+}
+#loader.done {
+  background:rgba(255, 255, 255, 0);
+}
+#loader.hide {
+  display:none;
+}
+#loader .message {
+  position:absolute;
+  left:50%;
+  top:50%;
+}
+/** GameWheel **/
+#GameWheelPanel img {
+	max-height:100%;
+	max-width:100%;
+}
+/** judge rate panel **/
+#judgePanel:hover {
+  background:#EDF0F1;
+}
+
+/** score footer **/
+#footer-score {
+  height: 40px;
+  background-color: #EDF0F1;
+}
+#footer-score img {
+  float: right;
+  margin-right: 0px;
+  margin-top: 5px;
+}
+#footer-score p {
+  font-size: 15px;
+  margin: 30px;
+  font-weight: bold;
+  float: right;
+  margin-top: 10px;
+}
+/** Links**/
+a {
+  color: #00B7FF;
+}
+/** Thumbnails **/
+.thumb {
+  height: 200px;
+  border: 1px solid #000;
+  margin: 10px 5px 0 0; 
+}
