@@ -127,7 +127,7 @@ function createMap(lat, lon) {
 			$("#noMsgModal").hide();
     		if(venuesVisited.indexOf(e.layer.feature.properties["id"]) != -1){
     			//Info message
-				$("#infMsgContent").text("You have already visited this venue!. It is possible to visit an occupied venue only once a day.");
+				$("#infMsgContent").text("You have already visited this venue! It is possible to visit an occupied venue only once a day.");
 				$("#infoMessage").show();
     			$("#messageModal").modal('show');
     		}else{
