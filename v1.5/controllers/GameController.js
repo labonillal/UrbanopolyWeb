@@ -789,7 +789,7 @@ exports.judge = function(venueJudge, photoRank, player, venueCategory, venueName
     // Mark as visited
     visitController.sendVisits(function (err, result){
       if(result){
-        venueController.addVisitedVenue(visit);
+        //venueController.addVisitedVenue(visit);
         //console.log('ADDED VISIT: %j', visit);
         callback(null, visit);
       }else{
