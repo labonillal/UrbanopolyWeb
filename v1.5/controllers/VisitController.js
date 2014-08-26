@@ -119,8 +119,7 @@ exports.sendVisits = function(callback){
   	request.post({
     	url: requestUrl,
     	method: "POST",
-    	body: jsonVisits,
-    	timeout: 10000
+    	body: jsonVisits
   	}, function (error, response, body) {
     	if (!error && response.statusCode === 200) {
     		for(var j = 0;j < visitsToSend.length;j++){
@@ -131,7 +130,7 @@ exports.sendVisits = function(callback){
     		callback(null, response.statusCode);
     	}
     	else{
-    		console.log('Unable to send the visits: %j', error);
+    		console.log('Unable to send the visits: ', error);
     		console.log('Function sendVisits finish');
     		callback(error);
     	}

@@ -105,7 +105,6 @@ exports.downloadArea = function(req, res, lat, lon){
   	request({
     	url: requestUrl,
     	method: "GET",
-    	timeout: 10000,
     	json: true
   	}, function (error, response, body) {
     	if (!error && response.statusCode === 200) {
@@ -173,7 +172,8 @@ exports.buyFreeVenue = function(venue, player, venueCategory, venueName, callbac
     }else{
       visitController.deleteVisit(visit);
       //console.log('DELETED VISIT: %j', visit);
-      callback(err);
+      var error = {"code": 0 };
+      callback(error);
     }
     //5) Share on facebook    
   });
@@ -252,7 +252,8 @@ exports.sellVenue = function(venue, player, callback){
     }else{
       visitController.deleteVisit(visit);
       //console.log('DELETED VISIT: %j', visit);
-      callback(err);
+      var error = {"code": 0 };
+      callback(error);
     }
   });
 };
@@ -324,7 +325,8 @@ exports.mortgageVenue = function(venue, player, callback){
     }else{
       visitController.deleteVisit(visit);
       //console.log('DELETED VISIT: %j', visit);
-      callback(err);
+      var error = {"code": 0 };
+      callback(error);
     }
   });
 };
@@ -392,7 +394,8 @@ exports.redeemMortgagedVenue = function(venue, player, callback){
     }else{
       visitController.deleteVisit(visit);
       //console.log('DELETED VISIT: %j', visit);
-      callback(err);
+      var error = {"code": 0 };
+      callback(error);
     }
   });
 };
@@ -455,7 +458,8 @@ exports.payFee = function(venue, player, callback){
     }else{
       visitController.deleteVisit(visit);
       //console.log('DELETED VISIT: %j', visit);
-      callback(err);
+      var error = {"code": 0 };
+      callback(error);
     }
   });
 };
@@ -525,7 +529,8 @@ exports.takeVenue = function(venue, player, venueName, venueCategory, callback){
     }else{
       visitController.deleteVisit(visit);
       //console.log('DELETED VISIT: %j', visit);
-      callback(err);
+      var error = {"code": 0 };
+      callback(error);
     }
   });
 };
@@ -590,7 +595,8 @@ exports.quiz = function(venue, player, selected, skips, callback){
       }else{
         visitController.deleteVisit(visit);
         //console.log('DELETED VISIT: %j', visit);
-        callback(err);
+        var error = {"code": 0 };
+        callback(error);
       }
     });
   }
@@ -657,7 +663,8 @@ exports.advertise = function(venueAdvertise, player, category, venueName, featur
       }else{
         visitController.deleteVisit(visit);
         //console.log('DELETED VISIT: %j', visit);
-        callback(err);
+        var error = {"code": 0 };
+        callback(error);
       }
     });
   }
@@ -715,7 +722,8 @@ exports.skip = function(venue, player, callback){
     }else{
       visitController.deleteVisit(visit);
       //console.log('DELETED VISIT: %j', visit);
-      callback(err);
+      var error = {"code": 0 };
+      callback(error);
     }
   });
 };
@@ -782,12 +790,13 @@ exports.judge = function(venueJudge, photoRank, player, venueCategory, venueName
     visitController.sendVisits(function (err, result){
       if(result){
         venueController.addVisitedVenue(visit);
-        console.log('ADDED VISIT: %j', visit);
+        //console.log('ADDED VISIT: %j', visit);
         callback(null, visit);
       }else{
         visitController.deleteVisit(visit);
-        console.log('DELETED VISIT: %j', visit);
-        callback(err);
+        //console.log('DELETED VISIT: %j', visit);
+        var error = {"code": 0 };
+        callback(error);
       }
     });
   }
@@ -822,8 +831,8 @@ exports.getHighscores = function(playerId, fromPosition, toPosition, callback){
   request({
     url: requestUrl,
     method: "GET"
-  }, function (error, response, data) {
-    if (!error && response.statusCode === 200) {
+  }, function (err, response, data) {
+    if (!err && response.statusCode === 200) {
       //console.log('DATA: ', data);
       //Parse server response object
       var reply = JSON.parse(data);
@@ -832,7 +841,8 @@ exports.getHighscores = function(playerId, fromPosition, toPosition, callback){
       console.log('Function getHighscores finish...');
       callback(null, reply);
     }else{
-      console.log("ERROR: Unable to connect to database server: %j", error);
+      console.log("ERROR: Unable to connect to database server: %j", err);
+      var error = {"code": 0 };
       callback(error);
     }
   }) 
