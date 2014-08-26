@@ -11,7 +11,6 @@ $('table tr').click(function(event) {
 	$("#mtgBtn").hide();
 	$("#rdmBtn").hide();
 	$("#selBtn").hide();
-	$("#reportAbusePosterBtn").hide();
 	$("#okMsgModal").hide();
 	$("#yesMsgModal").hide();
 	$("#noMsgModal").hide();
@@ -191,11 +190,10 @@ $('#rating').on('rating.change', function(e, value) {
     var venue = JSON.parse(selectedVenue);
     venue.posters[0].photoRank = parseFloat(value);
     selectedVenue = JSON.stringify(venue);
-    $("#reportAbusePosterBtn").show();
 });
 // Rating clear event
 $('#rating').on('rating.clear', function(event) {
-    $("#reportAbusePosterBtn").hide();
+    
 });
 
 // Ok poster modal event
