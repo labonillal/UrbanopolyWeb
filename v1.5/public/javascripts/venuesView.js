@@ -189,7 +189,7 @@ $("#judgePanel").click(function() {
 // Rating event
 $('#rating').on('rating.change', function(e, value) {
     var venue = JSON.parse(selectedVenue);
-    venue.posters[0].photoRank = parseInt(value);
+    venue.posters[0].photoRank = parseFloat(value);
     selectedVenue = JSON.stringify(venue);
     $("#reportAbusePosterBtn").show();
 });
