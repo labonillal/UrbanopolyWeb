@@ -9,7 +9,6 @@ var gameConf = require("../core/game");
 var venueController = require('./VenueController');
 var notificationsController = require('./NotificationsController');
 var Utility = require('./Utility');
-var photoTaken = false;
 
 /* GET cover page. */
 exports.getCover = function(req, res) {
@@ -348,7 +347,7 @@ exports.getAdvertiseAction = function(req, res){
 		}
 	}
 	//If the photo was taken add the bonus
-	if(photoTaken){
+	if(skips[ranges.length] == 'false'){
 		moneyForQuestions += parseInt(gameConf.moneyForAdvertiseOpen);
 		console.log('Advertise photo taken');
 	}
@@ -418,8 +417,6 @@ exports.getUploadAction = function(req, res){
 		// Location where we want to copy the uploaded file
 		var new_location = 'uploads/' + file_name + '.jpeg';
 		console.log('new_location: ', new_location);
-		// Photo taken
-		photoTaken = true;
 		//Compression to jpeg
 		gm(temp_path)
 			.compress('JPEG')
@@ -437,9 +434,9 @@ exports.getUploadAction = function(req, res){
 							//Upload the photo on jpeg
 							venueController.uploadPhoto(data, venueId, playerId, function(err, result){
 								if(result){
-									console.log('RESULT: ', result);
+									console.log('getUploadAction RESULT: ', result);
 								}else{
-									console.log('ERROR: ', err);
+									console.log('getUploadAction ERROR: ', err);
 								}
 							});
 						}
