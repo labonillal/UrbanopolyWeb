@@ -253,7 +253,7 @@ function createMap(lat, lon) {
 							break;
 						case 'ADVERTISE':
 							rotationObjective = 495;
-							$("#resultTitle").attr("src",'/images/title_advertise.png');
+							$("#resultTitle").attr("src",'/images/title_ad_vertise.png');
 							$("#resultTitle").attr("width",'146');
 	    					$("#resultTitle").attr("height",'25');
 							$("#resultDescription").text('Ok, you have been hired to produce an Advertisement Poster for this Venue\nYou will be asked to provide the inputs to complete the Poster; you\'ll be paid for each provided input.\nTake care! If you insert the wrong input your Karma will punish you!');
@@ -329,6 +329,11 @@ function createMap(lat, lon) {
 									content +=						options[i][3];
 									content +=					'</input>';
 									content +=				'</div>';
+									content +=				'<div class="radio">';
+									content +=					'<input type="checkbox" name="optionsRadios" id="optionsRadios5" value="4">';
+									content +=						'None';
+									content +=					'</input>';
+									content +=				'</div>';
 									content +=				'<div style="text-align:center">';
 									if(i == questions.length - 1){
 										content += '<a id="finishQz" href="#qzStep'+ nextStep +'" class="btn btn-primary" data-dismiss="modal"> Finish </a> </div>';
@@ -381,6 +386,11 @@ function createMap(lat, lon) {
 									content +=	'<div class="radio">';
 									content +=		'<input type="checkbox" name="optionsRadios" id="optionsRadios4" value="3">';
 									content +=			options[i][3];
+									content +=		'</input>';
+									content +=	'</div>';
+									content +=	'<div class="radio">';
+									content +=		'<input type="checkbox" name="optionsRadios" id="optionsRadios5" value="4">';
+									content +=			'None';
 									content +=		'</input>';
 									content +=	'</div>';
 									content +=	'<div style="text-align:center">';
@@ -456,12 +466,11 @@ function createMap(lat, lon) {
 								content +=					'<span class="help-block">Insert your answer here.</span>'
 								content +=				'</div>';
 								content +=			'</div>';
-								content +=			'<div class="panel-body">';
-								content +=				'<div style="text-align:center">';
-								content += '<a id="okAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-toggle="tab"> Ok </a>';
-								content += '<a id="idkAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-toggle="tab"> I dont know </a>';
-								content += '<a id="finishAdvStp'+ currentStep +'" class="btn btn-primary" data-dismiss="modal"> Finish </a> </div>';
-								content += '</div> </div> </div>';
+								content +=			'<div style="text-align:center">';
+								content += 				'<a id="okAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-toggle="tab"> Ok </a>';
+								content += 				'<a id="idkAdvStp'+ currentStep +'" href="#advStep'+ nextStep +'" class="btn btn-primary" data-toggle="tab"> I dont know </a>';
+								content += 				'<a id="finishAdvStp'+ currentStep +'" class="btn btn-primary" data-dismiss="modal"> Finish </a> </div>';
+								content += '</div></div>';
 							//Adding the content
 							$(content).appendTo('#advertiseTabsContent');
 							//console.log('For loop iteration '+ i +' ends...');
@@ -486,9 +495,6 @@ function createMap(lat, lon) {
 							content +=						'<div id ="errors"></div>'
 							content +=					'</form>';
 							content +=				'</div>';
-							content +=				'<div class="row" style="text-align:center">';
-							content +=					'<progress hidden></progress>';
-							content +=				'</div>';
 							content +=				'<div class="panel panel-default">';
 							content +=					'<div class="panel-heading">'
 							content +=						'<div class="row" style="text-align:center">';
@@ -505,11 +511,13 @@ function createMap(lat, lon) {
 							content +=					'</div>';
 							content +=				'</div>';
 							content +=			'</div>';
-							content +=			'<div class="panel-body">';
-							content +=				'<div style="text-align:center">';
-							content += 					'<a id="uploadBtn" class="btn btn-primary" disabled> Upload </a>';
-							content += 					'<a id="finishAdvStp'+ currentStep +'" class="btn btn-primary" data-dismiss="modal"> Finish </a> </div>';
-							content += '</div> </div> </div>';
+							content +=			'<div style="text-align:center">';
+							content +=				'<progress hidden></progress>';
+							content +=			'</div>';
+							content +=			'<div style="text-align:center">';
+							content += 				'<a id="uploadBtn" class="btn btn-primary" data-dismiss="modal" disabled> Upload </a>';
+							content += 				'<a id="finishAdvStp'+ currentStep +'" class="btn btn-primary" data-dismiss="modal"> Finish </a> </div>';
+							content += '</div> </div>';
 							//Adding the content
 							$(content).appendTo('#advertiseTabsContent');
 	   				}
@@ -1061,6 +1069,7 @@ $("#takeButton").click(function(){
 				//console.log('TakeAction REQUEST RESULT: ', JSON.stringify(result));
 				if(result.visit == null){
 					//Error message
+					//console.log('MESSAGE: ', result.message.text);
 					$("#errMsgContent").text(result.message.text);
 					$("#errorMessage").show();
 				}else{
@@ -1107,7 +1116,7 @@ $("#payBtn").click(function() {
 			},
 			error: function (req, status, error) {
 				//console.log('ERROR: ' + error);
-				console.log('Unable to get retrieveVenueRent response');
+				//console.log('Unable to get retrieveVenueRent response');
 			}
         });
 
@@ -1348,6 +1357,13 @@ $('#advertiseTabsContent').on( "click", "a.btn", function(event){
 			//console.log('FEATURE RANGES :', featureRanges);
 			break;
 		case 'uploadBtn':
+			$('#uploadBtn').attr('disabled', true);
+			visitAdvertise.skips[3] = 'false';
+			advertise(visitAdvertise.featureValues, visitAdvertise.skips, featureRanges);
+			//console.log('VISIT ADVERTISE :', visitAdvertise);
+			//console.log('FEATURE VALUES :', visitAdvertise.featureValues);
+			//console.log('SKIPS :', visitAdvertise.skips);
+			//console.log('FEATURE RANGES :', featureRanges);
 			uploadPhoto();
 			break;
 		case 'finishAdvStp5':
