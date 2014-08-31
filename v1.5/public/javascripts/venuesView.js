@@ -11,9 +11,8 @@ $('table tr').click(function(event) {
 	$("#mtgBtn").hide();
 	$("#rdmBtn").hide();
 	$("#selBtn").hide();
-	$("#okMsgModal").hide();
-	$("#yesMsgModal").hide();
-	$("#noMsgModal").hide();
+	$("#successMessage").hide();
+	$("#errorMessage").hide();
     // Request to get rent info
 	$.ajax(
 		{
@@ -88,10 +87,15 @@ $("#selBtn").click(function() {
             data: jsonData,
             success: function (result) {
 				//console.log('SellAction REQUEST RESULT: ', JSON.stringify(result));
-				//Success message
-				$("#scsMsgContent").text(result.message.text);
-				$("#okMsgModal").show();
-				$("#errorMessage").hide();
+				if(result.visit == null){
+					//Error message
+					$("#errMsgContent").text(result.message.text);
+					$("#errorMessage").show();
+				}else{
+					//Success message
+					$("#scsMsgContent").text(result.message.text);
+					$("#successMessage").show();
+				}
 				//Reload player data on footer
 				$("#userCash").text(result.player.cash);
 				$("#userNumVenues").text(result.player.numVenues);
@@ -99,8 +103,7 @@ $("#selBtn").click(function() {
             error: function (req, status, error) {
 				//console.log('ERROR: ' + error);
 				console.log('Unable to get SellAction response');
-				$("#successMessage").hide();
-				$("#okMsgModal").show();
+				$("#errorMessage").show();
             }
         });
     // Close modal and show message
@@ -124,10 +127,15 @@ $("#mtgBtn").click(function() {
             data: jsonData,
             success: function (result) {
 				//console.log('MortgageAction REQUEST RESULT: ', JSON.stringify(result));
-				//Success message
-				$("#scsMsgContent").text(result.message.text);
-				$("#okMsgModal").show();
-				$("#errorMessage").hide();
+				if(result.visit == null){
+					//Error message
+					$("#errMsgContent").text(result.message.text);
+					$("#errorMessage").show();
+				}else{
+					//Success message
+					$("#scsMsgContent").text(result.message.text);
+					$("#successMessage").show();
+				}
 				//Reload player data on footer
 				$("#userCash").text(result.player.cash);
 				$("#userNumVenues").text(result.player.numVenues);
@@ -135,8 +143,7 @@ $("#mtgBtn").click(function() {
             error: function (req, status, error) {
 				//console.log('ERROR: ' + error);
 				console.log('Unable to get MortgageAction response');
-				$("#successMessage").hide();
-				$("#okMsgModal").show();
+				$("#errorMessage").show();
             }
         });
     // Close modal and show message
@@ -160,10 +167,15 @@ $("#rdmBtn").click(function() {
             data: jsonData,
             success: function (result) {
 				//console.log('RedeemAction REQUEST RESULT: ', JSON.stringify(result));
-				//Success message
-				$("#scsMsgContent").text(result.message.text);
-				$("#okMsgModal").show();
-				$("#errorMessage").hide();
+				if(result.visit == null){
+					//Error message
+					$("#errMsgContent").text(result.message.text);
+					$("#errorMessage").show();
+				}else{
+					//Success message
+					$("#scsMsgContent").text(result.message.text);
+					$("#successMessage").show();
+				}
 				//Reload player data on footer
 				$("#userCash").text(result.player.cash);
 				$("#userNumVenues").text(result.player.numVenues);
@@ -171,12 +183,11 @@ $("#rdmBtn").click(function() {
             error: function (req, status, error) {
 				//console.log('ERROR: ' + error);
 				console.log('Unable to get RedeemAction response');
-				$("#successMessage").hide();
-				$("#okMsgModal").show();
+				$("#errorMessage").show();
             }
         });
     // Close modal and show message
-	$("#freeModal").modal('hide');
+	$("#venueModal").modal('hide');
 	$("#messageModal").modal('show');
 });
 
@@ -210,26 +221,23 @@ $("#okPosterBtn").click(function() {
             data: jsonData,
             success: function (result) {
 				//console.log('JudgeAction REQUEST RESULT: %j', result);
-				if(result.visit != null){
-					//Success message
-					$("#scsMsgContent").text(result.message.text);
-					$("#okMsgModal").show();
-					$("#errorMessage").hide();
-					//Reload player data on footer
-					$("#userCash").text(formatCurrency(result.player.cash));
-					$("#userNumVenues").text(result.player.numVenues);
-				}else{
+				if(result.visit == null){
 					//Error message
 					$("#errMsgContent").text(result.message.text);
-					$("#okMsgModal").show();
-					$("#successMessage").hide();
+					$("#errorMessage").show();
+				}else{
+					//Success message
+					$("#scsMsgContent").text(result.message.text);
+					$("#successMessage").show();
 				}
+				//Reload player data on footer
+				$("#userCash").text(formatCurrency(result.player.cash));
+				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
 				//console.log('ERROR: ' + error);
 				console.log('Unable to get JudgeAction response');
-				$("#successMessage").hide();
-				$("#okMsgModal").show();
+				$("#errorMessage").show();
             }
         });
     // Close modal and show message
@@ -254,26 +262,23 @@ $("#reportAbusePosterBtn").click(function() {
             data: jsonData,
             success: function (result) {
 				//console.log('JudgeAction REQUEST RESULT: %j', result);
-				if(result.visit != null){
-					//Success message
-					$("#scsMsgContent").text(result.message.text);
-					$("#okMsgModal").show();
-					$("#errorMessage").hide();
-					//Reload player data on footer
-					$("#userCash").text(formatCurrency(result.player.cash));
-					$("#userNumVenues").text(result.player.numVenues);
-				}else{
+				if(result.visit == null){
 					//Error message
 					$("#errMsgContent").text(result.message.text);
-					$("#okMsgModal").show();
-					$("#successMessage").hide();
+					$("#errorMessage").show();
+				}else{
+					//Success message
+					$("#scsMsgContent").text(result.message.text);
+					$("#successMessage").show();
 				}
+				//Reload player data on footer
+				$("#userCash").text(formatCurrency(result.player.cash));
+				$("#userNumVenues").text(result.player.numVenues);
             },
             error: function (req, status, error) {
 				//console.log('ERROR: ' + error);
 				console.log('Unable to get JudgeAction response');
-				$("#successMessage").hide();
-				$("#okMsgModal").show();
+				$("#errorMessage").show();
             }
         });
     // Close modal and show message
@@ -285,12 +290,6 @@ $("#reportAbusePosterBtn").click(function() {
 $("#okMsgModal").click(function() {
 	//Reload venues table
 	//console.log('OK button clicked!');
-});
-
-// No message modal event
-$("#noMsgModal").click(function() {
-	//Reload venues table
-	//console.log('NO button clicked!');
 });
 
 function formatCurrency(n, currency) {
