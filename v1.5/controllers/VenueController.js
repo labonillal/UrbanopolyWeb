@@ -259,14 +259,13 @@ exports.uploadPhoto = function(bitmap, venueId, playerId, callback){
 		// res – response object (http.IncomingMessage)  //
 		if (!err && res.statusCode === 200) {
 			res.resume(); // for node-0.10.x
-			console.log('Service uploadPhoto finish');
+			console.log('Function uploadPhoto finish');
 			callback(null, res.statusCode);
 		}
 		else{
-			console.log('Unable to upload photo: %j', err);
-			console.log('Service uploadPhoto finish');
+			console.log('Unable to upload photo: ', err);
+			console.log('Function uploadPhoto finish');
 			callback(err);
     	}
 	});
-	console.log('Function uploadPhoto finish');
 }
