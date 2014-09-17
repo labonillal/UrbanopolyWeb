@@ -1,6 +1,11 @@
-/**
-* Parse Player
-*/
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
+
+// Parse Player
 exports.parse = function(json) {
 	console.log('Executing Player Model...');
 	//console.log('Player Model JSON: '+JSON.stringify(json));

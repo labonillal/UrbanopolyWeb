@@ -1,49 +1,11 @@
-/**
- Parse VisitAdvertise
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
 
-	 {"type":"JUDGE",
-	 "player":"774274788",
-	 "venue":32579,
-	 "date":null,
-	 "deltaMoney":0,
-	 "sent":0,
-	 "venueName":" Intesa San Paolo",
-	 "venueCategory":581,
-	 "featureTypes":
-	 	[{	"name":"street",
-	 		"id":326,
-	 		"advertiseQuestion":"what is the name of the street?",
-	 		"featureRange":{
-	 			"id":133,
-	 			"values":[],
-	 			"type":"open",
-	 			"openDataType":"null"},
-	 		"multivalue":false},
-	 	{	"name":"housenumber",
-	 		"id":324,
-	 		"advertiseQuestion":"what is the house number?",
-	 		"featureRange":{
-	 			"id":133,
-	 			"values":[],
-	 			"type":"open",
-	 			"openDataType":"null"},
-	 		"multivalue":false},
-	 	{	"name":"postcode",
-	 		"id":325,
-	 		"advertiseQuestion":"what is the post code?",
-	 		"featureRange":{
-	 			"id":133,
-	 			"values":[],
-	 			"type":"open",
-	 			"openDataType":"null"},
-	 		"multivalue":false}],
-	 "featureValues":[null,null,"22100"],
-	 "photoRank":0,
-	 "idPhoto":null,
-	 "idAdvertiseVisit":5011,
-	 "offensive":false}
-*/
-
+// Parse VisitAdvertise
 exports.parse = function(json) {
 	//If the data is the type string is pased to json
 	if ('string' == typeof json){

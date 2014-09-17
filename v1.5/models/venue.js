@@ -1,30 +1,12 @@
-/**
- Parse Venue
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
 
-{ name: 'Scuola Elementare Leonardo da Vinci',
-  wheel:
-   { takePercentage: 10,
-     skipPercentage: 5,
-     payPercentage: 10,
-     advertisePercentage: 75,
-     quizPercentage: 0 },
-  id: 2315,
-  value: 498250,
-  lat: 45.4774392,
-  lon: 9.2244638,
-  mortgaged: false,
-  deadTime:
-   { year: 2014,
-     month: 4,
-     dayOfMonth: 9,
-     hourOfDay: 16,
-     minute: 21,
-     second: 15 },
-  category: 641,
-  ownerId: '703312353',
-  ownerName: 'Francesca Trento',
-  state: null }
-*/
+
+// Parse Venue
 exports.parse = function(json) {
 	//If the data is the type string is pased to json
 	if ('string' == typeof json){

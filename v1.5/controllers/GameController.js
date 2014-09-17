@@ -1,3 +1,10 @@
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
+
 /* Loading Module Dependencies */
 var gameConf = require("../core/game");
 var request = require("request");

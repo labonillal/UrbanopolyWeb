@@ -1,6 +1,11 @@
-/**
-* Parse Notification
-*/
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
+
+// Parse Notification
 exports.parse = function(json) {
 	if ('string' == typeof json){
 		json = JSON.parse(json);

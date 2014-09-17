@@ -1,15 +1,11 @@
-/**
- Parse Visit
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
 
-	{ "type" : "QUIZ",
-	  "player" : "774274788",
-	  "venue" : 33912,
-	  "date" : null,
-	  "deltaMoney" : 0,
-	  "sent" : 0,
-	  "offensive":false}
-*/
-
+// Parse Visit
 exports.parse = function(json) {
 	//If the data is the type string is pased to json
 	if ('string' == typeof json){

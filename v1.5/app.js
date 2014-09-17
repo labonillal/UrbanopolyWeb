@@ -1,3 +1,10 @@
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
+
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');

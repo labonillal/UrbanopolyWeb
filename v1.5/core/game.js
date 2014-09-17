@@ -1,4 +1,10 @@
-// config/game.js
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
+
 module.exports = {
 	// Servers
 	'localhostServerUrl' : 'http://192.168.1.10:8080/urbanopoly-server', // Local emulator

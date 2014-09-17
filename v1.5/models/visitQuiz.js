@@ -1,29 +1,11 @@
-/**
- Parse VisitQuiz
+//
+// UrbanopolyWeb v1.5.0
+// 
+// Copyright (c) 2012-2014, CEFRIEL
+// Licensed under the Apache 2.0 License.
+//
 
-	{ "type" : "QUIZ",
-	  "player" : "774274788",
-	  "venue" : 33912,
-	  "date" : null,
-	  "deltaMoney" : 0,
-	  "sent" : 0,
-	  "questions" : ["do wheelchairs have full unrestricted access?(yes/no)"],
-	  "skips" : null,
-	  "options" : [["yes","no",null,null]],
-	  "selected" : [],
-	  "feature" : 
-		[{	"name":"wheel chair",
-			"id":428,
-			"advertiseQuestion" : "do wheelchairs have full unrestricted access? (yes/no)",
-			"featureRange":
-				{"id" : 135,
-				 "values" : ["no"],
-				 "type" : "closed",
-				 "openDataType" : "null"},
-			"multivalue":false}],
-	  "offensive":false}
-*/
-
+// Parse VisitQuiz
 exports.parse = function(json) {
 	//If the data is the type string is pased to json
 	if ('string' == typeof json){
