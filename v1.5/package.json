@@ -17,7 +17,7 @@
     "passport": "~0.2.0",
     "passport-facebook": "~1.0.3",
     "connect-flash": "~0.1.1",
-    "request": "~2.34.0",
+    "request": "~2.88.0",
     "geojson": "~0.1.5",
     "fb": "~0.7.0",
     "formidable": "~1.0.15",
