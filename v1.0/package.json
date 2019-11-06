@@ -17,6 +17,6 @@
     "passport": "~0.2.0",
     "passport-facebook": "~1.0.3",
     "connect-flash": "~0.1.1",
-	"mongoose": "~3.8.8"
+	"mongoose": "~5.7.8"
   }
 }
